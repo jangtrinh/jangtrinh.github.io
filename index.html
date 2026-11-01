@@ -268,6 +268,13 @@
     container-type: inline-size;
   }
 
+  .brand {
+    display: block;
+    width: var(--space-48);
+    height: var(--space-48);
+    margin: 0 0 var(--space-24);
+  }
+
   /* Ink ends at 5.4em (800, -0.045em). vw fallback has no rem floor. */
   h1 {
     margin: 0 0 var(--space-24);
@@ -314,6 +321,7 @@
 
   @media (min-width: 768px) {
     main { padding-top: var(--space-128); }
+    .brand { width: var(--space-64); height: var(--space-64); margin-bottom: var(--space-32); }
     h1 { margin-bottom: var(--space-32); }
     .sub { font-size: 1.125rem; }
     #products { margin-top: var(--space-96); }
@@ -334,6 +342,19 @@
   }
 
   .index li:last-child { border-bottom: 1px solid var(--border); }
+
+  .index img {
+    display: block;
+    width: 56px;
+    height: 56px;
+    justify-self: start;
+    align-self: center;
+  }
+
+  .index li:first-child img {
+    width: 72px;
+    height: 72px;
+  }
 
   /* 13.15em fits "DESIGN:OS SVG Animation"; 9em fits Studio, still larger. */
   .index h2 {
@@ -388,23 +409,89 @@
 
   @media (min-width: 900px) {
     .index li {
-      grid-template-columns: minmax(0, 5fr) minmax(0, 5fr) 240px;
+      grid-template-columns: 88px minmax(0, 1fr) 240px;
+      grid-template-rows: auto auto;
       column-gap: var(--space-32);
       align-items: center;
       padding-block: calc(var(--space-32) + var(--space-8));
     }
 
+    .index img {
+      grid-column: 1;
+      grid-row: 1 / -1;
+      width: 72px;
+      height: 72px;
+    }
+
+    .index li:first-child img {
+      width: 88px;
+      height: 88px;
+    }
+
     .index h2 {
-      font-size: min(2.25rem, calc((100vw - 400px) / 26.3));
-      font-size: min(2.25rem, calc((100cqw - 240px - 2 * var(--space-32)) / 2 / 13.15));
+      grid-column: 2;
+      grid-row: 1;
+      font-size: min(2.25rem, calc((100vw - 488px) / 13.15));
+      font-size: min(2.25rem, calc((100cqw - 88px - 240px - 2 * var(--space-32)) / 13.15));
     }
 
     .index li:first-child h2 {
-      font-size: min(3.25rem, calc((100vw - 400px) / 18));
-      font-size: min(3.25rem, calc((100cqw - 240px - 2 * var(--space-32)) / 2 / 9));
+      grid-column: 2;
+      grid-row: 1;
+      font-size: min(3.25rem, calc((100vw - 488px) / 9));
+      font-size: min(3.25rem, calc((100cqw - 88px - 240px - 2 * var(--space-32)) / 9));
     }
 
-    .links { justify-content: flex-end; }
+    .index p {
+      grid-column: 2;
+      grid-row: 2;
+    }
+
+    .links {
+      grid-column: 3;
+      grid-row: 1 / -1;
+      justify-content: flex-end;
+    }
+  }
+
+  @media (min-width: 1280px) {
+    .index li {
+      grid-template-columns: var(--space-128) minmax(0, 5fr) minmax(0, 5fr) 240px;
+      grid-template-rows: auto;
+    }
+
+    .index img {
+      grid-row: auto;
+      width: var(--space-96);
+      height: var(--space-96);
+    }
+
+    .index li:first-child img {
+      width: var(--space-128);
+      height: var(--space-128);
+    }
+
+    .index h2 {
+      grid-row: auto;
+      font-size: min(2.25rem, calc((100vw - 560px) / 26.3));
+      font-size: min(2.25rem, calc((100cqw - var(--space-128) - 240px - 3 * var(--space-32)) / 2 / 13.15));
+    }
+
+    .index li:first-child h2 {
+      grid-row: auto;
+      font-size: min(3.25rem, calc((100vw - 560px) / 18));
+      font-size: min(3.25rem, calc((100cqw - var(--space-128) - 240px - 3 * var(--space-32)) / 2 / 9));
+    }
+
+    .index p {
+      grid-column: 3;
+      grid-row: auto;
+    }
+
+    .links {
+      grid-column: 4;
+      grid-row: auto;
+    }
   }
 
   @media (hover: hover) and (pointer: fine) {
@@ -452,22 +539,26 @@
 <body>
   <a class="skip" href="#products">Skip to products</a>
   <main>
+    <img class="brand" src="assets/logos/design-os-cli.webp" alt="" width="256" height="256" decoding="async" loading="eager">
     <h1>DESIGN<span class="colon">:</span>OS</h1>
     <p class="lead"><strong>FREE</strong> design tools for AI coding agents (Claude Code, Codex, Cursor, Antigravity).</p>
     <p class="sub">Every product is free and source-available (PolyForm Shield).</p>
     <section id="products" aria-label="Products">
       <ul class="index">
         <li>
+          <img src="assets/logos/design-os-studio.webp" alt="" width="256" height="256" decoding="async" loading="eager">
           <h2>DESIGN:OS Studio</h2>
           <p>Native GPU-accelerated interface design studio built in Rust, with an MCP server and Dev Mode code output. Reads and writes .fig files.</p>
           <div class="links"><a href="https://github.com/jangtrinh/design-os-studio" aria-label="DESIGN:OS Studio on GitHub">GitHub<svg viewBox="0 0 12 12" width="12" height="12" aria-hidden="true"><path d="M2 6h8M6.5 2.5 10 6 6.5 9.5" fill="none" stroke="currentColor" stroke-width="1.5"/></svg></a><a href="https://jangtrinh.github.io/design-os-studio/" aria-label="DESIGN:OS Studio Docs">Docs<svg viewBox="0 0 12 12" width="12" height="12" aria-hidden="true"><path d="M2 6h8M6.5 2.5 10 6 6.5 9.5" fill="none" stroke="currentColor" stroke-width="1.5"/></svg></a></div>
         </li>
         <li>
+          <img src="assets/logos/design-os-cli.webp" alt="" width="256" height="256" decoding="async" loading="lazy">
           <h2>DESIGN:OS CLI</h2>
           <p>Design CLI for Claude Code, Codex and Antigravity: describe the UI in plain words and get production-grade web, SwiftUI and Figma-compatible output, checked by deterministic gates.</p>
           <div class="links"><a href="https://github.com/jangtrinh/design-os" aria-label="DESIGN:OS CLI on GitHub">GitHub<svg viewBox="0 0 12 12" width="12" height="12" aria-hidden="true"><path d="M2 6h8M6.5 2.5 10 6 6.5 9.5" fill="none" stroke="currentColor" stroke-width="1.5"/></svg></a><a href="https://jangtrinh.github.io/design-os/" aria-label="DESIGN:OS CLI Docs">Docs<svg viewBox="0 0 12 12" width="12" height="12" aria-hidden="true"><path d="M2 6h8M6.5 2.5 10 6 6.5 9.5" fill="none" stroke="currentColor" stroke-width="1.5"/></svg></a></div>
         </li>
         <li>
+          <img src="assets/logos/design-os-bridge.webp" alt="" width="256" height="256" decoding="async" loading="lazy">
           <h2>DESIGN:OS Bridge</h2>
           <p>Plugin and CLI that lets Claude Code, Codex or any shell agent read and edit the design file you have open. Works with Figma, including the Free plan. Local WebSocket, one undo step per change, no seat.</p>
           <div class="links"><a href="https://github.com/jangtrinh/design-os-figma-plugin" aria-label="DESIGN:OS Bridge on GitHub">GitHub<svg viewBox="0 0 12 12" width="12" height="12" aria-hidden="true"><path d="M2 6h8M6.5 2.5 10 6 6.5 9.5" fill="none" stroke="currentColor" stroke-width="1.5"/></svg></a><a href="https://jangtrinh.github.io/design-os-figma-plugin/" aria-label="DESIGN:OS Bridge Docs">Docs<svg viewBox="0 0 12 12" width="12" height="12" aria-hidden="true"><path d="M2 6h8M6.5 2.5 10 6 6.5 9.5" fill="none" stroke="currentColor" stroke-width="1.5"/></svg></a></div>
@@ -478,16 +569,19 @@
           <div class="links"><a href="https://github.com/jangtrinh/mcp-bridge-go" aria-label="mcp-bridge-go on GitHub">GitHub<svg viewBox="0 0 12 12" width="12" height="12" aria-hidden="true"><path d="M2 6h8M6.5 2.5 10 6 6.5 9.5" fill="none" stroke="currentColor" stroke-width="1.5"/></svg></a></div>
         </li>
         <li>
+          <img src="assets/logos/design-os-svg-animation.webp" alt="" width="256" height="256" decoding="async" loading="lazy">
           <h2>DESIGN:OS SVG Animation</h2>
           <p>Deterministic vector animation and 1080p 60fps video pipeline for AI coding agents, with a Motion IR compiler and verification gates.</p>
           <div class="links"><a href="https://github.com/jangtrinh/design-os-svg-animation" aria-label="DESIGN:OS SVG Animation on GitHub">GitHub<svg viewBox="0 0 12 12" width="12" height="12" aria-hidden="true"><path d="M2 6h8M6.5 2.5 10 6 6.5 9.5" fill="none" stroke="currentColor" stroke-width="1.5"/></svg></a><a href="https://jangtrinh.github.io/design-os-svg-animation/" aria-label="DESIGN:OS SVG Animation Docs">Docs<svg viewBox="0 0 12 12" width="12" height="12" aria-hidden="true"><path d="M2 6h8M6.5 2.5 10 6 6.5 9.5" fill="none" stroke="currentColor" stroke-width="1.5"/></svg></a></div>
         </li>
         <li>
+          <img src="assets/logos/design-os-code2flow.webp" alt="" width="256" height="256" decoding="async" loading="lazy">
           <h2>DESIGN:OS Code2Flow</h2>
           <p>Local CLI that turns a Next.js, React Router, Expo, SwiftUI, Flutter or Compose codebase into user-flow maps and a UX gap report.</p>
           <div class="links"><a href="https://github.com/jangtrinh/design-os-code2flow" aria-label="DESIGN:OS Code2Flow on GitHub">GitHub<svg viewBox="0 0 12 12" width="12" height="12" aria-hidden="true"><path d="M2 6h8M6.5 2.5 10 6 6.5 9.5" fill="none" stroke="currentColor" stroke-width="1.5"/></svg></a><a href="https://jangtrinh.github.io/design-os-code2flow/" aria-label="DESIGN:OS Code2Flow Docs">Docs<svg viewBox="0 0 12 12" width="12" height="12" aria-hidden="true"><path d="M2 6h8M6.5 2.5 10 6 6.5 9.5" fill="none" stroke="currentColor" stroke-width="1.5"/></svg></a></div>
         </li>
         <li>
+          <img src="assets/logos/design-os-3d-blender.webp" alt="" width="256" height="256" decoding="async" loading="lazy">
           <h2>DESIGN:OS 3D Blender</h2>
           <p>AI agent system for Blender 5.2: agent skills, verified bpy knowledge base, execution contract and a production gate for 3D-printable parts. On the official MCP Registry.</p>
           <div class="links"><a href="https://github.com/jangtrinh/design-os-3d-blender" aria-label="DESIGN:OS 3D Blender on GitHub">GitHub<svg viewBox="0 0 12 12" width="12" height="12" aria-hidden="true"><path d="M2 6h8M6.5 2.5 10 6 6.5 9.5" fill="none" stroke="currentColor" stroke-width="1.5"/></svg></a><a href="https://jangtrinh.github.io/design-os-3d-blender/" aria-label="DESIGN:OS 3D Blender Docs">Docs<svg viewBox="0 0 12 12" width="12" height="12" aria-hidden="true"><path d="M2 6h8M6.5 2.5 10 6 6.5 9.5" fill="none" stroke="currentColor" stroke-width="1.5"/></svg></a></div>

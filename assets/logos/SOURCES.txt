@@ -1,0 +1,9 @@
+Resized (256x256, Lanczos) and WebP-encoded copies of the original brand logos. Not redrawn.
+mcp-bridge-go has no original logo, so none is shown.
+
+design-os-studio.webp  <- design-os-studio/docs/logo.png  sha256(original)=225c9f5095bc792c  8222 bytes
+design-os-cli.webp  <- design-os/site/logo.png  sha256(original)=c6fdd09877dea624  8792 bytes
+design-os-bridge.webp  <- design-os-figma-plugin/docs/logo.png  sha256(original)=be95990d824dbada  12024 bytes
+design-os-svg-animation.webp  <- design-os-svg-animation/docs/logo.png  sha256(original)=5e1a59c0d70009ae  12768 bytes
+design-os-code2flow.webp  <- design-os-code2flow/docs/logo.png  sha256(original)=c03c426c9ea1f787  7220 bytes
+design-os-3d-blender.webp  <- design-os-3d-blender/docs/logo.png  sha256(original)=fac58060235d0ae8  11728 bytes

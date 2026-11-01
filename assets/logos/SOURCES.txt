@@ -1,8 +1,9 @@
 DESIGN:OS hub logos: provenance (corrected 2026-11-01)
 
 What these files are
-  Six 256x256 WebP files. Each is a plain Lanczos downscale plus WebP encode (encoder settings not recorded)
-  of a PNG that exists on Jang's box. Nothing was redrawn, recoloured or generated.
+  Six WebP files: five are 256x256 and design-os-studio.webp is 384x384 (so it is not upscaled on 2x screens
+  at its 136px display size). Each is a plain Lanczos downscale plus WebP encode (the Studio one: quality 85,
+  method 6; the others' encoder settings were not recorded) of a PNG that exists on Jang's box. Nothing was redrawn, recoloured or generated.
   There are no SVG originals; every source is a raster 3D render, so svgo does not apply.
 
 Usage rights: UNCONFIRMED. Jang has not yet confirmed that he owns these renders or may
@@ -20,40 +21,53 @@ Per file: box path of the PNG that was resized, and where else it exists
 
   design-os-studio.webp
     <- /workspace/projects/favicons/design-os-studio/docs/logo.png   sha256 225c9f5095bc792c  1024x1024
-    NOT public: this file is only in the local, unpushed branch "favicon-from-logo"
-    (commit 5b5514f, 2026-10-26). github.com/jangtrinh/design-os-studio has no docs/logo.png on main.
+    (1024px -> 384px, resize only; re-encoded 2026-11-01, was 256px.)
+    Public on the pushed branch `favicon-from-logo` (commit 5b5514f) and in open PR #1214 of jangtrinh/design-os-studio
+    (https://github.com/jangtrinh/design-os-studio/pull/1214), not yet on main (no docs/logo.png on main).
+    Checked 2026-11-01: raw.githubusercontent.com/jangtrinh/design-os-studio/favicon-from-logo/docs/logo.png returns 200, same sha256 as the box copy.
     It is a downscale of the same render as /workspace/unikorn/logos/studio_logo.png (1000x1000)
     and /workspace/unikorn/logos/studio_logo_full.png (3000x3000).
     The 3000px file carries embedded PNG metadata (Third-party origin, below).
 
   design-os-bridge.webp
     <- /workspace/projects/favicons/design-os-figma-plugin/docs/logo.png   sha256 be95990d824dbada  400x400
-    NOT public: only in the local, unpushed branch "favicon-from-logo" (commit a3976bb).
+    Public on the pushed branch `favicon-from-logo` (commit a3976bb) and in open PR #195 of jangtrinh/design-os-figma-plugin
+    (https://github.com/jangtrinh/design-os-figma-plugin/pull/195), not yet on main (no docs/logo.png on main).
+    Checked 2026-11-01: raw.githubusercontent.com/jangtrinh/design-os-figma-plugin/favicon-from-logo/docs/logo.png returns 200, same sha256 as the box copy.
     Pixel-identical to /workspace/unikorn/logos/logo-small/circle-ring-shape-8441430.png.
 
   design-os-svg-animation.webp
     <- /workspace/projects/favicons/design-os-svg-animation/docs/logo.png   sha256 5e1a59c0d70009ae  400x400
-    NOT public: only in the local, unpushed branch "favicon-from-logo" (commit 2a17efb).
+    Public on the pushed branch `favicon-from-logo` (commit 2a17efb) and in open PR #22 of jangtrinh/design-os-svg-animation
+    (https://github.com/jangtrinh/design-os-svg-animation/pull/22), not yet on main (no docs/logo.png on main).
+    Checked 2026-11-01: raw.githubusercontent.com/jangtrinh/design-os-svg-animation/favicon-from-logo/docs/logo.png returns 200, same sha256 as the box copy.
     Pixel-identical to /workspace/unikorn/logos/logo-small/circle-spiral-shape-8441432.png.
 
   design-os-code2flow.webp
     <- /workspace/projects/favicons/design-os-code2flow/docs/logo.png   sha256 c03c426c9ea1f787  400x400
-    NOT public: only in the local, unpushed branch "favicon-from-logo" (commit f05a0d5).
+    Public on the pushed branch `favicon-from-logo` (commit f05a0d5) and in open PR #2 of jangtrinh/design-os-code2flow
+    (https://github.com/jangtrinh/design-os-code2flow/pull/2), not yet on main (no docs/logo.png on main).
+    Checked 2026-11-01: raw.githubusercontent.com/jangtrinh/design-os-code2flow/favicon-from-logo/docs/logo.png returns 200, same sha256 as the box copy.
     Pixel-identical to /workspace/unikorn/logos/logo-small/spiral-abstract-shape-8441433.png.
 
   design-os-3d-blender.webp
     <- /workspace/projects/favicons/design-os-3d-blender/docs/logo.png   sha256 fac58060235d0ae8  400x400
-    NOT public: only in the local, unpushed branch "favicon-from-logo" (commit f040f9d).
+    Public on the pushed branch `favicon-from-logo` (commit f040f9d) and in open PR #32 of jangtrinh/design-os-3d-blender
+    (https://github.com/jangtrinh/design-os-3d-blender/pull/32), not yet on main (no docs/logo.png on main).
+    Checked 2026-11-01: raw.githubusercontent.com/jangtrinh/design-os-3d-blender/favicon-from-logo/docs/logo.png returns 200, same sha256 as the box copy.
     Pixel-identical to /workspace/unikorn/logos/logo-small/cube-ball-shape-8441438.png.
 
   mcp-bridge-go: no logo exists, so none is shown (a neutral placeholder is drawn in CSS).
 
-How the files got into the repos' local branches
+How the files got into the repos' branches
   The 15 PNGs in /workspace/unikorn/logos/logo-small/ (made from /workspace/unikorn/logos/sheet.png,
   copied to the box 2026-10-29) were assigned to repos in the DRAFT
   /workspace/projects/design-os-studio/pm/logo-mapping-2026-10-25.md ("Draft for Jang's approval").
-  Local commits on "favicon-from-logo" (2026-10-26) then added them as docs/logo.png or site/logo.png.
-  Only the CLI one reached GitHub (design-os #352). The mapping is still unapproved.
+  Commits on "favicon-from-logo" (2026-10-26) then added them as docs/logo.png or site/logo.png.
+  Checked with gh and curl on 2026-11-01: the CLI one is on GitHub main (design-os #352, merged). The other five
+  are on the pushed branch "favicon-from-logo" of their repos and in open PRs (Studio #1214, Bridge #195,
+  SVG Animation #22, Code2Flow #2, 3D Blender #32); none is on main yet. The mapping is still unapproved.
+  (An earlier version of this file wrongly said the five were local and unpushed.)
 
 Third-party origin (not resolved)
   /workspace/unikorn/logos/studio_logo_full.png has embedded PNG text metadata, File:

@@ -281,7 +281,7 @@
 
   .colon {
     color: var(--text);
-    animation: colon 3.2s ease-in-out infinite alternate;
+    animation: colon 2.4s ease-in-out 2 alternate;
   }
 
   @keyframes colon {
@@ -550,6 +550,22 @@
     }
   }
 
+  @media (max-width: 899px) {
+    main { padding-top: var(--space-32); }
+    h1 { margin-bottom: var(--space-12); }
+    .sub { margin-top: var(--space-8); }
+    #products { margin-top: var(--space-24); }
+    .index li {
+      gap: var(--space-8);
+      padding-block: var(--space-24);
+    }
+    .index li:first-child { padding-block: calc(var(--space-32) + var(--space-4)); }
+    footer {
+      margin-top: var(--space-32);
+      padding-bottom: var(--space-24);
+    }
+  }
+
   @media (prefers-reduced-motion: reduce) {
     .colon { animation: none; }
     .index li,
@@ -566,7 +582,7 @@
     <section id="products" aria-label="Products">
       <ul class="index">
         <li>
-          <img src="assets/logos/design-os-studio.webp" alt="" width="256" height="256" decoding="async" loading="eager">
+          <img src="assets/logos/design-os-studio.webp" alt="" width="384" height="384" decoding="async" loading="eager">
           <h2>DESIGN:OS Studio</h2>
           <p>Native GPU-accelerated interface design studio built in Rust, with an MCP server and Dev Mode code output. Reads and writes .fig files.</p>
           <div class="links"><a href="https://github.com/jangtrinh/design-os-studio" aria-label="DESIGN:OS Studio on GitHub">GitHub<svg viewBox="0 0 12 12" width="12" height="12" aria-hidden="true"><path d="M2 6h8M6.5 2.5 10 6 6.5 9.5" fill="none" stroke="currentColor" stroke-width="1.5"/></svg></a><a href="https://jangtrinh.github.io/design-os-studio/" aria-label="DESIGN:OS Studio Docs">Docs<svg viewBox="0 0 12 12" width="12" height="12" aria-hidden="true"><path d="M2 6h8M6.5 2.5 10 6 6.5 9.5" fill="none" stroke="currentColor" stroke-width="1.5"/></svg></a></div>

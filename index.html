@@ -534,6 +534,9 @@
   footer a {
     color: inherit;
     text-underline-offset: 0.2em;
+    display: inline-flex;
+    align-items: center;
+    min-height: 24px;
   }
 
   @media (min-width: 768px) {
@@ -542,8 +545,6 @@
 
   @media (max-width: 1024px) {
     footer a {
-      display: inline-flex;
-      align-items: center;
       min-height: 44px;
       padding-inline: var(--space-4);
     }

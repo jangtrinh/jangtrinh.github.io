@@ -1,9 +1,64 @@
-Resized (256x256, Lanczos) and WebP-encoded copies of the original brand logos. Not redrawn.
-mcp-bridge-go has no original logo, so none is shown.
+DESIGN:OS hub logos: provenance (corrected 2026-11-01)
 
-design-os-studio.webp  <- design-os-studio/docs/logo.png  sha256(original)=225c9f5095bc792c  8222 bytes
-design-os-cli.webp  <- design-os/site/logo.png  sha256(original)=c6fdd09877dea624  8792 bytes
-design-os-bridge.webp  <- design-os-figma-plugin/docs/logo.png  sha256(original)=be95990d824dbada  12024 bytes
-design-os-svg-animation.webp  <- design-os-svg-animation/docs/logo.png  sha256(original)=5e1a59c0d70009ae  12768 bytes
-design-os-code2flow.webp  <- design-os-code2flow/docs/logo.png  sha256(original)=c03c426c9ea1f787  7220 bytes
-design-os-3d-blender.webp  <- design-os-3d-blender/docs/logo.png  sha256(original)=fac58060235d0ae8  11728 bytes
+What these files are
+  Six 256x256 WebP files. Each is a plain Lanczos downscale plus WebP encode (encoder settings not recorded)
+  of a PNG that exists on Jang's box. Nothing was redrawn, recoloured or generated.
+  There are no SVG originals; every source is a raster 3D render, so svgo does not apply.
+
+Usage rights: UNCONFIRMED. Jang has not yet confirmed that he owns these renders or may
+  use them as DESIGN:OS brand logos. See "Third-party origin" below. Merge waits for that.
+
+Per file: box path of the PNG that was resized, and where else it exists
+  (paths are on the box, under /workspace/projects/favicons/<repo>/; the PNG sha256
+  prefixes are of the source PNGs)
+
+  design-os-cli.webp
+    <- /workspace/projects/favicons/design-os/site/logo.png   sha256 c6fdd09877dea624  400x400
+    Public: the same bytes are on github.com/jangtrinh/design-os, branch main, at
+    site/logo.png (git blob fb1d21f, added by "Use repo logo as favicon (#352)").
+    Pixel-identical to /workspace/unikorn/logos/logo-small/ball-8441434.png.
+
+  design-os-studio.webp
+    <- /workspace/projects/favicons/design-os-studio/docs/logo.png   sha256 225c9f5095bc792c  1024x1024
+    NOT public: this file is only in the local, unpushed branch "favicon-from-logo"
+    (commit 5b5514f, 2026-10-26). github.com/jangtrinh/design-os-studio has no docs/logo.png on main.
+    It is a downscale of the same render as /workspace/unikorn/logos/studio_logo.png (1000x1000)
+    and /workspace/unikorn/logos/studio_logo_full.png (3000x3000).
+    The 3000px file carries embedded PNG metadata (Third-party origin, below).
+
+  design-os-bridge.webp
+    <- /workspace/projects/favicons/design-os-figma-plugin/docs/logo.png   sha256 be95990d824dbada  400x400
+    NOT public: only in the local, unpushed branch "favicon-from-logo" (commit a3976bb).
+    Pixel-identical to /workspace/unikorn/logos/logo-small/circle-ring-shape-8441430.png.
+
+  design-os-svg-animation.webp
+    <- /workspace/projects/favicons/design-os-svg-animation/docs/logo.png   sha256 5e1a59c0d70009ae  400x400
+    NOT public: only in the local, unpushed branch "favicon-from-logo" (commit 2a17efb).
+    Pixel-identical to /workspace/unikorn/logos/logo-small/circle-spiral-shape-8441432.png.
+
+  design-os-code2flow.webp
+    <- /workspace/projects/favicons/design-os-code2flow/docs/logo.png   sha256 c03c426c9ea1f787  400x400
+    NOT public: only in the local, unpushed branch "favicon-from-logo" (commit f05a0d5).
+    Pixel-identical to /workspace/unikorn/logos/logo-small/spiral-abstract-shape-8441433.png.
+
+  design-os-3d-blender.webp
+    <- /workspace/projects/favicons/design-os-3d-blender/docs/logo.png   sha256 fac58060235d0ae8  400x400
+    NOT public: only in the local, unpushed branch "favicon-from-logo" (commit f040f9d).
+    Pixel-identical to /workspace/unikorn/logos/logo-small/cube-ball-shape-8441438.png.
+
+  mcp-bridge-go: no logo exists, so none is shown (a neutral placeholder is drawn in CSS).
+
+How the files got into the repos' local branches
+  The 15 PNGs in /workspace/unikorn/logos/logo-small/ (made from /workspace/unikorn/logos/sheet.png,
+  copied to the box 2026-10-29) were assigned to repos in the DRAFT
+  /workspace/projects/design-os-studio/pm/logo-mapping-2026-10-25.md ("Draft for Jang's approval").
+  Local commits on "favicon-from-logo" (2026-10-26) then added them as docs/logo.png or site/logo.png.
+  Only the CLI one reached GitHub (design-os #352). The mapping is still unapproved.
+
+Third-party origin (not resolved)
+  /workspace/unikorn/logos/studio_logo_full.png has embedded PNG text metadata, File:
+  "/run/media/lynx/Data/Kerjaan/Nixx Product - Vol.4 (3D Icon)/001 - Nixx Icon 3D/44 - Shape Geometry/Blend/Geometry_6.blend",
+  render date 2023/04/03 (Blender Cycles). That points to a third-party 3D icon pack ("Nixx Icon 3D").
+  The 15 logo-small files have no embedded source text. Their consecutive numeric filenames
+  (8441427 to 8441441) and identical render style suggest the same kind of pack, but that is not proven.
+  No licence, receipt or purchase record for any of them was found on this box.

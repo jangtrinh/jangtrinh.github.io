@@ -268,13 +268,6 @@
     container-type: inline-size;
   }
 
-  .brand {
-    display: block;
-    width: var(--space-48);
-    height: var(--space-48);
-    margin: 0 0 var(--space-24);
-  }
-
   /* Ink ends at 5.4em (800, -0.045em). vw fallback has no rem floor. */
   h1 {
     margin: 0 0 var(--space-24);
@@ -321,7 +314,6 @@
 
   @media (min-width: 768px) {
     main { padding-top: var(--space-128); }
-    .brand { width: var(--space-64); height: var(--space-64); margin-bottom: var(--space-32); }
     h1 { margin-bottom: var(--space-32); }
     .sub { font-size: 1.125rem; }
     #products { margin-top: var(--space-96); }
@@ -336,27 +328,51 @@
   .index li {
     display: grid;
     gap: var(--space-12);
-    padding-block: var(--space-32);
+    padding-block: calc(var(--space-32) + var(--space-8));
     border-top: 1px solid var(--border);
     container-type: inline-size;
   }
 
   .index li:last-child { border-bottom: 1px solid var(--border); }
 
-  .index img {
+  .index img,
+  .mark-empty {
     display: block;
-    width: 56px;
-    height: 56px;
+    width: 72px;
+    height: 72px;
     justify-self: start;
     align-self: center;
   }
 
-  .index li:first-child img {
-    width: 72px;
-    height: 72px;
+  .mark-empty {
+    position: relative;
+    border: 1px solid var(--border-strong);
+    border-radius: var(--radius-full);
   }
 
-  /* 13.15em fits "DESIGN:OS SVG Animation"; 9em fits Studio, still larger. */
+  .mark-empty::before,
+  .mark-empty::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    width: 12%;
+    height: 12%;
+    border-radius: var(--radius-full);
+    background: var(--text-3);
+    transform: translateX(-50%);
+  }
+
+  .mark-empty::before { top: 34%; }
+  .mark-empty::after { bottom: 34%; }
+
+  .index li:first-child img {
+    width: 96px;
+    height: 96px;
+  }
+
+  /* 13.15em fits "DESIGN:OS SVG Animation"; 9em fits Studio, still larger.
+     From 1280 the name track is 16/31 of the text area so those sizes hold
+     after the wider logo track and 40px gutters. */
   .index h2 {
     margin: 0;
     font-weight: 600;
@@ -366,7 +382,7 @@
     line-height: 1.15;
   }
 
-  .index li:first-child { padding-block: var(--space-48); }
+  .index li:first-child { padding-block: calc(var(--space-48) + var(--space-8)); }
 
   .index li:first-child h2 {
     font-size: clamp(2rem, 3.8vw, 3.25rem);
@@ -409,37 +425,39 @@
 
   @media (min-width: 900px) {
     .index li {
-      grid-template-columns: 88px minmax(0, 1fr) 240px;
+      /* 224 fits GitHub + Docs; 240 would shrink the name more than 1px at 900. */
+      grid-template-columns: 112px minmax(0, 1fr) 224px;
       grid-template-rows: auto auto;
       column-gap: var(--space-32);
       align-items: center;
-      padding-block: calc(var(--space-32) + var(--space-8));
+      padding-block: var(--space-48);
     }
 
-    .index img {
+    .index img,
+    .mark-empty {
       grid-column: 1;
       grid-row: 1 / -1;
-      width: 72px;
-      height: 72px;
+      width: 96px;
+      height: 96px;
     }
 
     .index li:first-child img {
-      width: 88px;
-      height: 88px;
+      width: 112px;
+      height: 112px;
     }
 
     .index h2 {
       grid-column: 2;
       grid-row: 1;
-      font-size: min(2.25rem, calc((100vw - 488px) / 13.15));
-      font-size: min(2.25rem, calc((100cqw - 88px - 240px - 2 * var(--space-32)) / 13.15));
+      font-size: min(2.25rem, calc((100vw - 496px) / 13.15));
+      font-size: min(2.25rem, calc((100cqw - 112px - 224px - 2 * var(--space-32)) / 13.15));
     }
 
     .index li:first-child h2 {
       grid-column: 2;
       grid-row: 1;
-      font-size: min(3.25rem, calc((100vw - 488px) / 9));
-      font-size: min(3.25rem, calc((100cqw - 88px - 240px - 2 * var(--space-32)) / 9));
+      font-size: min(3.25rem, calc((100vw - 496px) / 9));
+      font-size: min(3.25rem, calc((100cqw - 112px - 224px - 2 * var(--space-32)) / 9));
     }
 
     .index p {
@@ -456,31 +474,33 @@
 
   @media (min-width: 1280px) {
     .index li {
-      grid-template-columns: var(--space-128) minmax(0, 5fr) minmax(0, 5fr) 240px;
+      grid-template-columns: 144px minmax(0, 16fr) minmax(0, 15fr) 224px;
       grid-template-rows: auto;
+      column-gap: calc(var(--space-32) + var(--space-8));
     }
 
-    .index img {
+    .index img,
+    .mark-empty {
       grid-row: auto;
-      width: var(--space-96);
-      height: var(--space-96);
+      width: 104px;
+      height: 104px;
     }
 
     .index li:first-child img {
-      width: var(--space-128);
-      height: var(--space-128);
+      width: 136px;
+      height: 136px;
     }
 
     .index h2 {
       grid-row: auto;
-      font-size: min(2.25rem, calc((100vw - 560px) / 26.3));
-      font-size: min(2.25rem, calc((100cqw - var(--space-128) - 240px - 3 * var(--space-32)) / 2 / 13.15));
+      font-size: min(2.25rem, calc((100vw - 584px) * 16 / 31 / 13.15));
+      font-size: min(2.25rem, calc((100cqw - 144px - 224px - 3 * (var(--space-32) + var(--space-8))) * 16 / 31 / 13.15));
     }
 
     .index li:first-child h2 {
       grid-row: auto;
-      font-size: min(3.25rem, calc((100vw - 560px) / 18));
-      font-size: min(3.25rem, calc((100cqw - var(--space-128) - 240px - 3 * var(--space-32)) / 2 / 9));
+      font-size: min(3.25rem, calc((100vw - 584px) * 16 / 31 / 9));
+      font-size: min(3.25rem, calc((100cqw - 144px - 224px - 3 * (var(--space-32) + var(--space-8))) * 16 / 31 / 9));
     }
 
     .index p {
@@ -539,7 +559,6 @@
 <body>
   <a class="skip" href="#products">Skip to products</a>
   <main>
-    <img class="brand" src="assets/logos/design-os-cli.webp" alt="" width="256" height="256" decoding="async" loading="eager">
     <h1>DESIGN<span class="colon">:</span>OS</h1>
     <p class="lead"><strong>FREE</strong> design tools for AI coding agents (Claude Code, Codex, Cursor, Antigravity).</p>
     <p class="sub">Every product is free and source-available (PolyForm Shield).</p>
@@ -564,6 +583,7 @@
           <div class="links"><a href="https://github.com/jangtrinh/design-os-figma-plugin" aria-label="DESIGN:OS Bridge on GitHub">GitHub<svg viewBox="0 0 12 12" width="12" height="12" aria-hidden="true"><path d="M2 6h8M6.5 2.5 10 6 6.5 9.5" fill="none" stroke="currentColor" stroke-width="1.5"/></svg></a><a href="https://jangtrinh.github.io/design-os-figma-plugin/" aria-label="DESIGN:OS Bridge Docs">Docs<svg viewBox="0 0 12 12" width="12" height="12" aria-hidden="true"><path d="M2 6h8M6.5 2.5 10 6 6.5 9.5" fill="none" stroke="currentColor" stroke-width="1.5"/></svg></a></div>
         </li>
         <li>
+          <span class="mark-empty" aria-hidden="true"></span>
           <h2>mcp-bridge-go</h2>
           <p>Go MCP server (stdio) that sends a prompt to an Electron-based AI IDE on macOS (Antigravity, Cursor, Windsurf) and returns the workspace git diff.</p>
           <div class="links"><a href="https://github.com/jangtrinh/mcp-bridge-go" aria-label="mcp-bridge-go on GitHub">GitHub<svg viewBox="0 0 12 12" width="12" height="12" aria-hidden="true"><path d="M2 6h8M6.5 2.5 10 6 6.5 9.5" fill="none" stroke="currentColor" stroke-width="1.5"/></svg></a></div>

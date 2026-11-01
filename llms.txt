@@ -11,3 +11,8 @@
 - [DESIGN:OS SVG Animation](https://jangtrinh.github.io/design-os-svg-animation/): Deterministic vector animation and 1080p 60fps video pipeline for AI coding agents, with a Motion IR compiler and verification gates. Repo: https://github.com/jangtrinh/design-os-svg-animation
 - [DESIGN:OS Code2Flow](https://jangtrinh.github.io/design-os-code2flow/): Local CLI that turns a Next.js, React Router, Expo, SwiftUI, Flutter or Compose codebase into user-flow maps and a UX gap report. Repo: https://github.com/jangtrinh/design-os-code2flow
 - [DESIGN:OS 3D Blender](https://jangtrinh.github.io/design-os-3d-blender/): AI agent system for Blender 5.2: agent skills, verified bpy knowledge base, execution contract and a production gate for 3D-printable parts. On the official MCP Registry. Repo: https://github.com/jangtrinh/design-os-3d-blender
+
+## Videos
+
+- [DESIGN:OS videos](https://jangtrinh.github.io/videos/): All channel videos for Studio, CLI, Bridge and 3D Blender with thumbnails and descriptions. Most are Vietnamese, with English terms.
+- [design:os by Jang on YouTube](https://www.youtube.com/@designosbyjang): the channel.

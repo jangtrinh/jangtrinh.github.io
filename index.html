@@ -146,7 +146,337 @@
   }
  ]
 }</script>
-<style>body{font:16px/1.5 system-ui,sans-serif;margin:0;background:#0d0d10;color:#e8e8ec}main{max-width:1040px;margin:auto;padding:48px 24px}h1{font-size:40px;margin:0}.tag{color:#a8a8b3}.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px;margin-top:32px}article{background:#17171c;border:1px solid #2a2a33;border-radius:12px;padding:20px}h2{font-size:19px;margin:0 0 8px}a{color:#8ab4ff}.l{margin:0}footer{margin-top:40px;color:#8a8a95;font-size:14px}</style></head>
-<body><main><h1>DESIGN:OS</h1><p class="tag">FREE design tools for AI coding agents (Claude Code, Codex, Cursor, Antigravity). Every product is free and source-available (PolyForm Shield).</p>
-<div class="grid"><article><h2>DESIGN:OS Studio</h2><p>Native GPU-accelerated interface design studio built in Rust, with an MCP server and Dev Mode code output. Reads and writes .fig files.</p><p class="l"><a href="https://github.com/jangtrinh/design-os-studio">GitHub</a> · <a href="https://jangtrinh.github.io/design-os-studio/">Docs</a></p></article><article><h2>DESIGN:OS CLI</h2><p>Design CLI for Claude Code, Codex and Antigravity: describe the UI in plain words and get production-grade web, SwiftUI and Figma-compatible output, checked by deterministic gates.</p><p class="l"><a href="https://github.com/jangtrinh/design-os">GitHub</a> · <a href="https://jangtrinh.github.io/design-os/">Docs</a></p></article><article><h2>DESIGN:OS Bridge</h2><p>Plugin and CLI that lets Claude Code, Codex or any shell agent read and edit the design file you have open. Works with Figma, including the Free plan. Local WebSocket, one undo step per change, no seat.</p><p class="l"><a href="https://github.com/jangtrinh/design-os-figma-plugin">GitHub</a> · <a href="https://jangtrinh.github.io/design-os-figma-plugin/">Docs</a></p></article><article><h2>mcp-bridge-go</h2><p>Go MCP server (stdio) that sends a prompt to an Electron-based AI IDE on macOS (Antigravity, Cursor, Windsurf) and returns the workspace git diff.</p><p class="l"><a href="https://github.com/jangtrinh/mcp-bridge-go">GitHub</a></p></article><article><h2>DESIGN:OS SVG Animation</h2><p>Deterministic vector animation and 1080p 60fps video pipeline for AI coding agents, with a Motion IR compiler and verification gates.</p><p class="l"><a href="https://github.com/jangtrinh/design-os-svg-animation">GitHub</a> · <a href="https://jangtrinh.github.io/design-os-svg-animation/">Docs</a></p></article><article><h2>DESIGN:OS Code2Flow</h2><p>Local CLI that turns a Next.js, React Router, Expo, SwiftUI, Flutter or Compose codebase into user-flow maps and a UX gap report.</p><p class="l"><a href="https://github.com/jangtrinh/design-os-code2flow">GitHub</a> · <a href="https://jangtrinh.github.io/design-os-code2flow/">Docs</a></p></article><article><h2>DESIGN:OS 3D Blender</h2><p>AI agent system for Blender 5.2: agent skills, verified bpy knowledge base, execution contract and a production gate for 3D-printable parts. On the official MCP Registry.</p><p class="l"><a href="https://github.com/jangtrinh/design-os-3d-blender">GitHub</a> · <a href="https://jangtrinh.github.io/design-os-3d-blender/">Docs</a></p></article></div>
-<footer>By Jang Trịnh · <a href="https://github.com/jangtrinh">github.com/jangtrinh</a> · FREE · source-available (PolyForm Shield 1.0.0) · <a href="llms.txt">llms.txt</a></footer></main></body></html>
+<meta name="theme-color" content="#fafafa" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#09090b" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" content="#09090b">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cstyle%3Erect%7Bfill:%23f4f4f5%7D%40media (prefers-color-scheme:light)%7Brect%7Bfill:%2309090b%7D%7D%3C/style%3E%3Crect x='6' y='3' width='4' height='4'/%3E%3Crect x='6' y='9' width='4' height='4'/%3E%3C/svg%3E" type="image/svg+xml">
+<link rel="preload" href="assets/fonts/be-vietnam-pro-400.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="assets/fonts/be-vietnam-pro-800.woff2" as="font" type="font/woff2" crossorigin>
+<style>
+  @font-face { font-family: "Be Vietnam Pro"; font-weight: 400; font-display: swap; src: url("assets/fonts/be-vietnam-pro-400.woff2") format("woff2"); }
+  @font-face { font-family: "Be Vietnam Pro"; font-weight: 600; font-display: swap; src: url("assets/fonts/be-vietnam-pro-600.woff2") format("woff2"); }
+  @font-face { font-family: "Be Vietnam Pro"; font-weight: 800; font-display: swap; src: url("assets/fonts/be-vietnam-pro-800.woff2") format("woff2"); }
+  /* size-adjust matches Arial-metric advances so the swap keeps the line length. */
+  @font-face { font-family: "Be Vietnam Pro Fallback"; font-weight: 400; font-display: swap; src: local("Arial"), local("Liberation Sans"), local("Arimo"); size-adjust: 109.61%; ascent-override: 91.23%; descent-override: 24.18%; line-gap-override: 0%; }
+  @font-face { font-family: "Be Vietnam Pro Fallback"; font-weight: 600; font-display: swap; src: local("Arial"), local("Liberation Sans"), local("Arimo"); size-adjust: 112.29%; ascent-override: 89.06%; descent-override: 23.60%; line-gap-override: 0%; }
+  @font-face { font-family: "Be Vietnam Pro Fallback"; font-weight: 800; font-display: swap; src: local("Arial"), local("Liberation Sans"), local("Arimo"); size-adjust: 104.16%; ascent-override: 96.01%; descent-override: 25.44%; line-gap-override: 0%; }
+
+  :root {
+    --bg: #09090b;
+    --surface: #121215;
+    --raised: #18181b;
+    --border: #27272a;
+    --border-strong: #52525b;
+    --text: #f4f4f5;
+    --text-2: #a1a1aa;
+    --text-3: #8a8a93;
+    --radius-full: 9999px;
+    --space-4: 4px;
+    --space-8: 8px;
+    --space-12: 12px;
+    --space-16: 16px;
+    --space-24: 24px;
+    --space-32: 32px;
+    --space-48: 48px;
+    --space-64: 64px;
+    --space-96: 96px;
+    --space-128: 128px;
+    color-scheme: dark light;
+    background: var(--bg);
+    color: var(--text);
+    scrollbar-color: var(--border-strong) var(--bg);
+    -webkit-text-size-adjust: 100%; text-size-adjust: 100%;
+  }
+
+  @media (prefers-color-scheme: light) {
+    :root {
+      --bg: #fafafa;
+      --surface: #ffffff;
+      --raised: #f4f4f5;
+      --border: #e4e4e7;
+      --border-strong: #a1a1aa;
+      --text: #09090b;
+      --text-2: #3f3f46;
+      --text-3: #5f5f68;
+    }
+  }
+
+  *,
+  *::before,
+  *::after { box-sizing: border-box; }
+
+  body {
+    position: relative;
+    margin: 0 auto;
+    max-width: calc(1280px + (var(--space-48) * 2));
+    padding-inline: var(--space-24);
+    background: var(--bg);
+    color: var(--text);
+    font-family: "Be Vietnam Pro", "Be Vietnam Pro Fallback", system-ui, sans-serif;
+    font-size: 1rem;
+    font-weight: 400;
+    font-synthesis: none;
+    line-height: 1.5;
+  }
+
+  @media (min-width: 768px) {
+    body { padding-inline: var(--space-48); }
+  }
+
+  ::selection {
+    background: var(--text);
+    color: var(--bg);
+  }
+
+  :focus { outline: none; }
+
+  :focus-visible {
+    outline: 2px solid var(--text);
+    outline-offset: 3px;
+  }
+
+  .skip {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+    border: 0;
+  }
+
+  .skip:focus {
+    width: auto;
+    height: auto;
+    clip-path: none;
+    overflow: visible;
+    left: var(--space-24);
+    top: var(--space-12);
+    min-height: 44px;
+    padding: var(--space-8) var(--space-16);
+    border: 1px solid var(--border-strong);
+    border-radius: var(--radius-full);
+    background: var(--raised);
+    color: var(--text);
+    font-weight: 600;
+    text-decoration: none;
+  }
+
+  main { padding-top: var(--space-64); }
+
+  /* Measured 5.428em. 15.75vw keeps ~4px spare at 360. 14.7rem holds the 1280 cap. */
+  h1 {
+    margin: 0 0 var(--space-24);
+    font-weight: 800;
+    font-size: clamp(3.5rem, 15.75vw, 14.7rem);
+    letter-spacing: -0.045em;
+    line-height: 0.9;
+    white-space: nowrap;
+  }
+
+  .colon {
+    color: var(--text);
+    animation: colon 3.2s ease-in-out infinite alternate;
+  }
+
+  @keyframes colon {
+    from { color: var(--text); }
+    to { color: var(--text-3); }
+  }
+
+  .lead {
+    margin: 0;
+    max-width: 34ch;
+    font-size: clamp(1.25rem, 2.2vw, 1.75rem);
+    font-weight: 600;
+    line-height: 1.3;
+    text-wrap: balance;
+  }
+
+  .lead strong { font-weight: 800; }
+
+  .sub {
+    margin: var(--space-12) 0 0;
+    max-width: 56ch;
+    color: var(--text-2);
+    font-size: 1rem;
+  }
+
+  #products {
+    margin-top: var(--space-48);
+    scroll-margin-top: var(--space-16);
+  }
+
+  @media (min-width: 768px) {
+    main { padding-top: var(--space-128); }
+    h1 { margin-bottom: var(--space-32); }
+    .sub { font-size: 1.125rem; }
+    #products { margin-top: var(--space-96); }
+  }
+
+  .index {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .index li {
+    display: grid;
+    gap: var(--space-12);
+    padding-block: var(--space-32);
+    border-top: 1px solid var(--border);
+  }
+
+  .index li:last-child { border-bottom: 1px solid var(--border); }
+
+  .index h2 {
+    margin: 0;
+    font-weight: 600;
+    font-size: clamp(1.5rem, 2.6vw, 2.25rem);
+    letter-spacing: -0.02em;
+    line-height: 1.15;
+  }
+
+  .index li:first-child { padding-block: var(--space-48); }
+
+  .index li:first-child h2 {
+    font-size: clamp(2rem, 3.8vw, 3.25rem);
+  }
+
+  .index p {
+    margin: 0;
+    max-width: 56ch;
+    color: var(--text-2);
+  }
+
+  .links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-8);
+  }
+
+  .index a path {
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  .index a {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-8);
+    min-height: 44px;
+    padding-inline: 20px 22px;
+    border: 1px solid var(--border-strong);
+    border-radius: var(--radius-full);
+    color: var(--text);
+    font-size: 0.875rem;
+    font-weight: 600;
+    line-height: 1.3;
+    text-decoration: none;
+    white-space: nowrap;
+    transition: background-color 160ms ease-out, color 160ms ease-out, border-color 160ms ease-out;
+  }
+
+  @media (min-width: 900px) {
+    .index li {
+      grid-template-columns: minmax(0, 5fr) minmax(0, 5fr) 240px;
+      column-gap: var(--space-32);
+      align-items: center;
+      padding-block: calc(var(--space-32) + var(--space-8));
+    }
+
+    .links { justify-content: flex-end; }
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .index li { transition: background-color 160ms ease-out; }
+    .index li:hover { background-color: var(--surface); }
+    .index a:hover {
+      background-color: var(--text);
+      border-color: var(--text);
+      color: var(--bg);
+    }
+  }
+
+  footer {
+    margin-top: var(--space-64);
+    padding-bottom: var(--space-48);
+    color: var(--text-2);
+    font-size: 0.875rem;
+  }
+
+  footer a {
+    color: inherit;
+    text-underline-offset: 0.2em;
+  }
+
+  @media (min-width: 768px) {
+    footer { margin-top: var(--space-96); }
+  }
+
+  @media (max-width: 1024px) {
+    footer a {
+      display: inline-flex;
+      align-items: center;
+      min-height: 44px;
+      padding-inline: var(--space-4);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .colon { animation: none; }
+    .index li,
+    .index a { transition: none; }
+  }
+</style>
+</head>
+<body>
+  <a class="skip" href="#products">Skip to products</a>
+  <main>
+    <h1>DESIGN<span class="colon">:</span>OS</h1>
+    <p class="lead"><strong>FREE</strong> design tools for AI coding agents (Claude Code, Codex, Cursor, Antigravity).</p>
+    <p class="sub">Every product is free and source-available (PolyForm Shield).</p>
+    <section id="products" aria-label="Products">
+      <ul class="index">
+        <li>
+          <h2>DESIGN:OS Studio</h2>
+          <p>Native GPU-accelerated interface design studio built in Rust, with an MCP server and Dev Mode code output. Reads and writes .fig files.</p>
+          <div class="links"><a href="https://github.com/jangtrinh/design-os-studio" aria-label="DESIGN:OS Studio on GitHub">GitHub<svg viewBox="0 0 12 12" width="12" height="12" aria-hidden="true"><path d="M2 6h8M6.5 2.5 10 6 6.5 9.5" fill="none" stroke="currentColor" stroke-width="1.5"/></svg></a><a href="https://jangtrinh.github.io/design-os-studio/" aria-label="DESIGN:OS Studio Docs">Docs<svg viewBox="0 0 12 12" width="12" height="12" aria-hidden="true"><path d="M2 6h8M6.5 2.5 10 6 6.5 9.5" fill="none" stroke="currentColor" stroke-width="1.5"/></svg></a></div>
+        </li>
+        <li>
+          <h2>DESIGN:OS CLI</h2>
+          <p>Design CLI for Claude Code, Codex and Antigravity: describe the UI in plain words and get production-grade web, SwiftUI and Figma-compatible output, checked by deterministic gates.</p>
+          <div class="links"><a href="https://github.com/jangtrinh/design-os" aria-label="DESIGN:OS CLI on GitHub">GitHub<svg viewBox="0 0 12 12" width="12" height="12" aria-hidden="true"><path d="M2 6h8M6.5 2.5 10 6 6.5 9.5" fill="none" stroke="currentColor" stroke-width="1.5"/></svg></a><a href="https://jangtrinh.github.io/design-os/" aria-label="DESIGN:OS CLI Docs">Docs<svg viewBox="0 0 12 12" width="12" height="12" aria-hidden="true"><path d="M2 6h8M6.5 2.5 10 6 6.5 9.5" fill="none" stroke="currentColor" stroke-width="1.5"/></svg></a></div>
+        </li>
+        <li>
+          <h2>DESIGN:OS Bridge</h2>
+          <p>Plugin and CLI that lets Claude Code, Codex or any shell agent read and edit the design file you have open. Works with Figma, including the Free plan. Local WebSocket, one undo step per change, no seat.</p>
+          <div class="links"><a href="https://github.com/jangtrinh/design-os-figma-plugin" aria-label="DESIGN:OS Bridge on GitHub">GitHub<svg viewBox="0 0 12 12" width="12" height="12" aria-hidden="true"><path d="M2 6h8M6.5 2.5 10 6 6.5 9.5" fill="none" stroke="currentColor" stroke-width="1.5"/></svg></a><a href="https://jangtrinh.github.io/design-os-figma-plugin/" aria-label="DESIGN:OS Bridge Docs">Docs<svg viewBox="0 0 12 12" width="12" height="12" aria-hidden="true"><path d="M2 6h8M6.5 2.5 10 6 6.5 9.5" fill="none" stroke="currentColor" stroke-width="1.5"/></svg></a></div>
+        </li>
+        <li>
+          <h2>mcp-bridge-go</h2>
+          <p>Go MCP server (stdio) that sends a prompt to an Electron-based AI IDE on macOS (Antigravity, Cursor, Windsurf) and returns the workspace git diff.</p>
+          <div class="links"><a href="https://github.com/jangtrinh/mcp-bridge-go" aria-label="mcp-bridge-go on GitHub">GitHub<svg viewBox="0 0 12 12" width="12" height="12" aria-hidden="true"><path d="M2 6h8M6.5 2.5 10 6 6.5 9.5" fill="none" stroke="currentColor" stroke-width="1.5"/></svg></a></div>
+        </li>
+        <li>
+          <h2>DESIGN:OS SVG Animation</h2>
+          <p>Deterministic vector animation and 1080p 60fps video pipeline for AI coding agents, with a Motion IR compiler and verification gates.</p>
+          <div class="links"><a href="https://github.com/jangtrinh/design-os-svg-animation" aria-label="DESIGN:OS SVG Animation on GitHub">GitHub<svg viewBox="0 0 12 12" width="12" height="12" aria-hidden="true"><path d="M2 6h8M6.5 2.5 10 6 6.5 9.5" fill="none" stroke="currentColor" stroke-width="1.5"/></svg></a><a href="https://jangtrinh.github.io/design-os-svg-animation/" aria-label="DESIGN:OS SVG Animation Docs">Docs<svg viewBox="0 0 12 12" width="12" height="12" aria-hidden="true"><path d="M2 6h8M6.5 2.5 10 6 6.5 9.5" fill="none" stroke="currentColor" stroke-width="1.5"/></svg></a></div>
+        </li>
+        <li>
+          <h2>DESIGN:OS Code2Flow</h2>
+          <p>Local CLI that turns a Next.js, React Router, Expo, SwiftUI, Flutter or Compose codebase into user-flow maps and a UX gap report.</p>
+          <div class="links"><a href="https://github.com/jangtrinh/design-os-code2flow" aria-label="DESIGN:OS Code2Flow on GitHub">GitHub<svg viewBox="0 0 12 12" width="12" height="12" aria-hidden="true"><path d="M2 6h8M6.5 2.5 10 6 6.5 9.5" fill="none" stroke="currentColor" stroke-width="1.5"/></svg></a><a href="https://jangtrinh.github.io/design-os-code2flow/" aria-label="DESIGN:OS Code2Flow Docs">Docs<svg viewBox="0 0 12 12" width="12" height="12" aria-hidden="true"><path d="M2 6h8M6.5 2.5 10 6 6.5 9.5" fill="none" stroke="currentColor" stroke-width="1.5"/></svg></a></div>
+        </li>
+        <li>
+          <h2>DESIGN:OS 3D Blender</h2>
+          <p>AI agent system for Blender 5.2: agent skills, verified bpy knowledge base, execution contract and a production gate for 3D-printable parts. On the official MCP Registry.</p>
+          <div class="links"><a href="https://github.com/jangtrinh/design-os-3d-blender" aria-label="DESIGN:OS 3D Blender on GitHub">GitHub<svg viewBox="0 0 12 12" width="12" height="12" aria-hidden="true"><path d="M2 6h8M6.5 2.5 10 6 6.5 9.5" fill="none" stroke="currentColor" stroke-width="1.5"/></svg></a><a href="https://jangtrinh.github.io/design-os-3d-blender/" aria-label="DESIGN:OS 3D Blender Docs">Docs<svg viewBox="0 0 12 12" width="12" height="12" aria-hidden="true"><path d="M2 6h8M6.5 2.5 10 6 6.5 9.5" fill="none" stroke="currentColor" stroke-width="1.5"/></svg></a></div>
+        </li>
+      </ul>
+    </section>
+  </main>
+  <footer>By Jang Trịnh · <a href="https://github.com/jangtrinh">github.com/jangtrinh</a> · FREE · source-available (PolyForm Shield 1.0.0) · <a href="llms.txt">llms.txt</a></footer>
+</body>
+</html>

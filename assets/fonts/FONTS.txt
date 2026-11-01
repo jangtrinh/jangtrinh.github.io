@@ -1,0 +1,2 @@
+Be Vietnam Pro (Regular 400, SemiBold 600, ExtraBold 800), subset to Latin + Vietnamese.
+Copyright The Be Vietnam Pro Project Authors. Licensed under the SIL Open Font License 1.1.

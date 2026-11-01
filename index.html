@@ -166,7 +166,7 @@
     --surface: #121215;
     --raised: #18181b;
     --border: #27272a;
-    --border-strong: #52525b;
+    --border-strong: #66666f;
     --text: #f4f4f5;
     --text-2: #a1a1aa;
     --text-3: #8a8a93;
@@ -194,7 +194,7 @@
       --surface: #ffffff;
       --raised: #f4f4f5;
       --border: #e4e4e7;
-      --border-strong: #a1a1aa;
+      --border-strong: #8a8a93;
       --text: #09090b;
       --text-2: #3f3f46;
       --text-3: #5f5f68;
@@ -263,13 +263,17 @@
     text-decoration: none;
   }
 
-  main { padding-top: var(--space-64); }
+  main {
+    padding-top: var(--space-64);
+    container-type: inline-size;
+  }
 
-  /* Measured 5.428em. 15.75vw keeps ~4px spare at 360. 14.7rem holds the 1280 cap. */
+  /* Ink ends at 5.4em (800, -0.045em). vw fallback has no rem floor. */
   h1 {
     margin: 0 0 var(--space-24);
     font-weight: 800;
-    font-size: clamp(3.5rem, 15.75vw, 14.7rem);
+    font-size: min(15.4vw, 14.7rem);
+    font-size: calc(100cqw / 5.4);
     letter-spacing: -0.045em;
     line-height: 0.9;
     white-space: nowrap;
@@ -326,14 +330,17 @@
     gap: var(--space-12);
     padding-block: var(--space-32);
     border-top: 1px solid var(--border);
+    container-type: inline-size;
   }
 
   .index li:last-child { border-bottom: 1px solid var(--border); }
 
+  /* 13.15em fits "DESIGN:OS SVG Animation"; 9em fits Studio, still larger. */
   .index h2 {
     margin: 0;
     font-weight: 600;
     font-size: clamp(1.5rem, 2.6vw, 2.25rem);
+    font-size: min(2.25rem, calc(100cqw / 13.15));
     letter-spacing: -0.02em;
     line-height: 1.15;
   }
@@ -342,6 +349,7 @@
 
   .index li:first-child h2 {
     font-size: clamp(2rem, 3.8vw, 3.25rem);
+    font-size: min(3.25rem, calc(100cqw / 9));
   }
 
   .index p {
@@ -384,6 +392,16 @@
       column-gap: var(--space-32);
       align-items: center;
       padding-block: calc(var(--space-32) + var(--space-8));
+    }
+
+    .index h2 {
+      font-size: min(2.25rem, calc((100vw - 400px) / 26.3));
+      font-size: min(2.25rem, calc((100cqw - 240px - 2 * var(--space-32)) / 2 / 13.15));
+    }
+
+    .index li:first-child h2 {
+      font-size: min(3.25rem, calc((100vw - 400px) / 18));
+      font-size: min(3.25rem, calc((100cqw - 240px - 2 * var(--space-32)) / 2 / 9));
     }
 
     .links { justify-content: flex-end; }

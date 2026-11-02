@@ -1,0 +1,25 @@
+/* Ink ends at 5.4em (800, -0.045em). vw fallback has no rem floor. */
+h1 {
+  margin: 0 0 var(--space-24);
+  font-weight: 800;
+  font-size: min(15.4vw, 14.7rem);
+  font-size: calc(100cqw / 5.4);
+  letter-spacing: -0.045em;
+  line-height: 0.9;
+  white-space: nowrap;
+}
+
+#products {
+  margin-top: var(--space-48);
+  scroll-margin-top: var(--space-16);
+}
+
+@media (min-width: 768px) {
+  h1 { margin-bottom: var(--space-32); }
+  #products { margin-top: var(--space-96); }
+}
+
+@media (max-width: 899px) {
+  h1 { margin-bottom: var(--space-12); }
+  #products { margin-top: var(--space-24); }
+}

@@ -1,0 +1,725 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>DESIGN:OS — free design tools for AI agents</title>
+<meta name="description" content="DESIGN:OS: free, source-available (PolyForm Shield) design tools for AI coding agents: Studio, CLI, Bridge, SVG Animation, Code2Flow, 3D Blender and mcp-bridge-go. Vietnamese, Skills, Knowledge Builder, Agent Teacher, Voice UX, Generative UI, System One, Apple, GitHub Pages, Origami, mcpop, multi-AI-profile, Orchestration System, Ổi Browser and four showcases.">
+<link rel="canonical" href="https://jangtrinh.github.io/">
+<script type="application/ld+json">{
+ "@context": "https://schema.org",
+ "@graph": [
+  {
+   "@type": "Organization",
+   "@id": "https://jangtrinh.github.io/#org",
+   "name": "DESIGN:OS",
+   "url": "https://jangtrinh.github.io/",
+   "founder": {
+    "@type": "Person",
+    "name": "Jang Trịnh"
+   },
+   "sameAs": [
+    "https://github.com/jangtrinh"
+   ]
+  },
+  {
+   "@type": "SoftwareApplication",
+   "name": "DESIGN:OS Studio",
+   "description": "Native GPU-accelerated interface design studio built in Rust, with an MCP server and Dev Mode code output. Reads and writes .fig files.",
+   "applicationCategory": "DesignApplication",
+   "url": "https://jangtrinh.github.io/design-os-studio/",
+   "codeRepository": "https://github.com/jangtrinh/design-os-studio",
+   "isAccessibleForFree": true,
+   "license": "https://polyformproject.org/licenses/shield/1.0.0/",
+   "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD"
+   },
+   "publisher": {
+    "@id": "https://jangtrinh.github.io/#org"
+   }
+  },
+  {
+   "@type": "SoftwareApplication",
+   "name": "DESIGN:OS CLI",
+   "description": "Design CLI for Claude Code, Codex and Antigravity: describe the UI in plain words and get production-grade web, SwiftUI and Figma-compatible output, checked by deterministic gates.",
+   "applicationCategory": "DeveloperApplication",
+   "url": "https://jangtrinh.github.io/design-os/",
+   "codeRepository": "https://github.com/jangtrinh/design-os",
+   "isAccessibleForFree": true,
+   "license": "https://polyformproject.org/licenses/shield/1.0.0/",
+   "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD"
+   },
+   "publisher": {
+    "@id": "https://jangtrinh.github.io/#org"
+   }
+  },
+  {
+   "@type": "SoftwareApplication",
+   "name": "DESIGN:OS Bridge",
+   "description": "Plugin and CLI that lets Claude Code, Codex or any shell agent read and edit the design file you have open. Works with Figma, including the Free plan. Local WebSocket, one undo step per change, no seat.",
+   "applicationCategory": "DeveloperApplication",
+   "url": "https://jangtrinh.github.io/design-os-figma-plugin/",
+   "codeRepository": "https://github.com/jangtrinh/design-os-figma-plugin",
+   "isAccessibleForFree": true,
+   "license": "https://polyformproject.org/licenses/shield/1.0.0/",
+   "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD"
+   },
+   "publisher": {
+    "@id": "https://jangtrinh.github.io/#org"
+   }
+  },
+  {
+   "@type": "SoftwareApplication",
+   "name": "mcp-bridge-go",
+   "description": "Go MCP server (stdio) that sends a prompt to an Electron-based AI IDE on macOS (Antigravity, Cursor, Windsurf) and returns the workspace git diff.",
+   "applicationCategory": "DeveloperApplication",
+   "url": "https://github.com/jangtrinh/mcp-bridge-go",
+   "codeRepository": "https://github.com/jangtrinh/mcp-bridge-go",
+   "isAccessibleForFree": true,
+   "license": "https://polyformproject.org/licenses/shield/1.0.0/",
+   "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD"
+   },
+   "publisher": {
+    "@id": "https://jangtrinh.github.io/#org"
+   }
+  },
+  {
+   "@type": "SoftwareApplication",
+   "name": "DESIGN:OS SVG Animation",
+   "description": "Deterministic vector animation and 1080p 60fps video pipeline for AI coding agents, with a Motion IR compiler and verification gates.",
+   "applicationCategory": "MultimediaApplication",
+   "url": "https://jangtrinh.github.io/design-os-svg-animation/",
+   "codeRepository": "https://github.com/jangtrinh/design-os-svg-animation",
+   "isAccessibleForFree": true,
+   "license": "https://polyformproject.org/licenses/shield/1.0.0/",
+   "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD"
+   },
+   "publisher": {
+    "@id": "https://jangtrinh.github.io/#org"
+   }
+  },
+  {
+   "@type": "SoftwareApplication",
+   "name": "DESIGN:OS Code2Flow",
+   "description": "Local CLI that turns a Next.js, React Router, Expo, SwiftUI, Flutter or Compose codebase into user-flow maps and a UX gap report.",
+   "applicationCategory": "DeveloperApplication",
+   "url": "https://jangtrinh.github.io/design-os-code2flow/",
+   "codeRepository": "https://github.com/jangtrinh/design-os-code2flow",
+   "isAccessibleForFree": true,
+   "license": "https://polyformproject.org/licenses/shield/1.0.0/",
+   "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD"
+   },
+   "publisher": {
+    "@id": "https://jangtrinh.github.io/#org"
+   }
+  },
+  {
+   "@type": "SoftwareApplication",
+   "name": "DESIGN:OS 3D Blender",
+   "description": "AI agent system for Blender 5.2: agent skills, verified bpy knowledge base, execution contract and a production gate for 3D-printable parts. On the official MCP Registry.",
+   "applicationCategory": "DesignApplication",
+   "url": "https://jangtrinh.github.io/design-os-3d-blender/",
+   "codeRepository": "https://github.com/jangtrinh/design-os-3d-blender",
+   "isAccessibleForFree": true,
+   "license": "https://polyformproject.org/licenses/shield/1.0.0/",
+   "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD"
+   },
+   "publisher": {
+    "@id": "https://jangtrinh.github.io/#org"
+   }
+  },
+  {
+   "@type": "SoftwareApplication",
+   "name": "DESIGN:OS Vietnamese",
+   "description": "Free, offline Vietnamese copy linter plus 16 agent skills for Claude Code, Codex, Gemini CLI and Antigravity. Zero telemetry.",
+   "applicationCategory": "DeveloperApplication",
+   "url": "https://jangtrinh.github.io/design-os-vietnamese/",
+   "codeRepository": "https://github.com/jangtrinh/design-os-vietnamese",
+   "isAccessibleForFree": true,
+   "license": "https://polyformproject.org/licenses/shield/1.0.0/",
+   "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD"
+   },
+   "publisher": {
+    "@id": "https://jangtrinh.github.io/#org"
+   }
+  },
+  {
+   "@type": "SoftwareApplication",
+   "name": "DESIGN:OS Skills",
+   "description": "32 free agent skills from the suite, in one folder you can copy into Claude Code, Codex or Cursor.",
+   "applicationCategory": "DeveloperApplication",
+   "url": "https://github.com/jangtrinh/design-os-skills-pack",
+   "codeRepository": "https://github.com/jangtrinh/design-os-skills-pack",
+   "isAccessibleForFree": true,
+   "license": "https://polyformproject.org/licenses/shield/1.0.0/",
+   "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD"
+   },
+   "publisher": {
+    "@id": "https://jangtrinh.github.io/#org"
+   }
+  },
+  {
+   "@type": "SoftwareApplication",
+   "name": "DESIGN:OS Knowledge Builder",
+   "description": "Ontology-first knowledge packs: claims with verifiable sources, and a ledger-backed stopping gate for coding agents.",
+   "applicationCategory": "DeveloperApplication",
+   "url": "https://jangtrinh.github.io/design-os-knowledge-builder/",
+   "codeRepository": "https://github.com/jangtrinh/design-os-knowledge-builder",
+   "isAccessibleForFree": true,
+   "license": "https://polyformproject.org/licenses/shield/1.0.0/",
+   "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD"
+   },
+   "publisher": {
+    "@id": "https://jangtrinh.github.io/#org"
+   }
+  },
+  {
+   "@type": "SoftwareApplication",
+   "name": "DESIGN:OS Agent Teacher",
+   "description": "Evidence-graded pedagogy library and a local teacher rehearsal on authored fraction cases. Python, no model calls.",
+   "applicationCategory": "DeveloperApplication",
+   "url": "https://jangtrinh.github.io/design-os-pedagogy/",
+   "codeRepository": "https://github.com/jangtrinh/design-os-pedagogy",
+   "isAccessibleForFree": true,
+   "license": "https://polyformproject.org/licenses/shield/1.0.0/",
+   "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD"
+   },
+   "publisher": {
+    "@id": "https://jangtrinh.github.io/#org"
+   }
+  },
+  {
+   "@type": "SoftwareApplication",
+   "name": "DESIGN:OS Voice UX",
+   "description": "Handbook, barge-in state machines, latency budgets and an audit rubric for real-time voice agents.",
+   "applicationCategory": "DeveloperApplication",
+   "url": "https://jangtrinh.github.io/design-os-voice-ux/",
+   "codeRepository": "https://github.com/jangtrinh/design-os-voice-ux",
+   "isAccessibleForFree": true,
+   "license": "https://polyformproject.org/licenses/shield/1.0.0/",
+   "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD"
+   },
+   "publisher": {
+    "@id": "https://jangtrinh.github.io/#org"
+   }
+  },
+  {
+   "@type": "SoftwareApplication",
+   "name": "DESIGN:OS Generative UI",
+   "description": "Stream-first visual runtime for agents: 60fps DOM reconciliation, a streaming HTML sanitizer and a WebGL/Canvas widget bridge.",
+   "applicationCategory": "DeveloperApplication",
+   "url": "https://jangtrinh.github.io/design-os-generative-ui/",
+   "codeRepository": "https://github.com/jangtrinh/design-os-generative-ui",
+   "isAccessibleForFree": true,
+   "license": "https://polyformproject.org/licenses/shield/1.0.0/",
+   "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD"
+   },
+   "publisher": {
+    "@id": "https://jangtrinh.github.io/#org"
+   }
+  },
+  {
+   "@type": "SoftwareApplication",
+   "name": "DESIGN:OS System One",
+   "description": "Sub-10ms calibrated judgments for agents, on-device on Apple Silicon, with a cloud triage fallback.",
+   "applicationCategory": "DeveloperApplication",
+   "url": "https://jangtrinh.github.io/design-os-system-one/",
+   "codeRepository": "https://github.com/jangtrinh/design-os-system-one",
+   "isAccessibleForFree": true,
+   "license": "https://polyformproject.org/licenses/shield/1.0.0/",
+   "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD"
+   },
+   "publisher": {
+    "@id": "https://jangtrinh.github.io/#org"
+   }
+  },
+  {
+   "@type": "SoftwareApplication",
+   "name": "DESIGN:OS Apple",
+   "description": "Native Swift 6.2 and SwiftUI component system with an adaptive color engine for iOS 26, iPadOS 26 and macOS 26.",
+   "applicationCategory": "DeveloperApplication",
+   "url": "https://jangtrinh.github.io/design-os-apple/",
+   "codeRepository": "https://github.com/jangtrinh/design-os-apple",
+   "isAccessibleForFree": true,
+   "license": "https://polyformproject.org/licenses/shield/1.0.0/",
+   "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD"
+   },
+   "publisher": {
+    "@id": "https://jangtrinh.github.io/#org"
+   }
+  },
+  {
+   "@type": "SoftwareApplication",
+   "name": "DESIGN:OS GitHub Pages",
+   "description": "Zero-dependency GitHub Pages scaffolder with a 10-gate SEO, AEO and GEO check for repos and developer profiles.",
+   "applicationCategory": "DeveloperApplication",
+   "url": "https://jangtrinh.github.io/design-os-github-page/",
+   "codeRepository": "https://github.com/jangtrinh/design-os-github-page",
+   "isAccessibleForFree": true,
+   "license": "https://polyformproject.org/licenses/shield/1.0.0/",
+   "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD"
+   },
+   "publisher": {
+    "@id": "https://jangtrinh.github.io/#org"
+   }
+  },
+  {
+   "@type": "SoftwareApplication",
+   "name": "DESIGN:OS Origami",
+   "description": "Parametric packaging dielines, foldability checks, spot-color print PDFs and DXFs, and 3D fold previews. Python stdlib only.",
+   "applicationCategory": "DeveloperApplication",
+   "url": "https://jangtrinh.github.io/design-os-origami/",
+   "codeRepository": "https://github.com/jangtrinh/design-os-origami",
+   "isAccessibleForFree": true,
+   "license": "https://polyformproject.org/licenses/shield/1.0.0/",
+   "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD"
+   },
+   "publisher": {
+    "@id": "https://jangtrinh.github.io/#org"
+   }
+  },
+  {
+   "@type": "SoftwareApplication",
+   "name": "mcpop",
+   "description": "Observability proxy and silent-failure catcher for MCP servers: flags retry loops, schema mismatches and slow tool calls. One Go binary with a local dashboard.",
+   "applicationCategory": "DeveloperApplication",
+   "url": "https://github.com/jangtrinh/mcpop",
+   "codeRepository": "https://github.com/jangtrinh/mcpop",
+   "isAccessibleForFree": true,
+   "license": "https://polyformproject.org/licenses/shield/1.0.0/",
+   "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD"
+   },
+   "publisher": {
+    "@id": "https://jangtrinh.github.io/#org"
+   }
+  },
+  {
+   "@type": "SoftwareApplication",
+   "name": "multi-AI-profile",
+   "description": "Run several isolated Claude, Antigravity, Codex, Grok, Cursor and Windsurf accounts on macOS, with separate MCP and CLI configs. Instant APFS clones, zero telemetry.",
+   "applicationCategory": "DeveloperApplication",
+   "url": "https://jangtrinh.github.io/multi-AI-profile/",
+   "codeRepository": "https://github.com/jangtrinh/multi-AI-profile",
+   "isAccessibleForFree": true,
+   "license": "https://polyformproject.org/licenses/shield/1.0.0/",
+   "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD"
+   },
+   "publisher": {
+    "@id": "https://jangtrinh.github.io/#org"
+   }
+  },
+  {
+   "@type": "SoftwareApplication",
+   "name": "Orchestration System by Jang",
+   "description": "A portable system for delegating work to AI agents without losing control: dispatch contracts, capability routing and independent verification. Works on any agent runtime.",
+   "applicationCategory": "DeveloperApplication",
+   "url": "https://github.com/jangtrinh/orchestration-system-by-jang",
+   "codeRepository": "https://github.com/jangtrinh/orchestration-system-by-jang",
+   "isAccessibleForFree": true,
+   "license": "https://polyformproject.org/licenses/shield/1.0.0/",
+   "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD"
+   },
+   "publisher": {
+    "@id": "https://jangtrinh.github.io/#org"
+   }
+  },
+  {
+   "@type": "SoftwareApplication",
+   "name": "Ổi Browser",
+   "description": "A local-first AI browser (v1.0.0) with nine domain companions and Markdown memory. Runs on your installed AI CLIs, with zero cloud telemetry.",
+   "applicationCategory": "DeveloperApplication",
+   "url": "https://jangtrinh.github.io/oi-browser/",
+   "codeRepository": "https://github.com/jangtrinh/oi-browser",
+   "isAccessibleForFree": true,
+   "license": "https://polyformproject.org/licenses/shield/1.0.0/",
+   "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD"
+   },
+   "publisher": {
+    "@id": "https://jangtrinh.github.io/#org"
+   }
+  },
+  {
+   "@type": "SoftwareApplication",
+   "name": "OPAH ONE",
+   "description": "Scroll-scrubbed product page with 343 WebP frames and an exploded-view tour. Fictional product, real pipeline.",
+   "applicationCategory": "WebApplication",
+   "url": "https://jangtrinh.github.io/design-os-drone-showcase/",
+   "codeRepository": "https://github.com/jangtrinh/design-os-drone-showcase",
+   "isAccessibleForFree": true,
+   "license": "https://polyformproject.org/licenses/shield/1.0.0/",
+   "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD"
+   },
+   "publisher": {
+    "@id": "https://jangtrinh.github.io/#org"
+   }
+  },
+  {
+   "@type": "SoftwareApplication",
+   "name": "Contour House",
+   "description": "Service page for a fictional architecture studio, with GSAP parallax. Fictional brand, real pipeline.",
+   "applicationCategory": "WebApplication",
+   "url": "https://jangtrinh.github.io/design-os-rill-architecture/",
+   "codeRepository": "https://github.com/jangtrinh/design-os-rill-architecture",
+   "isAccessibleForFree": true,
+   "license": "https://polyformproject.org/licenses/shield/1.0.0/",
+   "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD"
+   },
+   "publisher": {
+    "@id": "https://jangtrinh.github.io/#org"
+   }
+  },
+  {
+   "@type": "SoftwareApplication",
+   "name": "Robotic Arm",
+   "description": "A 3D scrollytelling showcase in the anime.js style, driven by one scroll value.",
+   "applicationCategory": "WebApplication",
+   "url": "https://design-os-animejs.vercel.app",
+   "codeRepository": "https://github.com/jangtrinh/design-os-animejs",
+   "isAccessibleForFree": true,
+   "license": "https://polyformproject.org/licenses/shield/1.0.0/",
+   "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD"
+   },
+   "publisher": {
+    "@id": "https://jangtrinh.github.io/#org"
+   }
+  },
+  {
+   "@type": "SoftwareApplication",
+   "name": "AURA",
+   "description": "Scroll-scrubbed cinematic product page with a 2K exploded-view film generated by DESIGN:OS.",
+   "applicationCategory": "WebApplication",
+   "url": "https://jangtrinh.github.io/aura-scrollcinema-demo/",
+   "codeRepository": "https://github.com/jangtrinh/aura-scrollcinema-demo",
+   "isAccessibleForFree": true,
+   "license": "https://polyformproject.org/licenses/shield/1.0.0/",
+   "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD"
+   },
+   "publisher": {
+    "@id": "https://jangtrinh.github.io/#org"
+   }
+  }
+ ]
+}</script>
+<meta name="theme-color" content="#fafafa" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#09090b" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" content="#09090b">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cstyle%3Erect%7Bfill:%23f4f4f5%7D%40media (prefers-color-scheme:light)%7Brect%7Bfill:%2309090b%7D%7D%3C/style%3E%3Crect x='6' y='3' width='4' height='4'/%3E%3Crect x='6' y='9' width='4' height='4'/%3E%3C/svg%3E" type="image/svg+xml">
+<link rel="preload" href="assets/fonts/be-vietnam-pro-400.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="assets/fonts/be-vietnam-pro-800.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="assets/css/hub.css">
+<link rel="stylesheet" href="assets/css/home.css">
+<style>:root{--text-2:#b1b1ba !important}@media (prefers-color-scheme: light){:root{--text-2:#4f4f56 !important}}</style>
+</head>
+<body>
+  <a class="skip" href="#products">Skip to products</a>
+<!-- hub:header -->
+<header class="site">
+  <a class="mark" href="/">DESIGN<span class="colon">:</span>OS</a>
+  <nav aria-label="Primary">
+    <a href="/#products" aria-current="page">Products</a>
+    <a href="/videos/">Videos</a>
+    <a href="/#ecosystem">Ecosystem</a>
+  </nav>
+</header>
+<!-- /hub:header -->
+  <main>
+    <h1>DESIGN<span class="colon">:</span>OS</h1>
+    <p class="lead"><strong>FREE</strong> design tools for AI coding agents (Claude Code, Codex, Cursor, Antigravity).</p>
+    <p class="sub">Every product is free and source-available (PolyForm Shield).</p>
+    <section id="products" aria-label="Products">
+      <ul class="index">
+        <li>
+          <img src="assets/logos/design-os-studio.webp" alt="" width="384" height="384" decoding="async" loading="eager">
+          <h2>DESIGN:OS Studio</h2>
+          <p>Native GPU-accelerated interface design studio built in Rust, with an MCP server and Dev Mode code output. Reads and writes .fig files.</p>
+          <div class="links"><a href="https://github.com/jangtrinh/design-os-studio" aria-label="DESIGN:OS Studio on GitHub">GitHub<svg viewBox="0 0 12 12" width="12" height="12" aria-hidden="true"><path d="M2 6h8M6.5 2.5 10 6 6.5 9.5" fill="none" stroke="currentColor" stroke-width="1.5"/></svg></a><a href="https://jangtrinh.github.io/design-os-studio/" aria-label="DESIGN:OS Studio Docs">Docs<svg viewBox="0 0 12 12" width="12" height="12" aria-hidden="true"><path d="M2 6h8M6.5 2.5 10 6 6.5 9.5" fill="none" stroke="currentColor" stroke-width="1.5"/></svg></a></div>
+        </li>
+        <li>
+          <img src="assets/logos/design-os-cli.webp" alt="" width="256" height="256" decoding="async" loading="lazy">
+          <h2>DESIGN:OS CLI</h2>
+          <p>Design CLI for Claude Code, Codex and Antigravity: describe the UI in plain words and get production-grade web, SwiftUI and Figma-compatible output, checked by deterministic gates.</p>
+          <div class="links"><a href="https://github.com/jangtrinh/design-os" aria-label="DESIGN:OS CLI on GitHub">GitHub<svg viewBox="0 0 12 12" width="12" height="12" aria-hidden="true"><path d="M2 6h8M6.5 2.5 10 6 6.5 9.5" fill="none" stroke="currentColor" stroke-width="1.5"/></svg></a><a href="https://jangtrinh.github.io/design-os/" aria-label="DESIGN:OS CLI Docs">Docs<svg viewBox="0 0 12 12" width="12" height="12" aria-hidden="true"><path d="M2 6h8M6.5 2.5 10 6 6.5 9.5" fill="none" stroke="currentColor" stroke-width="1.5"/></svg></a></div>
+        </li>
+        <li>
+          <img src="assets/logos/design-os-bridge.webp" alt="" width="256" height="256" decoding="async" loading="lazy">
+          <h2>DESIGN:OS Bridge</h2>
+          <p>Plugin and CLI that lets Claude Code, Codex or any shell agent read and edit the design file you have open. Works with Figma, including the Free plan. Local WebSocket, one undo step per change, no seat.</p>
+          <div class="links"><a href="https://github.com/jangtrinh/design-os-figma-plugin" aria-label="DESIGN:OS Bridge on GitHub">GitHub<svg viewBox="0 0 12 12" width="12" height="12" aria-hidden="true"><path d="M2 6h8M6.5 2.5 10 6 6.5 9.5" fill="none" stroke="currentColor" stroke-width="1.5"/></svg></a><a href="https://jangtrinh.github.io/design-os-figma-plugin/" aria-label="DESIGN:OS Bridge Docs">Docs<svg viewBox="0 0 12 12" width="12" height="12" aria-hidden="true"><path d="M2 6h8M6.5 2.5 10 6 6.5 9.5" fill="none" stroke="currentColor" stroke-width="1.5"/></svg></a></div>
+        </li>
+        <li>
+          <img src="assets/logos/mcp-bridge-go.webp" alt="" width="256" height="256" decoding="async" loading="lazy">
+          <h2>mcp-bridge-go</h2>
+          <p>Go MCP server (stdio) that sends a prompt to an Electron-based AI IDE on macOS (Antigravity, Cursor, Windsurf) and returns the workspace git diff.</p>
+          <div class="links"><a href="https://github.com/jangtrinh/mcp-bridge-go" aria-label="mcp-bridge-go on GitHub">GitHub<svg viewBox="0 0 12 12" width="12" height="12" aria-hidden="true"><path d="M2 6h8M6.5 2.5 10 6 6.5 9.5" fill="none" stroke="currentColor" stroke-width="1.5"/></svg></a></div>
+        </li>
+        <li>
+          <img src="assets/logos/design-os-svg-animation.webp" alt="" width="256" height="256" decoding="async" loading="lazy">
+          <h2>DESIGN:OS SVG Animation</h2>
+          <p>Deterministic vector animation and 1080p 60fps video pipeline for AI coding agents, with a Motion IR compiler and verification gates.</p>
+          <div class="links"><a href="https://github.com/jangtrinh/design-os-svg-animation" aria-label="DESIGN:OS SVG Animation on GitHub">GitHub<svg viewBox="0 0 12 12" width="12" height="12" aria-hidden="true"><path d="M2 6h8M6.5 2.5 10 6 6.5 9.5" fill="none" stroke="currentColor" stroke-width="1.5"/></svg></a><a href="https://jangtrinh.github.io/design-os-svg-animation/" aria-label="DESIGN:OS SVG Animation Docs">Docs<svg viewBox="0 0 12 12" width="12" height="12" aria-hidden="true"><path d="M2 6h8M6.5 2.5 10 6 6.5 9.5" fill="none" stroke="currentColor" stroke-width="1.5"/></svg></a></div>
+        </li>
+        <li>
+          <img src="assets/logos/design-os-code2flow.webp" alt="" width="256" height="256" decoding="async" loading="lazy">
+          <h2>DESIGN:OS Code2Flow</h2>
+          <p>Local CLI that turns a Next.js, React Router, Expo, SwiftUI, Flutter or Compose codebase into user-flow maps and a UX gap report.</p>
+          <div class="links"><a href="https://github.com/jangtrinh/design-os-code2flow" aria-label="DESIGN:OS Code2Flow on GitHub">GitHub<svg viewBox="0 0 12 12" width="12" height="12" aria-hidden="true"><path d="M2 6h8M6.5 2.5 10 6 6.5 9.5" fill="none" stroke="currentColor" stroke-width="1.5"/></svg></a><a href="https://jangtrinh.github.io/design-os-code2flow/" aria-label="DESIGN:OS Code2Flow Docs">Docs<svg viewBox="0 0 12 12" width="12" height="12" aria-hidden="true"><path d="M2 6h8M6.5 2.5 10 6 6.5 9.5" fill="none" stroke="currentColor" stroke-width="1.5"/></svg></a></div>
+        </li>
+        <li>
+          <img src="assets/logos/design-os-3d-blender.webp" alt="" width="256" height="256" decoding="async" loading="lazy">
+          <h2>DESIGN:OS 3D Blender</h2>
+          <p>AI agent system for Blender 5.2: agent skills, verified bpy knowledge base, execution contract and a production gate for 3D-printable parts. On the official MCP Registry.</p>
+          <div class="links"><a href="https://github.com/jangtrinh/design-os-3d-blender" aria-label="DESIGN:OS 3D Blender on GitHub">GitHub<svg viewBox="0 0 12 12" width="12" height="12" aria-hidden="true"><path d="M2 6h8M6.5 2.5 10 6 6.5 9.5" fill="none" stroke="currentColor" stroke-width="1.5"/></svg></a><a href="https://jangtrinh.github.io/design-os-3d-blender/" aria-label="DESIGN:OS 3D Blender Docs">Docs<svg viewBox="0 0 12 12" width="12" height="12" aria-hidden="true"><path d="M2 6h8M6.5 2.5 10 6 6.5 9.5" fill="none" stroke="currentColor" stroke-width="1.5"/></svg></a></div>
+        </li>
+      </ul>
+    </section>
+    <section id="ecosystem" aria-labelledby="ecosystem-title">
+      <h2 id="ecosystem-title" class="eco-title">More from<br>the ecosystem</h2>
+      <p class="eco-intro"><strong>FREE</strong> and source-available (PolyForm Shield 1.0.0): the rest of the public DESIGN:OS repos, plus Jang's other free tools.</p>
+      <h3 class="eco-label">Tools and libraries</h3>
+      <ul class="eco-list">
+        <li>
+          <img src="assets/logos/design-os-vietnamese.webp" alt="" width="256" height="256" decoding="async" loading="lazy">
+          <div class="eco-name">
+            <h4>DESIGN:OS Vietnamese</h4>
+            <span class="eco-tag">FREE · source-available</span>
+          </div>
+          <p>Free, offline Vietnamese copy linter plus 16 agent skills for Claude Code, Codex, Gemini CLI and Antigravity. Zero telemetry.</p>
+          <div class="links"><a href="https://github.com/jangtrinh/design-os-vietnamese" aria-label="DESIGN:OS Vietnamese on GitHub">GitHub<svg viewBox="0 0 12 12" width="12" height="12" aria-hidden="true"><path d="M2 6h8M6.5 2.5 10 6 6.5 9.5" fill="none" stroke="currentColor" stroke-width="1.5"/></svg></a><a href="https://jangtrinh.github.io/design-os-vietnamese/" aria-label="DESIGN:OS Vietnamese docs">Docs<svg viewBox="0 0 12 12" width="12" height="12" aria-hidden="true"><path d="M2 6h8M6.5 2.5 10 6 6.5 9.5" fill="none" stroke="currentColor" stroke-width="1.5"/></svg></a></div>
+        </li>
+        <li>
+          <img src="assets/logos/design-os-skills-pack.webp" alt="" width="256" height="256" decoding="async" loading="lazy">
+          <div class="eco-name">
+            <h4>DESIGN:OS Skills</h4>
+            <span class="eco-tag">FREE · source-available</span>
+          </div>
+          <p>32 free agent skills from the suite, in one folder you can copy into Claude Code, Codex or Cursor.</p>
+          <div class="links"><a href="https://github.com/jangtrinh/design-os-skills-pack" aria-label="DESIGN:OS Skills on GitHub">GitHub<svg viewBox="0 0 12 12" width="12" height="12" aria-hidden="true"><path d="M2 6h8M6.5 2.5 10 6 6.5 9.5" fill="none" stroke="currentColor" stroke-width="1.5"/></svg></a></div>
+        </li>
+        <li>
+          <img src="assets/logos/design-os-knowledge-builder.webp" alt="" width="256" height="256" decoding="async" loading="lazy">
+          <div class="eco-name">
+            <h4>DESIGN:OS Knowledge Builder</h4>
+            <span class="eco-tag">FREE · source-available</span>
+          </div>
+          <p>Ontology-first knowledge packs: claims with verifiable sources, and a ledger-backed stopping gate for coding agents.</p>
+          <div class="links"><a href="https://github.com/jangtrinh/design-os-knowledge-builder" aria-label="DESIGN:OS Knowledge Builder on GitHub">GitHub<svg viewBox="0 0 12 12" width="12" height="12" aria-hidden="true"><path d="M2 6h8M6.5 2.5 10 6 6.5 9.5" fill="none" stroke="currentColor" stroke-width="1.5"/></svg></a><a href="https://jangtrinh.github.io/design-os-knowledge-builder/" aria-label="DESIGN:OS Knowledge Builder docs">Docs<svg viewBox="0 0 12 12" width="12" height="12" aria-hidden="true"><path d="M2 6h8M6.5 2.5 10 6 6.5 9.5" fill="none" stroke="currentColor" stroke-width="1.5"/></svg></a></div>
+        </li>
+        <li>
+          <img src="assets/logos/design-os-pedagogy.webp" alt="" width="256" height="256" decoding="async" loading="lazy">
+          <div class="eco-name">
+            <h4>DESIGN:OS Agent Teacher</h4>
+            <span class="eco-tag">FREE · source-available</span>
+          </div>
+          <p>Evidence-graded pedagogy library and a local teacher rehearsal on authored fraction cases. Python, no model calls.</p>
+          <div class="links"><a href="https://github.com/jangtrinh/design-os-pedagogy" aria-label="DESIGN:OS Agent Teacher on GitHub">GitHub<svg viewBox="0 0 12 12" width="12" height="12" aria-hidden="true"><path d="M2 6h8M6.5 2.5 10 6 6.5 9.5" fill="none" stroke="currentColor" stroke-width="1.5"/></svg></a><a href="https://jangtrinh.github.io/design-os-pedagogy/" aria-label="DESIGN:OS Agent Teacher docs">Docs<svg viewBox="0 0 12 12" width="12" height="12" aria-hidden="true"><path d="M2 6h8M6.5 2.5 10 6 6.5 9.5" fill="none" stroke="currentColor" stroke-width="1.5"/></svg></a></div>
+        </li>
+        <li>
+          <img src="assets/logos/design-os-voice-ux.webp" alt="" width="256" height="256" decoding="async" loading="lazy">
+          <div class="eco-name">
+            <h4>DESIGN:OS Voice UX</h4>
+            <span class="eco-tag">FREE · source-available</span>
+          </div>
+          <p>Handbook, barge-in state machines, latency budgets and an audit rubric for real-time voice agents.</p>
+          <div class="links"><a href="https://github.com/jangtrinh/design-os-voice-ux" aria-label="DESIGN:OS Voice UX on GitHub">GitHub<svg viewBox="0 0 12 12" width="12" height="12" aria-hidden="true"><path d="M2 6h8M6.5 2.5 10 6 6.5 9.5" fill="none" stroke="currentColor" stroke-width="1.5"/></svg></a><a href="https://jangtrinh.github.io/design-os-voice-ux/" aria-label="DESIGN:OS Voice UX docs">Docs<svg viewBox="0 0 12 12" width="12" height="12" aria-hidden="true"><path d="M2 6h8M6.5 2.5 10 6 6.5 9.5" fill="none" stroke="currentColor" stroke-width="1.5"/></svg></a></div>
+        </li>
+        <li>
+          <img src="assets/logos/design-os-generative-ui.webp" alt="" width="256" height="256" decoding="async" loading="lazy">
+          <div class="eco-name">
+            <h4>DESIGN:OS Generative UI</h4>
+            <span class="eco-tag">FREE · source-available</span>
+          </div>
+          <p>Stream-first visual runtime for agents: 60fps DOM reconciliation, a streaming HTML sanitizer and a WebGL/Canvas widget bridge.</p>
+          <div class="links"><a href="https://github.com/jangtrinh/design-os-generative-ui" aria-label="DESIGN:OS Generative UI on GitHub">GitHub<svg viewBox="0 0 12 12" width="12" height="12" aria-hidden="true"><path d="M2 6h8M6.5 2.5 10 6 6.5 9.5" fill="none" stroke="currentColor" stroke-width="1.5"/></svg></a><a href="https://jangtrinh.github.io/design-os-generative-ui/" aria-label="DESIGN:OS Generative UI docs">Docs<svg viewBox="0 0 12 12" width="12" height="12" aria-hidden="true"><path d="M2 6h8M6.5 2.5 10 6 6.5 9.5" fill="none" stroke="currentColor" stroke-width="1.5"/></svg></a></div>
+        </li>
+        <li>
+          <img src="assets/logos/design-os-system-one.webp" alt="" width="256" height="256" decoding="async" loading="lazy">
+          <div class="eco-name">
+            <h4>DESIGN:OS System One</h4>
+            <span class="eco-tag">FREE · source-available</span>
+          </div>
+          <p>Sub-10ms calibrated judgments for agents, on-device on Apple Silicon, with a cloud triage fallback.</p>
+          <div class="links"><a href="https://github.com/jangtrinh/design-os-system-one" aria-label="DESIGN:OS System One on GitHub">GitHub<svg viewBox="0 0 12 12" width="12" height="12" aria-hidden="true"><path d="M2 6h8M6.5 2.5 10 6 6.5 9.5" fill="none" stroke="currentColor" stroke-width="1.5"/></svg></a><a href="https://jangtrinh.github.io/design-os-system-one/" aria-label="DESIGN:OS System One docs">Docs<svg viewBox="0 0 12 12" width="12" height="12" aria-hidden="true"><path d="M2 6h8M6.5 2.5 10 6 6.5 9.5" fill="none" stroke="currentColor" stroke-width="1.5"/></svg></a></div>
+        </li>
+        <li>
+          <img src="assets/logos/design-os-apple.webp" alt="" width="256" height="256" decoding="async" loading="lazy">
+          <div class="eco-name">
+            <h4>DESIGN:OS Apple</h4>
+            <span class="eco-tag">FREE · source-available</span>
+          </div>
+          <p>Native Swift 6.2 and SwiftUI component system with an adaptive color engine for iOS 26, iPadOS 26 and macOS 26.</p>
+          <div class="links"><a href="https://github.com/jangtrinh/design-os-apple" aria-label="DESIGN:OS Apple on GitHub">GitHub<svg viewBox="0 0 12 12" width="12" height="12" aria-hidden="true"><path d="M2 6h8M6.5 2.5 10 6 6.5 9.5" fill="none" stroke="currentColor" stroke-width="1.5"/></svg></a><a href="https://jangtrinh.github.io/design-os-apple/" aria-label="DESIGN:OS Apple docs">Docs<svg viewBox="0 0 12 12" width="12" height="12" aria-hidden="true"><path d="M2 6h8M6.5 2.5 10 6 6.5 9.5" fill="none" stroke="currentColor" stroke-width="1.5"/></svg></a></div>
+        </li>
+        <li>
+          <img src="assets/logos/design-os-github-page.webp" alt="" width="256" height="256" decoding="async" loading="lazy">
+          <div class="eco-name">
+            <h4>DESIGN:OS GitHub Pages</h4>
+            <span class="eco-tag">FREE · source-available</span>
+          </div>
+          <p>Zero-dependency GitHub Pages scaffolder with a 10-gate SEO, AEO and GEO check for repos and developer profiles.</p>
+          <div class="links"><a href="https://github.com/jangtrinh/design-os-github-page" aria-label="DESIGN:OS GitHub Pages on GitHub">GitHub<svg viewBox="0 0 12 12" width="12" height="12" aria-hidden="true"><path d="M2 6h8M6.5 2.5 10 6 6.5 9.5" fill="none" stroke="currentColor" stroke-width="1.5"/></svg></a><a href="https://jangtrinh.github.io/design-os-github-page/" aria-label="DESIGN:OS GitHub Pages docs">Docs<svg viewBox="0 0 12 12" width="12" height="12" aria-hidden="true"><path d="M2 6h8M6.5 2.5 10 6 6.5 9.5" fill="none" stroke="currentColor" stroke-width="1.5"/></svg></a></div>
+        </li>
+        <li>
+          <img src="assets/logos/design-os-origami.webp" alt="" width="256" height="256" decoding="async" loading="lazy">
+          <div class="eco-name">
+            <h4>DESIGN:OS Origami</h4>
+            <span class="eco-tag">FREE · source-available</span>
+          </div>
+          <p>Parametric packaging dielines, foldability checks, spot-color print PDFs and DXFs, and 3D fold previews. Python stdlib only.</p>
+          <div class="links"><a href="https://github.com/jangtrinh/design-os-origami" aria-label="DESIGN:OS Origami on GitHub">GitHub<svg viewBox="0 0 12 12" width="12" height="12" aria-hidden="true"><path d="M2 6h8M6.5 2.5 10 6 6.5 9.5" fill="none" stroke="currentColor" stroke-width="1.5"/></svg></a><a href="https://jangtrinh.github.io/design-os-origami/" aria-label="DESIGN:OS Origami docs">Docs<svg viewBox="0 0 12 12" width="12" height="12" aria-hidden="true"><path d="M2 6h8M6.5 2.5 10 6 6.5 9.5" fill="none" stroke="currentColor" stroke-width="1.5"/></svg></a></div>
+        </li>
+      </ul>
+      <h3 class="eco-label">Free tools by Jang</h3>
+      <ul class="eco-list">
+        <li>
+          <img src="assets/logos/mcpop.webp" alt="" width="256" height="256" decoding="async" loading="lazy">
+          <div class="eco-name">
+            <h4>mcpop</h4>
+            <span class="eco-tag">FREE · source-available</span>
+          </div>
+          <p>Observability proxy and silent-failure catcher for MCP servers: flags retry loops, schema mismatches and slow tool calls. One Go binary with a local dashboard.</p>
+          <div class="links"><a href="https://github.com/jangtrinh/mcpop" aria-label="mcpop on GitHub">GitHub<svg viewBox="0 0 12 12" width="12" height="12" aria-hidden="true"><path d="M2 6h8M6.5 2.5 10 6 6.5 9.5" fill="none" stroke="currentColor" stroke-width="1.5"/></svg></a></div>
+        </li>
+        <li>
+          <img src="assets/logos/multi-AI-profile.webp" alt="" width="256" height="256" decoding="async" loading="lazy">
+          <div class="eco-name">
+            <h4>multi-AI-profile</h4>
+            <span class="eco-tag">FREE · source-available</span>
+          </div>
+          <p>Run several isolated Claude, Antigravity, Codex, Grok, Cursor and Windsurf accounts on macOS, with separate MCP and CLI configs. Instant APFS clones, zero telemetry.</p>
+          <div class="links"><a href="https://github.com/jangtrinh/multi-AI-profile" aria-label="multi-AI-profile on GitHub">GitHub<svg viewBox="0 0 12 12" width="12" height="12" aria-hidden="true"><path d="M2 6h8M6.5 2.5 10 6 6.5 9.5" fill="none" stroke="currentColor" stroke-width="1.5"/></svg></a><a href="https://jangtrinh.github.io/multi-AI-profile/" aria-label="multi-AI-profile docs">Docs<svg viewBox="0 0 12 12" width="12" height="12" aria-hidden="true"><path d="M2 6h8M6.5 2.5 10 6 6.5 9.5" fill="none" stroke="currentColor" stroke-width="1.5"/></svg></a></div>
+        </li>
+        <li>
+          <img src="assets/logos/orchestration-system-by-jang.webp" alt="" width="256" height="256" decoding="async" loading="lazy">
+          <div class="eco-name">
+            <h4>Orchestration System by Jang</h4>
+            <span class="eco-tag">FREE · source-available</span>
+          </div>
+          <p>A portable system for delegating work to AI agents without losing control: dispatch contracts, capability routing and independent verification. Works on any agent runtime.</p>
+          <div class="links"><a href="https://github.com/jangtrinh/orchestration-system-by-jang" aria-label="Orchestration System by Jang on GitHub">GitHub<svg viewBox="0 0 12 12" width="12" height="12" aria-hidden="true"><path d="M2 6h8M6.5 2.5 10 6 6.5 9.5" fill="none" stroke="currentColor" stroke-width="1.5"/></svg></a></div>
+        </li>
+        <li>
+          <img src="assets/logos/oi-browser.webp" alt="" width="256" height="256" decoding="async" loading="lazy">
+          <div class="eco-name">
+            <h4>Ổi Browser</h4>
+            <span class="eco-tag">FREE · source-available</span>
+          </div>
+          <p>A local-first AI browser (v1.0.0) with nine domain companions and Markdown memory. Runs on your installed AI CLIs, with zero cloud telemetry.</p>
+          <div class="links"><a href="https://github.com/jangtrinh/oi-browser" aria-label="Ổi Browser on GitHub">GitHub<svg viewBox="0 0 12 12" width="12" height="12" aria-hidden="true"><path d="M2 6h8M6.5 2.5 10 6 6.5 9.5" fill="none" stroke="currentColor" stroke-width="1.5"/></svg></a><a href="https://jangtrinh.github.io/oi-browser/" aria-label="Ổi Browser docs">Docs<svg viewBox="0 0 12 12" width="12" height="12" aria-hidden="true"><path d="M2 6h8M6.5 2.5 10 6 6.5 9.5" fill="none" stroke="currentColor" stroke-width="1.5"/></svg></a></div>
+        </li>
+      </ul>
+      <h3 class="eco-label">Built with DESIGN:OS</h3>
+      <ul class="eco-list">
+        <li>
+          <img src="assets/logos/design-os-drone-showcase.webp" alt="" width="256" height="256" decoding="async" loading="lazy">
+          <div class="eco-name">
+            <h4>OPAH ONE</h4>
+            <span class="eco-tag">FREE · source-available</span>
+          </div>
+          <p>Scroll-scrubbed product page with 343 WebP frames and an exploded-view tour. Fictional product, real pipeline.</p>
+          <div class="links"><a href="https://github.com/jangtrinh/design-os-drone-showcase" aria-label="OPAH ONE on GitHub">GitHub<svg viewBox="0 0 12 12" width="12" height="12" aria-hidden="true"><path d="M2 6h8M6.5 2.5 10 6 6.5 9.5" fill="none" stroke="currentColor" stroke-width="1.5"/></svg></a><a href="https://jangtrinh.github.io/design-os-drone-showcase/" aria-label="OPAH ONE docs">Docs<svg viewBox="0 0 12 12" width="12" height="12" aria-hidden="true"><path d="M2 6h8M6.5 2.5 10 6 6.5 9.5" fill="none" stroke="currentColor" stroke-width="1.5"/></svg></a></div>
+        </li>
+        <li>
+          <img src="assets/logos/design-os-rill-architecture.webp" alt="" width="256" height="256" decoding="async" loading="lazy">
+          <div class="eco-name">
+            <h4>Contour House</h4>
+            <span class="eco-tag">FREE · source-available</span>
+          </div>
+          <p>Service page for a fictional architecture studio, with GSAP parallax. Fictional brand, real pipeline.</p>
+          <div class="links"><a href="https://github.com/jangtrinh/design-os-rill-architecture" aria-label="Contour House on GitHub">GitHub<svg viewBox="0 0 12 12" width="12" height="12" aria-hidden="true"><path d="M2 6h8M6.5 2.5 10 6 6.5 9.5" fill="none" stroke="currentColor" stroke-width="1.5"/></svg></a><a href="https://jangtrinh.github.io/design-os-rill-architecture/" aria-label="Contour House docs">Docs<svg viewBox="0 0 12 12" width="12" height="12" aria-hidden="true"><path d="M2 6h8M6.5 2.5 10 6 6.5 9.5" fill="none" stroke="currentColor" stroke-width="1.5"/></svg></a></div>
+        </li>
+        <li>
+          <img src="assets/logos/design-os-animejs.webp" alt="" width="256" height="256" decoding="async" loading="lazy">
+          <div class="eco-name">
+            <h4>Robotic Arm</h4>
+            <span class="eco-tag">FREE · source-available</span>
+          </div>
+          <p>A 3D scrollytelling showcase in the anime.js style, driven by one scroll value.</p>
+          <div class="links"><a href="https://github.com/jangtrinh/design-os-animejs" aria-label="Robotic Arm on GitHub">GitHub<svg viewBox="0 0 12 12" width="12" height="12" aria-hidden="true"><path d="M2 6h8M6.5 2.5 10 6 6.5 9.5" fill="none" stroke="currentColor" stroke-width="1.5"/></svg></a><a href="https://design-os-animejs.vercel.app" aria-label="Robotic Arm docs">Docs<svg viewBox="0 0 12 12" width="12" height="12" aria-hidden="true"><path d="M2 6h8M6.5 2.5 10 6 6.5 9.5" fill="none" stroke="currentColor" stroke-width="1.5"/></svg></a></div>
+        </li>
+        <li>
+          <img src="assets/logos/aura-scrollcinema-demo.webp" alt="" width="256" height="256" decoding="async" loading="lazy">
+          <div class="eco-name">
+            <h4>AURA</h4>
+            <span class="eco-tag">FREE · source-available</span>
+          </div>
+          <p>Scroll-scrubbed cinematic product page with a 2K exploded-view film generated by DESIGN:OS.</p>
+          <div class="links"><a href="https://github.com/jangtrinh/aura-scrollcinema-demo" aria-label="AURA on GitHub">GitHub<svg viewBox="0 0 12 12" width="12" height="12" aria-hidden="true"><path d="M2 6h8M6.5 2.5 10 6 6.5 9.5" fill="none" stroke="currentColor" stroke-width="1.5"/></svg></a><a href="https://jangtrinh.github.io/aura-scrollcinema-demo/" aria-label="AURA docs">Docs<svg viewBox="0 0 12 12" width="12" height="12" aria-hidden="true"><path d="M2 6h8M6.5 2.5 10 6 6.5 9.5" fill="none" stroke="currentColor" stroke-width="1.5"/></svg></a></div>
+        </li>
+      </ul>
+    </section>
+  </main>
+<!-- hub:footer -->
+<footer>By Jang Trịnh · <a href="https://github.com/jangtrinh">github.com/jangtrinh</a><!-- hub:footer-extra --><!-- /hub:footer-extra --> · FREE · source-available (PolyForm Shield 1.0.0) · <a href="/llms.txt">llms.txt</a></footer>
+<!-- /hub:footer -->
+</body>
+</html>

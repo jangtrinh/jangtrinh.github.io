@@ -1,13 +1,46 @@
-DESIGN:OS hub logos: provenance (corrected 2026-11-01)
+Overview
+
+This directory holds 25 WebP marks. 19 are original marks generated for design:os on 2026-11-02
+(Asia/Saigon). Each one is a 1:1 sculptural 3D clay render of one chunky primitive form, made with
+an image generator. The six older hub logos were a style reference only. No third-party brand mark,
+logo or likeness was used as the subject or as a reference. Each file was downscaled to 256x256 WebP.
+tests/marks.sha256 lists the sha256 of all 25 files, the 19 new marks and the six older ones.
+scripts/check-ecosystem.mjs enforces that list. Jang accepted this set on 2026-11-02.
+mcp-bridge-go now uses its mark, mcp-bridge-go.webp.
+
+  design-os-vietnamese.webp          crescent moon
+  design-os-skills-pack.webp         slab
+  design-os-knowledge-builder.webp   staircase block
+  design-os-pedagogy.webp            wedge ramp
+  design-os-voice-ux.webp            capsule
+  design-os-generative-ui.webp       four-point star
+  design-os-system-one.webp          plus sign
+  design-os-apple.webp               rounded triangle slab
+  design-os-github-page.webp         J block
+  design-os-origami.webp             arrowhead
+  mcpop.webp                         lightning bolt
+  orchestration-system-by-jang.webp  Y block
+  oi-browser.webp                    pear
+  design-os-drone-showcase.webp      X block
+  design-os-rill-architecture.webp   half-disc
+  design-os-animejs.webp             S tube
+  aura-scrollcinema-demo.webp        horseshoe
+  mcp-bridge-go.webp                 bridge arch
+  multi-AI-profile.webp              three fused spheres
+
+The six older logos (open question O-1)
 
 What these files are
-  Six WebP files: five are 256x256 and design-os-studio.webp is 384x384 (so it is not upscaled on 2x screens
+  Six older WebP files: five are 256x256 and design-os-studio.webp is 384x384 (so it is not upscaled on 2x screens
   at its 136px display size). Each is a plain Lanczos downscale plus WebP encode (the Studio one: quality 85,
-  method 6; the others' encoder settings were not recorded) of a PNG that exists on Jang's box. Nothing was redrawn, recoloured or generated.
+  method 6; the others' encoder settings were not recorded) of a PNG that exists on Jang's box.
+  Nothing was redrawn, recoloured or generated.
   There are no SVG originals; every source is a raster 3D render, so svgo does not apply.
 
 Usage rights: UNCONFIRMED. Jang has not yet confirmed that he owns these renders or may
-  use them as DESIGN:OS brand logos. See "Third-party origin" below. Merge waits for that.
+  use them as DESIGN:OS brand logos. See "Third-party origin" below. Jang approved merging
+  with this still open (2026-11-02); the rights question stays open and nothing here claims
+  the six are original.
 
 Per file: box path of the PNG that was resized, and where else it exists
   (paths are on the box, under /workspace/projects/favicons/<repo>/; the PNG sha256
@@ -57,8 +90,6 @@ Per file: box path of the PNG that was resized, and where else it exists
     Checked 2026-11-01: raw.githubusercontent.com/jangtrinh/design-os-3d-blender/favicon-from-logo/docs/logo.png returns 200, same sha256 as the box copy.
     Pixel-identical to /workspace/unikorn/logos/logo-small/cube-ball-shape-8441438.png.
 
-  mcp-bridge-go: no logo exists, so none is shown (a neutral placeholder is drawn in CSS).
-
 How the files got into the repos' branches
   The 15 PNGs in /workspace/unikorn/logos/logo-small/ (made from /workspace/unikorn/logos/sheet.png,
   copied to the box 2026-10-29) were assigned to repos in the DRAFT
@@ -76,25 +107,3 @@ Third-party origin (not resolved)
   The 15 logo-small files have no embedded source text. Their consecutive numeric filenames
   (8441427 to 8441441) and identical render style suggest the same kind of pack, but that is not proven.
   No licence, receipt or purchase record for any of them was found on this box.
-
-New marks (2026-11-02)
-
-mcp-bridge-go.webp: original, generated for design:os, 2026-11-02, no third-party mark. Provenance, prompt and hash: marks/PROVENANCE.md (design:os logo-system r3).
-design-os-vietnamese.webp: original, generated for design:os, 2026-11-02, no third-party mark. Provenance, prompt and hash: marks/PROVENANCE.md (design:os logo-system r3).
-design-os-skills-pack.webp: original, generated for design:os, 2026-11-02, no third-party mark. Provenance, prompt and hash: marks/PROVENANCE.md (design:os logo-system r3).
-design-os-knowledge-builder.webp: original, generated for design:os, 2026-11-02, no third-party mark. Provenance, prompt and hash: marks/PROVENANCE.md (design:os logo-system r3).
-design-os-pedagogy.webp: original, generated for design:os, 2026-11-02, no third-party mark. Provenance, prompt and hash: marks/PROVENANCE.md (design:os logo-system r3).
-design-os-voice-ux.webp: original, generated for design:os, 2026-11-02, no third-party mark. Provenance, prompt and hash: marks/PROVENANCE.md (design:os logo-system r3).
-design-os-generative-ui.webp: original, generated for design:os, 2026-11-02, no third-party mark. Provenance, prompt and hash: marks/PROVENANCE.md (design:os logo-system r3).
-design-os-system-one.webp: original, generated for design:os, 2026-11-02, no third-party mark. Provenance, prompt and hash: marks/PROVENANCE.md (design:os logo-system r3).
-design-os-apple.webp: original, generated for design:os, 2026-11-02, no third-party mark. Provenance, prompt and hash: marks/PROVENANCE.md (design:os logo-system r3).
-design-os-github-page.webp: original, generated for design:os, 2026-11-02, no third-party mark. Provenance, prompt and hash: marks/PROVENANCE.md (design:os logo-system r3).
-design-os-origami.webp: original, generated for design:os, 2026-11-02, no third-party mark. Provenance, prompt and hash: marks/PROVENANCE.md (design:os logo-system r3).
-mcpop.webp: original, generated for design:os, 2026-11-02, no third-party mark. Provenance, prompt and hash: marks/PROVENANCE.md (design:os logo-system r3).
-multi-AI-profile.webp: original, generated for design:os, 2026-11-02, no third-party mark. Provenance, prompt and hash: marks/PROVENANCE.md (design:os logo-system r3).
-orchestration-system-by-jang.webp: original, generated for design:os, 2026-11-02, no third-party mark. Provenance, prompt and hash: marks/PROVENANCE.md (design:os logo-system r3).
-oi-browser.webp: original, generated for design:os, 2026-11-02, no third-party mark. Provenance, prompt and hash: marks/PROVENANCE.md (design:os logo-system r3).
-design-os-drone-showcase.webp: original, generated for design:os, 2026-11-02, no third-party mark. Provenance, prompt and hash: marks/PROVENANCE.md (design:os logo-system r3).
-design-os-rill-architecture.webp: original, generated for design:os, 2026-11-02, no third-party mark. Provenance, prompt and hash: marks/PROVENANCE.md (design:os logo-system r3).
-design-os-animejs.webp: original, generated for design:os, 2026-11-02, no third-party mark. Provenance, prompt and hash: marks/PROVENANCE.md (design:os logo-system r3).
-aura-scrollcinema-demo.webp: original, generated for design:os, 2026-11-02, no third-party mark. Provenance, prompt and hash: marks/PROVENANCE.md (design:os logo-system r3).

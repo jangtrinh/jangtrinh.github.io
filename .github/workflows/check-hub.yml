@@ -23,6 +23,7 @@ jobs:
       - run: node scripts/check-hub.mjs --expect-fail tests/fixtures/drift/*.html tests/fixtures/rules/*.html tests/fixtures/rules/*.css
       - run: node scripts/check-hub.mjs tests/fixtures/pass/videos-target.html
       - run: node scripts/check-ecosystem.mjs
+      - run: node scripts/check-ecosystem.mjs --self-test
       - run: node scripts/check-ecosystem.mjs --online
         env:
           GH_TOKEN: ${{ github.token }}

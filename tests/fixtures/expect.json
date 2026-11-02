@@ -30,11 +30,19 @@
   "tests/fixtures/rules/b2-overflow-390.html": {
     "fail": ["B2"]
   },
+  "tests/fixtures/rules/b2-overflow-360.html": {
+    "fail": ["B2"]
+  },
   "tests/fixtures/rules/b3-small-tap-target.html": {
     "fail": ["B3"]
   },
   "tests/fixtures/rules/b4-token-drift.html": {
     "fail": ["B4"],
+    "b4Target": "/"
+  },
+  "tests/fixtures/rules/b5-colour-drift.html": {
+    "fail": ["B5"],
+    "pass": ["B4"],
     "b4Target": "/"
   }
 }

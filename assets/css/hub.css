@@ -158,7 +158,7 @@ body {
 }
 
 @media (max-width: 420px) {
-  .site { flex-wrap: wrap; row-gap: var(--space-8); }
+  .site { flex-wrap: wrap; padding-block: var(--space-16); }
   .site nav { flex: 1 0 100%; justify-content: space-between; }
 }
 

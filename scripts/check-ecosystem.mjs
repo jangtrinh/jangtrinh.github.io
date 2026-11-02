@@ -11,6 +11,11 @@ const SHIELD_PHRASE = "source-available (PolyForm Shield";
 const MCP_LOGO = "assets/logos/mcp-bridge-go.webp";
 const HUB_HOME = "https://jangtrinh.github.io/";
 const HUB_VIDEOS = "https://jangtrinh.github.io/videos/";
+const NAV_ARIA_LABEL = "Primary";
+const ECOSYSTEM_LABELLEDBY = "ecosystem-title";
+const SHIELD_LICENSE = "https://polyformproject.org/licenses/shield/1.0.0/";
+const OFFER_PRICE = "0";
+const OFFER_CURRENCY = "USD";
 const NAV = [
   { href: "/#products", text: "Products" },
   { href: "/videos/", text: "Videos" },
@@ -44,6 +49,13 @@ function emptyStats() {
     llmsProducts: 0,
     llmsEco: 0,
     marks: 0,
+    publicRepos: 0,
+    pageRepos: 0,
+    exclusions: 0,
+    docsFetched: 0,
+    absentPages: 0,
+    pagesApi: 0,
+    licenceGate: 0,
   };
 }
 
@@ -136,7 +148,7 @@ function anchorsIn(html) {
   let match;
   while ((match = re.exec(html))) {
     const attrs = tagAttrs(`<a ${match[1]}>`);
-    out.push({ href: attrs.href || "", text: textOf(match[2]) });
+    out.push({ href: attrs.href || "", text: textOf(match[2]), ariaLabel: attrs["aria-label"] || "" });
   }
   return out;
 }
@@ -161,9 +173,36 @@ function tagText(li) {
   return null;
 }
 
+function ownerRepoFromHref(href) {
+  const match = /^https:\/\/github\.com\/([^/?#]+)\/([^/?#]+)$/.exec(href || "");
+  return match ? { owner: match[1], repo: match[2] } : null;
+}
+
 function repoFromHref(href) {
-  const match = /^https:\/\/github\.com\/jangtrinh\/([^/?#]+)$/.exec(href || "");
+  const parsed = ownerRepoFromHref(href);
+  return parsed ? parsed.repo : null;
+}
+
+function ownerFromGithubIo(url) {
+  const match = /^https:\/\/([^./]+)\.github\.io(?:\/|$)/.exec(url || "");
   return match ? match[1] : null;
+}
+
+function isGithubComUrl(url) {
+  try {
+    const host = new URL(url).hostname.toLowerCase();
+    return host === "github.com" || host === "www.github.com";
+  } catch {
+    return false;
+  }
+}
+
+function hostOf(url) {
+  try {
+    return new URL(url).host;
+  } catch {
+    return url;
+  }
 }
 
 function parseRow(li) {
@@ -273,6 +312,10 @@ function checkNav(headerHtml, rel) {
     fail("AC-E12", `${rel} missing nav`);
     return;
   }
+  const navAttrs = tagAttrs(nav[0].slice(0, nav[0].indexOf(">") + 1));
+  if (navAttrs["aria-label"] !== NAV_ARIA_LABEL) {
+    fail("AC-E12", `${rel} nav aria-label is ${show(navAttrs["aria-label"] || null)}, expected "${NAV_ARIA_LABEL}"`);
+  }
   const links = anchorsIn(nav[1]);
   if (links.length !== NAV.length) {
     fail("AC-E12", `${rel} nav has ${links.length} links, expected ${NAV.length}`);
@@ -377,6 +420,18 @@ function checkRowContent(flat, catalog) {
     if (expected.docs == null && row.links.some((link) => link.text === "Docs")) {
       fail("AC-E2", `row ${expected.n} has a Docs link`);
     }
+    const githubLink = row.links.find((link) => link.text === "GitHub");
+    const expectedGithubAria = `${row.name} on GitHub`;
+    if (githubLink && githubLink.ariaLabel !== expectedGithubAria) {
+      fail("AC-E2", `row ${expected.n} GitHub aria-label is ${show(githubLink.ariaLabel || null)}, expected ${show(expectedGithubAria)}`);
+    }
+    const docsLink = row.links.find((link) => link.text === "Docs");
+    if (docsLink) {
+      const expectedDocsAria = `${row.name} docs`;
+      if (docsLink.ariaLabel !== expectedDocsAria) {
+        fail("AC-E2", `row ${expected.n} Docs aria-label is ${show(docsLink.ariaLabel || null)}, expected ${show(expectedDocsAria)}`);
+      }
+    }
   }
 }
 
@@ -402,6 +457,23 @@ function checkWording(sectionHtml, jsonLd, llmsEco, meta) {
   if (!joined.includes(SHIELD_PHRASE)) fail("AC-E3", `missing "${SHIELD_PHRASE}"`);
 }
 
+function checkBannedFiles(readme, llms) {
+  if (readme != null && BANNED.test(readme)) fail("AC-E3", "README.md matches /open[\\s-]source/i");
+  if (llms != null && BANNED.test(llms)) fail("AC-E3", "llms.txt matches /open[\\s-]source/i");
+}
+
+function checkEcosystemAria(html) {
+  const open = /<section\b[^>]*\bid=["']ecosystem["'][^>]*>/i.exec(html || "");
+  if (!open) return;
+  const attrs = tagAttrs(open[0]);
+  if (attrs["aria-labelledby"] !== ECOSYSTEM_LABELLEDBY) {
+    fail("AC-E12", `#ecosystem aria-labelledby is ${show(attrs["aria-labelledby"] || null)}, expected "${ECOSYSTEM_LABELLEDBY}"`);
+  }
+  if (attrs["aria-label"]) {
+    fail("AC-E12", `#ecosystem aria-label is ${show(attrs["aria-label"])}, expected none`);
+  }
+}
+
 function checkJsonLd(blocks, expectedCount) {
   if (!blocks || blocks.length === 0) {
     fail("AC-E7", "home JSON-LD missing");
@@ -420,8 +492,19 @@ function checkJsonLd(blocks, expectedCount) {
   stats.jsonLd = apps.length;
   if (apps.length !== expectedCount) fail("AC-E7", `${apps.length} SoftwareApplication nodes, expected ${expectedCount}`);
   for (const app of apps) {
+    const label = app.name || "SoftwareApplication";
     if (app.isAccessibleForFree !== true) {
-      fail("AC-E7", `${app.name || "SoftwareApplication"} isAccessibleForFree is not true`);
+      fail("AC-E7", `${label} isAccessibleForFree is not true`);
+    }
+    if (app.license !== SHIELD_LICENSE) {
+      fail("AC-E7", `${label} license is ${show(app.license)}, expected "${SHIELD_LICENSE}"`);
+    }
+    const offers = app.offers && typeof app.offers === "object" && !Array.isArray(app.offers) ? app.offers : {};
+    if (offers.price !== OFFER_PRICE) {
+      fail("AC-E7", `${label} offers.price is ${show(offers.price)}, expected "${OFFER_PRICE}"`);
+    }
+    if (offers.priceCurrency !== OFFER_CURRENCY) {
+      fail("AC-E7", `${label} offers.priceCurrency is ${show(offers.priceCurrency)}, expected "${OFFER_CURRENCY}"`);
     }
   }
   return apps;
@@ -705,8 +788,22 @@ function checkCounts() {
   for (const size of stats.groupSizes) if (!size) fail("AC-E1", "group size is 0");
 }
 
-function summaryLine() {
+function onlineSummaryLine() {
+  return `check-ecosystem --online: ${stats.publicRepos} public repos listed, ${stats.pageRepos} page repos, ${stats.exclusions} exclusions, ${stats.docsFetched} docs links fetched, ${stats.absentPages} absent-Pages probes, ${stats.pagesApi} Pages-API probes, ${stats.licenceGate} licence-gate repos`;
+}
+
+function summaryLine(online) {
+  if (online) return onlineSummaryLine();
   return `check-ecosystem: ${stats.rows} rows, ${stats.groups} groups (${stats.groupSizes.join("/")}), ${stats.docsPills} docs pills, ${stats.jsonLd} JSON-LD nodes, ${stats.sitemap} sitemap URLs, llms ${stats.llmsProducts}+${stats.llmsEco}, ${stats.marks} marks hashed`;
+}
+
+function checkOnlineCounts() {
+  const counts = [
+    ["AC-E1", "public repos listed", stats.publicRepos],
+    ["AC-E2", "docs links fetched", stats.docsFetched],
+    ["AC-E11", "licence-gate repos", stats.licenceGate],
+  ];
+  for (const [ac, label, value] of counts) if (!value) fail(ac, `${label} count is 0`);
 }
 
 function jqString(text) {
@@ -733,9 +830,26 @@ function gh(args) {
   }
 }
 
+function ghResult(args) {
+  try {
+    return { ok: true, text: execFileSync("gh", args, {
+      encoding: "utf8",
+      timeout: 30000,
+      stdio: ["ignore", "pipe", "pipe"],
+    }) };
+  } catch (err) {
+    return { ok: false, text: oneLine([err.stderr, err.stdout, err.message].filter(Boolean).join(" ")) };
+  }
+}
+
+function isHttp404(message) {
+  return /\(HTTP 404\)/.test(message) || /\bHTTP 404\b/.test(message) || /"message"\s*:\s*"Not Found"/.test(message);
+}
+
 function checkLicenseGate(catalog) {
   for (const entry of catalog) {
     if (!entry || typeof entry.repo !== "string") continue;
+    stats.licenceGate += 1;
     let visibility;
     try {
       visibility = jqString(gh(["repo", "view", `jangtrinh/${entry.repo}`, "--json", "visibility", "-q", ".visibility"]));
@@ -774,6 +888,7 @@ async function checkLiveLinks(rows) {
       if (!link.href || link.href === "/videos/" || seen.has(link.href)) continue;
       seen.add(link.href);
       urls.push(link.href);
+      if (link.text === "Docs") stats.docsFetched += 1;
     }
   }
   const results = await Promise.all(urls.map(async (url) => {
@@ -792,30 +907,79 @@ async function checkLiveLinks(rows) {
   for (const message of results) if (message) fail("AC-E2", message);
 }
 
-async function checkAbsentPages(catalog) {
+function ownerForEntry(row) {
+  const github = (row && row.links || []).find((link) => ownerRepoFromHref(link.href));
+  const parsed = ownerRepoFromHref(github && github.href);
+  if (parsed) return parsed.owner;
+  return ownerFromGithubIo(HUB_HOME);
+}
+
+async function fetchStatus(url) {
+  const response = await fetch(url, {
+    method: "GET",
+    redirect: "follow",
+    signal: AbortSignal.timeout(15000),
+  });
+  await response.arrayBuffer();
+  return response.status;
+}
+
+async function checkAbsentPages(catalog, ecoRows) {
   if (!Array.isArray(catalog)) return;
   const rows = catalog.filter((entry) => entry && entry.docs == null && typeof entry.repo === "string" && entry.repo);
+  const byRepo = new Map();
+  for (const row of ecoRows || []) if (row.repo) byRepo.set(row.repo, row);
   const results = await Promise.all(rows.map(async (entry) => {
-    const url = `https://jangtrinh.github.io/${entry.repo}/`;
-    try {
-      const response = await fetch(url, {
-        method: "GET",
-        redirect: "follow",
-        signal: AbortSignal.timeout(15000),
-      });
-      await response.arrayBuffer();
-      if (response.status === 404) return null;
-      return `row ${entry.n} ${url} status ${response.status}, expected 404`;
-    } catch (err) {
-      return `row ${entry.n} ${url} ${oneLine(err.message)}`;
+    const owner = ownerForEntry(byRepo.get(entry.repo));
+    const messages = [];
+    if (!owner) {
+      messages.push(`row ${entry.n} missing GitHub owner`);
+      return messages;
     }
+    const url = `https://${owner}.github.io/${entry.repo}/`;
+    stats.absentPages += 1;
+    try {
+      const status = await fetchStatus(url);
+      if (status !== 404) messages.push(`row ${entry.n} ${url} status ${status}, expected 404`);
+    } catch (err) {
+      messages.push(`row ${entry.n} ${url} ${oneLine(err.message)}`);
+    }
+    stats.pagesApi += 1;
+    const pages = ghResult(["api", `repos/${owner}/${entry.repo}/pages`]);
+    if (pages.ok) {
+      let htmlUrl = "";
+      try {
+        htmlUrl = JSON.parse(pages.text).html_url || "";
+      } catch {
+        htmlUrl = oneLine(pages.text);
+      }
+      messages.push(`row ${entry.n} Pages host ${hostOf(htmlUrl || "unknown")}`);
+    } else if (!isHttp404(pages.text)) {
+      messages.push(`row ${entry.n} Pages API ${pages.text}`);
+    }
+    const homepageResult = ghResult(["repo", "view", `${owner}/${entry.repo}`, "--json", "homepageUrl", "-q", ".homepageUrl"]);
+    if (!homepageResult.ok) {
+      messages.push(`row ${entry.n} homepageUrl ${homepageResult.text}`);
+      return messages;
+    }
+    const homepage = jqString(homepageResult.text);
+    if (!homepage || homepage === "null" || isGithubComUrl(homepage)) return messages;
+    try {
+      const status = await fetchStatus(homepage);
+      if (status === 200) messages.push(`row ${entry.n} undeclared docs ${homepage} status 200`);
+    } catch (err) {
+      messages.push(`row ${entry.n} ${homepage} ${oneLine(err.message)}`);
+    }
+    return messages;
   }));
-  for (const message of results) if (message) fail("AC-E2", message);
+  for (const group of results) {
+    for (const message of group) if (message) fail("AC-E2", message);
+  }
 }
 
 async function runOnline(catalog, exclusions, ecoRows, flagshipRows) {
   if (catalog) checkLicenseGate(catalog);
-  if (catalog) await checkAbsentPages(catalog);
+  if (catalog) await checkAbsentPages(catalog, ecoRows);
   let names = [];
   try {
     names = gh(["repo", "list", "jangtrinh", "--visibility", "public", "--limit", "300", "--json", "name", "-q", ".[].name"])
@@ -825,10 +989,14 @@ async function runOnline(catalog, exclusions, ecoRows, flagshipRows) {
   } catch (err) {
     fail("AC-E1", `gh repo list ${err.message}`);
   }
+  stats.publicRepos = names.length;
   const pageRepos = new Set();
   for (const row of [...(flagshipRows || []), ...(ecoRows || [])]) if (row.repo) pageRepos.add(row.repo);
+  stats.pageRepos = pageRepos.size;
+  stats.exclusions = Array.isArray(exclusions) ? exclusions.length : 0;
   checkPublicDesignOs(names, pageRepos, exclusions || []);
   if (ecoRows) await checkLiveLinks(ecoRows);
+  checkOnlineCounts();
 }
 
 function fileText(files, rel, ac) {
@@ -893,6 +1061,8 @@ function evaluate(files) {
   const jsonLd = indexHtml ? jsonLdTexts(indexHtml) : null;
   const llmsEco = llms ? markdownSection(llms, "## Ecosystem") : null;
   checkWording(ecosystemHtml, jsonLd ? jsonLd.join("\n") : null, llmsEco ? llmsEco.join("\n") : null, indexHtml ? metaDescription(indexHtml) : null);
+  checkBannedFiles(readme, llms);
+  if (indexHtml) checkEcosystemAria(indexHtml);
   const productCount = Array.isArray(flagshipSnapshot) ? flagshipSnapshot.length : 0;
   const rowCount = Array.isArray(catalog) ? catalog.length : 0;
   const apps = jsonLd ? checkJsonLd(jsonLd, productCount + rowCount) : [];
@@ -1028,6 +1198,26 @@ function licenceMention(text) {
   return `${text || ""}\nproduct-os-spec-driven is listed here.\n`;
 }
 
+function changeJsonLdLicense(html) {
+  const needle = `"license": "${SHIELD_LICENSE}"`;
+  const hit = (html || "").indexOf(needle);
+  if (hit < 0) return html;
+  return html.slice(0, hit) + `"license": "${SHIELD_LICENSE}changed"` + html.slice(hit + needle.length);
+}
+
+function changeAriaLabel(html) {
+  const at = (html || "").indexOf('id="ecosystem"');
+  const needle = 'aria-label="DESIGN:OS Vietnamese on GitHub"';
+  const hit = html.indexOf(needle, at);
+  if (at < 0 || hit < 0) return html;
+  return html.slice(0, hit) + 'aria-label="DESIGN:OS Vietnamese GitHub"' + html.slice(hit + needle.length);
+}
+
+function readmeBannedWording(text) {
+  const phrase = ["open", "source"].join(" ");
+  return `${text || ""}\n${phrase}\n`;
+}
+
 function changeFlagship(html) {
   const needle = "Reads and writes .fig files.";
   const at = (html || "").indexOf('id="products"');
@@ -1078,6 +1268,9 @@ const MUTATIONS = [
   { name: "remove-nav", ac: "AC-E12", apply(files) { files["index.html"] = removeNav(files["index.html"]); } },
   { name: "remove-sitemap-url", ac: "sitemap", apply(files) { files["sitemap.xml"] = dropSitemapUrl(files["sitemap.xml"]); } },
   { name: "co-edit", ac: "AC-E7", apply: coEdit },
+  { name: "jsonld-license", ac: "AC-E7", apply(files) { files["index.html"] = changeJsonLdLicense(files["index.html"]); } },
+  { name: "aria-label", ac: "AC-E2", apply(files) { files["index.html"] = changeAriaLabel(files["index.html"]); } },
+  { name: "readme-banned-wording", ac: "AC-E3", apply(files) { files["README.md"] = readmeBannedWording(files["README.md"]); } },
 ];
 
 function selfTestRun(files) {
@@ -1121,9 +1314,9 @@ function parseArgs(argv) {
   return { online, selfTest };
 }
 
-function report() {
+function report(online) {
   if (failures.length === 0) {
-    console.log(summaryLine());
+    console.log(summaryLine(online));
     console.log("check-ecosystem: OK");
     process.exit(0);
   }
@@ -1142,7 +1335,7 @@ async function main() {
   reset();
   const loaded = evaluate(files);
   if (online) await runOnline(loaded.catalog, loaded.exclusions, loaded.ecoRows, loaded.flagshipRows);
-  report();
+  report(online);
 }
 
 const invoked = process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url);

@@ -1,0 +1,146 @@
+[
+  {
+    "n": 1,
+    "name": "DESIGN:OS Vietnamese",
+    "repo": "design-os-vietnamese",
+    "group": "tools",
+    "docs": "https://jangtrinh.github.io/design-os-vietnamese/",
+    "logo": "assets/logos/design-os-vietnamese.webp"
+  },
+  {
+    "n": 2,
+    "name": "DESIGN:OS Skills",
+    "repo": "design-os-skills-pack",
+    "group": "tools",
+    "docs": null,
+    "logo": "assets/logos/design-os-skills-pack.webp"
+  },
+  {
+    "n": 3,
+    "name": "DESIGN:OS Knowledge Builder",
+    "repo": "design-os-knowledge-builder",
+    "group": "tools",
+    "docs": "https://jangtrinh.github.io/design-os-knowledge-builder/",
+    "logo": "assets/logos/design-os-knowledge-builder.webp"
+  },
+  {
+    "n": 4,
+    "name": "DESIGN:OS Agent Teacher",
+    "repo": "design-os-pedagogy",
+    "group": "tools",
+    "docs": "https://jangtrinh.github.io/design-os-pedagogy/",
+    "logo": "assets/logos/design-os-pedagogy.webp"
+  },
+  {
+    "n": 5,
+    "name": "DESIGN:OS Voice UX",
+    "repo": "design-os-voice-ux",
+    "group": "tools",
+    "docs": "https://jangtrinh.github.io/design-os-voice-ux/",
+    "logo": "assets/logos/design-os-voice-ux.webp"
+  },
+  {
+    "n": 6,
+    "name": "DESIGN:OS Generative UI",
+    "repo": "design-os-generative-ui",
+    "group": "tools",
+    "docs": "https://jangtrinh.github.io/design-os-generative-ui/",
+    "logo": "assets/logos/design-os-generative-ui.webp"
+  },
+  {
+    "n": 7,
+    "name": "DESIGN:OS System One",
+    "repo": "design-os-system-one",
+    "group": "tools",
+    "docs": "https://jangtrinh.github.io/design-os-system-one/",
+    "logo": "assets/logos/design-os-system-one.webp"
+  },
+  {
+    "n": 8,
+    "name": "DESIGN:OS Apple",
+    "repo": "design-os-apple",
+    "group": "tools",
+    "docs": "https://jangtrinh.github.io/design-os-apple/",
+    "logo": "assets/logos/design-os-apple.webp"
+  },
+  {
+    "n": 9,
+    "name": "DESIGN:OS GitHub Pages",
+    "repo": "design-os-github-page",
+    "group": "tools",
+    "docs": "https://jangtrinh.github.io/design-os-github-page/",
+    "logo": "assets/logos/design-os-github-page.webp"
+  },
+  {
+    "n": 10,
+    "name": "DESIGN:OS Origami",
+    "repo": "design-os-origami",
+    "group": "tools",
+    "docs": "https://jangtrinh.github.io/design-os-origami/",
+    "logo": "assets/logos/design-os-origami.webp"
+  },
+  {
+    "n": 11,
+    "name": "mcpop",
+    "repo": "mcpop",
+    "group": "free-tools",
+    "docs": null,
+    "logo": "assets/logos/mcpop.webp"
+  },
+  {
+    "n": 12,
+    "name": "multi-AI-profile",
+    "repo": "multi-AI-profile",
+    "group": "free-tools",
+    "docs": "https://jangtrinh.github.io/multi-AI-profile/",
+    "logo": "assets/logos/multi-AI-profile.webp"
+  },
+  {
+    "n": 13,
+    "name": "Orchestration System by Jang",
+    "repo": "orchestration-system-by-jang",
+    "group": "free-tools",
+    "docs": null,
+    "logo": "assets/logos/orchestration-system-by-jang.webp"
+  },
+  {
+    "n": 14,
+    "name": "Ổi Browser",
+    "repo": "oi-browser",
+    "group": "free-tools",
+    "docs": "https://jangtrinh.github.io/oi-browser/",
+    "logo": "assets/logos/oi-browser.webp"
+  },
+  {
+    "n": 15,
+    "name": "OPAH ONE",
+    "repo": "design-os-drone-showcase",
+    "group": "built-with",
+    "docs": "https://jangtrinh.github.io/design-os-drone-showcase/",
+    "logo": "assets/logos/design-os-drone-showcase.webp"
+  },
+  {
+    "n": 16,
+    "name": "Contour House",
+    "repo": "design-os-rill-architecture",
+    "group": "built-with",
+    "docs": "https://jangtrinh.github.io/design-os-rill-architecture/",
+    "logo": "assets/logos/design-os-rill-architecture.webp"
+  },
+  {
+    "n": 17,
+    "name": "Robotic Arm",
+    "repo": "design-os-animejs",
+    "group": "built-with",
+    "docs": "https://design-os-animejs.vercel.app",
+    "logo": "assets/logos/design-os-animejs.webp"
+  },
+  {
+    "n": 18,
+    "name": "AURA",
+    "repo": "aura-scrollcinema-demo",
+    "group": "built-with",
+    "docs": null,
+    "logo": "assets/logos/aura-scrollcinema-demo.webp"
+  }
+]

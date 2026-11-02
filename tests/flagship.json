@@ -1,0 +1,64 @@
+[
+  {
+    "name": "DESIGN:OS Studio",
+    "description": "Native GPU-accelerated interface design studio built in Rust, with an MCP server and Dev Mode code output. Reads and writes .fig files.",
+    "links": [
+      { "href": "https://github.com/jangtrinh/design-os-studio", "text": "GitHub" },
+      { "href": "https://jangtrinh.github.io/design-os-studio/", "text": "Docs" }
+    ],
+    "logo": "assets/logos/design-os-studio.webp"
+  },
+  {
+    "name": "DESIGN:OS CLI",
+    "description": "Design CLI for Claude Code, Codex and Antigravity: describe the UI in plain words and get production-grade web, SwiftUI and Figma-compatible output, checked by deterministic gates.",
+    "links": [
+      { "href": "https://github.com/jangtrinh/design-os", "text": "GitHub" },
+      { "href": "https://jangtrinh.github.io/design-os/", "text": "Docs" }
+    ],
+    "logo": "assets/logos/design-os-cli.webp"
+  },
+  {
+    "name": "DESIGN:OS Bridge",
+    "description": "Plugin and CLI that lets Claude Code, Codex or any shell agent read and edit the design file you have open. Works with Figma, including the Free plan. Local WebSocket, one undo step per change, no seat.",
+    "links": [
+      { "href": "https://github.com/jangtrinh/design-os-figma-plugin", "text": "GitHub" },
+      { "href": "https://jangtrinh.github.io/design-os-figma-plugin/", "text": "Docs" }
+    ],
+    "logo": "assets/logos/design-os-bridge.webp"
+  },
+  {
+    "name": "mcp-bridge-go",
+    "description": "Go MCP server (stdio) that sends a prompt to an Electron-based AI IDE on macOS (Antigravity, Cursor, Windsurf) and returns the workspace git diff.",
+    "links": [
+      { "href": "https://github.com/jangtrinh/mcp-bridge-go", "text": "GitHub" }
+    ],
+    "logo": null
+  },
+  {
+    "name": "DESIGN:OS SVG Animation",
+    "description": "Deterministic vector animation and 1080p 60fps video pipeline for AI coding agents, with a Motion IR compiler and verification gates.",
+    "links": [
+      { "href": "https://github.com/jangtrinh/design-os-svg-animation", "text": "GitHub" },
+      { "href": "https://jangtrinh.github.io/design-os-svg-animation/", "text": "Docs" }
+    ],
+    "logo": "assets/logos/design-os-svg-animation.webp"
+  },
+  {
+    "name": "DESIGN:OS Code2Flow",
+    "description": "Local CLI that turns a Next.js, React Router, Expo, SwiftUI, Flutter or Compose codebase into user-flow maps and a UX gap report.",
+    "links": [
+      { "href": "https://github.com/jangtrinh/design-os-code2flow", "text": "GitHub" },
+      { "href": "https://jangtrinh.github.io/design-os-code2flow/", "text": "Docs" }
+    ],
+    "logo": "assets/logos/design-os-code2flow.webp"
+  },
+  {
+    "name": "DESIGN:OS 3D Blender",
+    "description": "AI agent system for Blender 5.2: agent skills, verified bpy knowledge base, execution contract and a production gate for 3D-printable parts. On the official MCP Registry.",
+    "links": [
+      { "href": "https://github.com/jangtrinh/design-os-3d-blender", "text": "GitHub" },
+      { "href": "https://jangtrinh.github.io/design-os-3d-blender/", "text": "Docs" }
+    ],
+    "logo": "assets/logos/design-os-3d-blender.webp"
+  }
+]

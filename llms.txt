@@ -12,6 +12,29 @@
 - [DESIGN:OS Code2Flow](https://jangtrinh.github.io/design-os-code2flow/): Local CLI that turns a Next.js, React Router, Expo, SwiftUI, Flutter or Compose codebase into user-flow maps and a UX gap report. Repo: https://github.com/jangtrinh/design-os-code2flow
 - [DESIGN:OS 3D Blender](https://jangtrinh.github.io/design-os-3d-blender/): AI agent system for Blender 5.2: agent skills, verified bpy knowledge base, execution contract and a production gate for 3D-printable parts. On the official MCP Registry. Repo: https://github.com/jangtrinh/design-os-3d-blender
 
+## Ecosystem
+
+FREE and source-available under PolyForm Shield 1.0.0.
+
+- [DESIGN:OS Vietnamese](https://jangtrinh.github.io/design-os-vietnamese/): Free, offline Vietnamese copy linter plus 16 agent skills for Claude Code, Codex, Gemini CLI and Antigravity. Zero telemetry. Repo: https://github.com/jangtrinh/design-os-vietnamese
+- [DESIGN:OS Skills](https://github.com/jangtrinh/design-os-skills-pack): 32 free agent skills from the suite, in one folder you can copy into Claude Code, Codex or Cursor. Repo: https://github.com/jangtrinh/design-os-skills-pack
+- [DESIGN:OS Knowledge Builder](https://jangtrinh.github.io/design-os-knowledge-builder/): Ontology-first knowledge packs: claims with verifiable sources, and a ledger-backed stopping gate for coding agents. Repo: https://github.com/jangtrinh/design-os-knowledge-builder
+- [DESIGN:OS Agent Teacher](https://jangtrinh.github.io/design-os-pedagogy/): Evidence-graded pedagogy library and a local teacher rehearsal on authored fraction cases. Python, no model calls. Repo: https://github.com/jangtrinh/design-os-pedagogy
+- [DESIGN:OS Voice UX](https://jangtrinh.github.io/design-os-voice-ux/): Handbook, barge-in state machines, latency budgets and an audit rubric for real-time voice agents. Repo: https://github.com/jangtrinh/design-os-voice-ux
+- [DESIGN:OS Generative UI](https://jangtrinh.github.io/design-os-generative-ui/): Stream-first visual runtime for agents: 60fps DOM reconciliation, a streaming HTML sanitizer and a WebGL/Canvas widget bridge. Repo: https://github.com/jangtrinh/design-os-generative-ui
+- [DESIGN:OS System One](https://jangtrinh.github.io/design-os-system-one/): Sub-10ms calibrated judgments for agents, on-device on Apple Silicon, with a cloud triage fallback. Repo: https://github.com/jangtrinh/design-os-system-one
+- [DESIGN:OS Apple](https://jangtrinh.github.io/design-os-apple/): Native Swift 6.2 and SwiftUI component system with an adaptive color engine for iOS 26, iPadOS 26 and macOS 26. Repo: https://github.com/jangtrinh/design-os-apple
+- [DESIGN:OS GitHub Pages](https://jangtrinh.github.io/design-os-github-page/): Zero-dependency GitHub Pages scaffolder with a 10-gate SEO, AEO and GEO check for repos and developer profiles. Repo: https://github.com/jangtrinh/design-os-github-page
+- [DESIGN:OS Origami](https://jangtrinh.github.io/design-os-origami/): Parametric packaging dielines, foldability checks, spot-color print PDFs and DXFs, and 3D fold previews. Python stdlib only. Repo: https://github.com/jangtrinh/design-os-origami
+- [mcpop](https://github.com/jangtrinh/mcpop): Observability proxy and silent-failure catcher for MCP servers: flags retry loops, schema mismatches and slow tool calls. One Go binary with a local dashboard. Repo: https://github.com/jangtrinh/mcpop
+- [multi-AI-profile](https://jangtrinh.github.io/multi-AI-profile/): Run several isolated Claude, Antigravity, Codex, Grok, Cursor and Windsurf accounts on macOS, with separate MCP and CLI configs. Instant APFS clones, zero telemetry. Repo: https://github.com/jangtrinh/multi-AI-profile
+- [Orchestration System by Jang](https://github.com/jangtrinh/orchestration-system-by-jang): A portable system for delegating work to AI agents without losing control: dispatch contracts, capability routing and independent verification. Works on any agent runtime. Repo: https://github.com/jangtrinh/orchestration-system-by-jang
+- [Ổi Browser](https://jangtrinh.github.io/oi-browser/): A local-first AI browser (v1.0.0) with nine domain companions and Markdown memory. Runs on your installed AI CLIs, with zero cloud telemetry. Repo: https://github.com/jangtrinh/oi-browser
+- [OPAH ONE](https://jangtrinh.github.io/design-os-drone-showcase/): Scroll-scrubbed product page with 343 WebP frames and an exploded-view tour. Fictional product, real pipeline. Repo: https://github.com/jangtrinh/design-os-drone-showcase
+- [Contour House](https://jangtrinh.github.io/design-os-rill-architecture/): Service page for a fictional architecture studio, with GSAP parallax. Fictional brand, real pipeline. Repo: https://github.com/jangtrinh/design-os-rill-architecture
+- [Robotic Arm](https://design-os-animejs.vercel.app): A 3D scrollytelling showcase in the anime.js style, driven by one scroll value. Repo: https://github.com/jangtrinh/design-os-animejs
+- [AURA](https://github.com/jangtrinh/aura-scrollcinema-demo): Scroll-scrubbed cinematic product page with a 2K exploded-view film generated by DESIGN:OS. Repo: https://github.com/jangtrinh/aura-scrollcinema-demo
+
 ## Videos
 
 - [DESIGN:OS videos](https://jangtrinh.github.io/videos/): All channel videos for Studio, CLI, Bridge and 3D Blender with thumbnails and descriptions. Most are Vietnamese, with English terms.

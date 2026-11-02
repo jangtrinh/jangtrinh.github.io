@@ -1,0 +1,30 @@
+[
+  {
+    "repo": "design-os",
+    "reason": "flagship product in #products"
+  },
+  {
+    "repo": "design-os-studio",
+    "reason": "flagship product in #products"
+  },
+  {
+    "repo": "design-os-figma-plugin",
+    "reason": "flagship product in #products"
+  },
+  {
+    "repo": "design-os-svg-animation",
+    "reason": "flagship product in #products"
+  },
+  {
+    "repo": "design-os-code2flow",
+    "reason": "flagship product in #products"
+  },
+  {
+    "repo": "design-os-3d-blender",
+    "reason": "flagship product in #products"
+  },
+  {
+    "repo": "product-os-spec-driven",
+    "reason": "PolyForm Noncommercial License 1.0.0, not FREE source-available (PolyForm Shield)"
+  }
+]

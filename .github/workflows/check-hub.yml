@@ -5,6 +5,9 @@ on:
   push:
     branches: [main]
 
+permissions:
+  contents: read
+
 jobs:
   check-hub:
     runs-on: ubuntu-latest
@@ -19,6 +22,10 @@ jobs:
       - run: node scripts/check-hub.mjs
       - run: node scripts/check-hub.mjs --expect-fail tests/fixtures/drift/*.html tests/fixtures/rules/*.html tests/fixtures/rules/*.css
       - run: node scripts/check-hub.mjs tests/fixtures/pass/videos-target.html
+      - run: node scripts/check-ecosystem.mjs
+      - run: node scripts/check-ecosystem.mjs --online
+        env:
+          GH_TOKEN: ${{ github.token }}
       - uses: actions/upload-artifact@v4
         if: failure()
         with:

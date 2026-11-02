@@ -628,6 +628,12 @@ function checkFlagship(liveRows, snapshot) {
     if (live.name !== expected.name) fail("AC-E10", `flagship row ${index + 1} name is "${live.name}", expected "${expected.name}"`);
     if (descriptionOf(live) !== expected.description) fail("AC-E10", `${label} description differs`);
     if (!sameLinks(live.links, expected.links)) fail("AC-E10", `${label} links differ`);
+    for (const link of live.links) {
+      const expectedAria = link.text === "GitHub" ? `${expected.name} on GitHub` : `${expected.name} ${link.text}`;
+      if (link.ariaLabel !== expectedAria) {
+        fail("AC-E10", `${label} ${link.text} aria-label is ${show(link.ariaLabel || null)}, expected ${show(expectedAria)}`);
+      }
+    }
     const logo = live.imgs.length === 1 ? live.imgs[0].src : null;
     const expectedLogo = expectedFlagshipLogo(expected);
     if (logo !== expectedLogo) fail("AC-E10", `${label} logo ${logo}, expected ${expectedLogo}`);
@@ -1226,6 +1232,14 @@ function changeFlagship(html) {
   return html.slice(0, hit) + "Reads and writes .fig files now." + html.slice(hit + needle.length);
 }
 
+function changeFlagshipAriaLabel(html) {
+  const at = (html || "").indexOf('id="products"');
+  const needle = 'aria-label="DESIGN:OS CLI Docs"';
+  const hit = html.indexOf(needle, at);
+  if (at < 0 || hit < 0) return html;
+  return html.slice(0, hit) + 'aria-label="CLI docs"' + html.slice(hit + needle.length);
+}
+
 function removeNav(html) {
   return (html || "").replace('\n    <a href="/#ecosystem">Ecosystem</a>', "");
 }
@@ -1265,6 +1279,7 @@ const MUTATIONS = [
   { name: "remove-img", ac: "AC-E8", apply(files) { files["index.html"] = removeImg(files["index.html"]); } },
   { name: "licence-mention", ac: "AC-E9", apply(files) { files["README.md"] = licenceMention(files["README.md"]); } },
   { name: "flagship-description", ac: "AC-E10", apply(files) { files["index.html"] = changeFlagship(files["index.html"]); } },
+  { name: "flagship-aria-label", ac: "AC-E10", apply(files) { files["index.html"] = changeFlagshipAriaLabel(files["index.html"]); } },
   { name: "remove-nav", ac: "AC-E12", apply(files) { files["index.html"] = removeNav(files["index.html"]); } },
   { name: "remove-sitemap-url", ac: "sitemap", apply(files) { files["sitemap.xml"] = dropSitemapUrl(files["sitemap.xml"]); } },
   { name: "co-edit", ac: "AC-E7", apply: coEdit },

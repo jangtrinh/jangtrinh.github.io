@@ -20,7 +20,7 @@ jobs:
           node-version: 22
       - run: npm install --no-save --no-audit --no-fund playwright-core
       - run: node scripts/check-hub.mjs
-      - run: node scripts/check-hub.mjs --expect-fail tests/fixtures/drift/*.html tests/fixtures/rules/*.html tests/fixtures/rules/*.css
+      - run: node scripts/check-hub.mjs --expect-fail tests/fixtures/drift/*.html tests/fixtures/rules/*.html tests/fixtures/rules/*.css tests/fixtures/rules/*.txt
       - run: node scripts/check-hub.mjs tests/fixtures/pass/videos-target.html
       - run: node scripts/check-ecosystem.mjs
       - run: node scripts/check-ecosystem.mjs --self-test

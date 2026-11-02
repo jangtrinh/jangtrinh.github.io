@@ -24,7 +24,10 @@ const B2_VIEWS = [
 const CLASSIC_SCROLLBAR = 15;
 const CLASSIC_SCROLLBAR_CSS = "html{overflow-y:scroll!important;scrollbar-color:auto!important}::-webkit-scrollbar{width:15px}::-webkit-scrollbar-thumb{background:CanvasText}";
 const SCHEMES = ["dark", "light"];
-const RULE_ORDER = ["H1", "H2", "H3", "H4", "H5", "H6", "H7", "B1", "B2", "B3", "B4", "B5"];
+const RULE_ORDER = ["H1", "H2", "H3", "H4", "H5", "H6", "H7", "H8", "B1", "B2", "B3", "B4", "B5"];
+const H8_RE = /(^|[^A-Za-z0-9_.-])\/(workspace\b|home\/|run\/media\b)/;
+const H8_EXT = new Set([".txt", ".md", ".json", ".css", ".svg", ".js", ".html", ".xml"]);
+const H8_ROOT = ["llms.txt", "README.md", "robots.txt", "sitemap.xml"];
 const COMPUTED_BASELINE = path.join(ROOT, "tests", "baselines", "computed-styles.json");
 const B5_PROPS = [
   "color",
@@ -579,6 +582,69 @@ function defaultCss() {
   return fs.readdirSync(dir).filter((name) => name.endsWith(".css")).map((name) => path.join(dir, name)).sort();
 }
 
+function isInternalTree(rel) {
+  return (
+    rel === ".git" ||
+    rel.startsWith(".git/") ||
+    rel.startsWith("tests/") ||
+    rel.startsWith("scripts/") ||
+    rel.startsWith(".github/")
+  );
+}
+
+function walkH8Assets(dir, out) {
+  if (!fs.existsSync(dir)) return;
+  for (const name of fs.readdirSync(dir)) {
+    const abs = path.join(dir, name);
+    const stat = fs.statSync(abs);
+    if (stat.isDirectory()) {
+      walkH8Assets(abs, out);
+      continue;
+    }
+    if (H8_EXT.has(path.extname(name).toLowerCase())) out.push(abs);
+  }
+}
+
+function defaultH8Files() {
+  const files = [];
+  walkH8Assets(path.join(ROOT, "assets"), files);
+  for (const name of H8_ROOT) {
+    const abs = path.join(ROOT, name);
+    if (fs.existsSync(abs)) files.push(abs);
+  }
+  return files.sort();
+}
+
+function auditH8(text) {
+  const failures = [];
+  const lines = eol(text).split("\n");
+  for (let i = 0; i < lines.length; i++) {
+    const match = lines[i].match(H8_RE);
+    if (!match) continue;
+    failures.push({
+      rule: "H8",
+      message: `${i + 1} internal path prefix /${match[2]}`,
+    });
+  }
+  return failures;
+}
+
+function h8Targets(bundle, fromArgs) {
+  const seen = new Set();
+  const out = [];
+  const add = (abs) => {
+    const rel = relPosix(abs);
+    if (seen.has(rel)) return;
+    if (!fromArgs && isInternalTree(rel)) return;
+    seen.add(rel);
+    out.push({ abs, rel });
+  };
+  for (const page of bundle.html) add(page.abs);
+  for (const abs of bundle.css) add(abs);
+  for (const abs of bundle.text) add(abs);
+  return out;
+}
+
 function parseArgs(argv) {
   const opts = {
     static: false,
@@ -645,10 +711,11 @@ function collect(opts) {
     const html = [];
     walkHtml(ROOT, html);
     html.sort();
-    return { html: html.map(readHtml), css: defaultCss() };
+    return { html: html.map(readHtml), css: defaultCss(), text: defaultH8Files() };
   }
   const html = [];
   const css = [];
+  const text = [];
   for (const file of opts.files) {
     const abs = resolveArg(file);
     if (!fs.existsSync(abs)) {
@@ -657,14 +724,15 @@ function collect(opts) {
     }
     if (abs.endsWith(".html")) html.push(readHtml(abs));
     else if (abs.endsWith(".css")) css.push(abs);
+    else if (abs.endsWith(".txt")) text.push(abs);
     else {
       console.error(`check-hub: skip ${file} (not html or css)`);
     }
   }
-  return { html, css };
+  return { html, css, text };
 }
 
-function staticFailures(bundle, env) {
+function staticFailures(bundle, env, fromArgs) {
   const failures = [];
   for (const page of bundle.html) {
     for (const item of auditHtml(page.html, env)) {
@@ -679,6 +747,12 @@ function staticFailures(bundle, env) {
   }
   if (BANNED.test(env.llms)) failures.push({ file: "llms.txt", rule: "H7", message: "banned wording" });
   if (BANNED.test(env.readme)) failures.push({ file: "README.md", rule: "H7", message: "banned wording" });
+  for (const target of h8Targets(bundle, fromArgs)) {
+    const text = fs.readFileSync(target.abs, "utf8");
+    for (const item of auditH8(text)) {
+      failures.push({ file: target.rel, rule: item.rule, message: item.message });
+    }
+  }
   return failures;
 }
 
@@ -1575,9 +1649,11 @@ async function main() {
   }
   const bundle = collect(opts);
   const env = loadEnv();
-  const failures = opts.runStatic ? staticFailures(bundle, env) : [];
+  const failures = opts.runStatic ? staticFailures(bundle, env, opts.files.length > 0) : [];
   if (opts.expectFail) {
-    opts.expectMap = loadExpect(bundle.html.map((page) => page.rel).concat(bundle.css.map(relPosix)));
+    opts.expectMap = loadExpect(
+      bundle.html.map((page) => page.rel).concat(bundle.css.map(relPosix), bundle.text.map(relPosix)),
+    );
   }
   if (opts.runBrowser) await runBrowser(bundle, opts, failures);
   printReport(failures, pageNames(bundle.html), opts.expectFail, opts.expectMap || { __order: [] });

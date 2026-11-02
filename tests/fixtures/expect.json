@@ -24,6 +24,9 @@
   "tests/fixtures/rules/h7-banned-wording.html": {
     "fail": ["H7"]
   },
+  "tests/fixtures/rules/h8-box-path.txt": {
+    "fail": ["H8"]
+  },
   "tests/fixtures/rules/b1-body-font.html": {
     "fail": ["B1"]
   },

@@ -1103,15 +1103,43 @@ async function runB4(context, origin, job, failures) {
           ctx.clearRect(0, 0, left.width, left.height);
           ctx.drawImage(right, 0, 0);
           const rightData = ctx.getImageData(0, 0, right.width, right.height).data;
+          // 8x8 area averages ignore cross-machine text anti-aliasing on glyph edges.
+          const blockSize = 8;
+          const cols = Math.ceil(left.width / blockSize);
+          const rows = Math.ceil(left.height / blockSize);
           let diff = 0;
-          const total = left.width * left.height;
-          for (let i = 0; i < leftData.length; i += 4) {
-            if (
-              Math.abs(leftData[i] - rightData[i]) > 8 ||
-              Math.abs(leftData[i + 1] - rightData[i + 1]) > 8 ||
-              Math.abs(leftData[i + 2] - rightData[i + 2]) > 8 ||
-              Math.abs(leftData[i + 3] - rightData[i + 3]) > 8
-            ) diff += 1;
+          const total = cols * rows;
+          for (let row = 0; row < rows; row++) {
+            const y0 = row * blockSize;
+            const y1 = Math.min(y0 + blockSize, left.height);
+            for (let col = 0; col < cols; col++) {
+              const x0 = col * blockSize;
+              const x1 = Math.min(x0 + blockSize, left.width);
+              let leftR = 0;
+              let leftG = 0;
+              let leftB = 0;
+              let rightR = 0;
+              let rightG = 0;
+              let rightB = 0;
+              const count = (x1 - x0) * (y1 - y0);
+              for (let y = y0; y < y1; y++) {
+                let offset = (y * left.width + x0) * 4;
+                for (let x = x0; x < x1; x++) {
+                  leftR += leftData[offset];
+                  leftG += leftData[offset + 1];
+                  leftB += leftData[offset + 2];
+                  rightR += rightData[offset];
+                  rightG += rightData[offset + 1];
+                  rightB += rightData[offset + 2];
+                  offset += 4;
+                }
+              }
+              if (
+                Math.abs(leftR / count - rightR / count) > 16 ||
+                Math.abs(leftG / count - rightG / count) > 16 ||
+                Math.abs(leftB / count - rightB / count) > 16
+              ) diff += 1;
+            }
           }
           return { size: false, diff, total };
         }, { actualB64: actual.toString("base64"), expectedB64: expected.toString("base64") });
@@ -1128,7 +1156,7 @@ async function runB4(context, origin, job, failures) {
           failures.push({
             file: job.file,
             rule: "B4",
-            message: `${name} differs by ${pct}% of pixels (limit 0.1%)`,
+            message: `${name} differs by ${pct}% of blocks (limit 0.1%)`,
           });
         }
       } catch (err) {

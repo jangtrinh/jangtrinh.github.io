@@ -1,0 +1,17 @@
+/* Hub-like sheet. A colour literal sits outside :root. */
+:root {
+  --bg: #09090b;
+  --text: #f4f4f5;
+  color-scheme: dark light;
+}
+
+@font-face {
+  font-family: "Be Vietnam Pro";
+  src: url("../fonts/be-vietnam-pro-400.woff2") format("woff2");
+}
+
+body {
+  background: #ff00ff;
+  color: var(--text);
+  font-family: Georgia, serif;
+}

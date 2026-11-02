@@ -1,0 +1,134 @@
+h1 {
+  margin: 0 0 var(--space-24);
+  font-weight: 800;
+  letter-spacing: -0.045em;
+  line-height: 0.9;
+  font-size: min(22cqw, 8rem);
+}
+
+@media (min-width: 768px) {
+  h1 { margin-bottom: var(--space-32); }
+}
+
+.group { margin-top: var(--space-64); }
+
+.group-head {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: var(--space-24);
+  padding-bottom: var(--space-24);
+}
+
+.group-head .mark-empty {
+  width: 72px;
+  height: 72px;
+  flex: none;
+}
+
+.group-head h2 {
+  margin: 0;
+  font-weight: 600;
+  font-size: clamp(1.5rem, 2.6vw, 2.25rem);
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+}
+
+.group-head small {
+  display: block;
+  margin-top: 4px;
+  color: var(--text-3);
+  font-size: 0.875rem;
+  font-weight: 400;
+}
+
+.vgrid {
+  display: grid;
+  gap: 0 var(--space-32);
+  grid-template-columns: 1fr;
+  border-top: 1px solid var(--border);
+}
+
+@media (min-width: 640px) {
+  .vgrid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+@media (min-width: 1000px) {
+  .vgrid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+
+.v {
+  padding-block: var(--space-24) var(--space-32);
+  border-bottom: 1px solid var(--border);
+}
+
+.v .p {
+  position: relative;
+  display: block;
+  aspect-ratio: 16 / 9;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  border-radius: 0;
+  color: var(--text);
+  text-decoration: none;
+}
+
+.v .p img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.v .len {
+  position: absolute;
+  right: var(--space-8);
+  bottom: var(--space-8);
+  display: inline-flex;
+  align-items: center;
+  min-height: 24px;
+  padding-inline: 10px;
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-full);
+  background: var(--bg);
+  color: var(--text);
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.v h3 {
+  margin: var(--space-16) 0 var(--space-8);
+  font-size: 1.125rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  line-height: 1.3;
+}
+
+.v h3 a {
+  color: var(--text);
+  text-decoration: none;
+  display: block;
+}
+
+@media (max-width: 1024px) {
+  .v h3 a { min-height: 44px; }
+}
+
+.v p {
+  margin: 0;
+  color: var(--text-2);
+  font-size: 0.9375rem;
+}
+
+.v iframe {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16 / 9;
+  border: 0;
+  border-radius: 0;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .v h3 a:hover { text-decoration: underline; }
+}

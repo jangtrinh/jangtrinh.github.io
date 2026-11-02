@@ -1,0 +1,40 @@
+{
+  "tests/fixtures/drift/videos-5511ef3.html": {
+    "fail": ["H1", "H2", "H4", "H5", "B1", "B3"],
+    "pass": ["H6", "H7"]
+  },
+  "tests/fixtures/rules/h1-no-stylesheet.html": {
+    "fail": ["H1"]
+  },
+  "tests/fixtures/rules/h2-inline-style.html": {
+    "fail": ["H2"]
+  },
+  "tests/fixtures/rules/h3-colour-literal.css": {
+    "fail": ["H3"]
+  },
+  "tests/fixtures/rules/h4-header-drift.html": {
+    "fail": ["H4"]
+  },
+  "tests/fixtures/rules/h5-no-skip-link.html": {
+    "fail": ["H5"]
+  },
+  "tests/fixtures/rules/h6-videoobject-count.html": {
+    "fail": ["H6"]
+  },
+  "tests/fixtures/rules/h7-banned-wording.html": {
+    "fail": ["H7"]
+  },
+  "tests/fixtures/rules/b1-body-font.html": {
+    "fail": ["B1"]
+  },
+  "tests/fixtures/rules/b2-overflow-390.html": {
+    "fail": ["B2"]
+  },
+  "tests/fixtures/rules/b3-small-tap-target.html": {
+    "fail": ["B3"]
+  },
+  "tests/fixtures/rules/b4-token-drift.html": {
+    "fail": ["B4"],
+    "b4Target": "/"
+  }
+}

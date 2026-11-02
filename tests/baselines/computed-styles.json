@@ -46,7 +46,7 @@
             "font-size": "16.00px",
             "font-weight": "400",
             "letter-spacing": "normal",
-            "padding-top": "24.00px",
+            "padding-top": "16.00px",
             "padding-left": "0.00px"
           },
           ".site .mark": {
@@ -181,6 +181,54 @@
             "padding-top": "0.00px",
             "padding-left": "0.00px"
           },
+          ".eco-label": {
+            "color": "rgb(138, 138, 147)",
+            "background-color": "rgba(0, 0, 0, 0)",
+            "border-top-color": "rgb(138, 138, 147)",
+            "border-top-width": "0.00px",
+            "border-radius": "0.00px",
+            "font-size": "14.00px",
+            "font-weight": "600",
+            "letter-spacing": "0.28px",
+            "padding-top": "0.00px",
+            "padding-left": "0.00px"
+          },
+          ".eco-intro": {
+            "color": "rgb(161, 161, 170)",
+            "background-color": "rgba(0, 0, 0, 0)",
+            "border-top-color": "rgb(161, 161, 170)",
+            "border-top-width": "0.00px",
+            "border-radius": "0.00px",
+            "font-size": "16.00px",
+            "font-weight": "400",
+            "letter-spacing": "normal",
+            "padding-top": "0.00px",
+            "padding-left": "0.00px"
+          },
+          ".eco-list li > p": {
+            "color": "rgb(161, 161, 170)",
+            "background-color": "rgba(0, 0, 0, 0)",
+            "border-top-color": "rgb(161, 161, 170)",
+            "border-top-width": "0.00px",
+            "border-radius": "0.00px",
+            "font-size": "16.00px",
+            "font-weight": "400",
+            "letter-spacing": "normal",
+            "padding-top": "0.00px",
+            "padding-left": "0.00px"
+          },
+          ".eco-title": {
+            "color": "rgb(244, 244, 245)",
+            "background-color": "rgba(0, 0, 0, 0)",
+            "border-top-color": "rgb(244, 244, 245)",
+            "border-top-width": "0.00px",
+            "border-radius": "0.00px",
+            "font-size": "36.00px",
+            "font-weight": "800",
+            "letter-spacing": "-1.62px",
+            "padding-top": "0.00px",
+            "padding-left": "0.00px"
+          },
           ".links a": {
             "color": "rgb(244, 244, 245)",
             "background-color": "rgba(0, 0, 0, 0)",
@@ -264,7 +312,7 @@
             "font-size": "16.00px",
             "font-weight": "400",
             "letter-spacing": "normal",
-            "padding-top": "24.00px",
+            "padding-top": "16.00px",
             "padding-left": "0.00px"
           },
           ".site .mark": {
@@ -396,6 +444,54 @@
             "font-size": "20.00px",
             "font-weight": "600",
             "letter-spacing": "-0.40px",
+            "padding-top": "0.00px",
+            "padding-left": "0.00px"
+          },
+          ".eco-label": {
+            "color": "rgb(95, 95, 104)",
+            "background-color": "rgba(0, 0, 0, 0)",
+            "border-top-color": "rgb(95, 95, 104)",
+            "border-top-width": "0.00px",
+            "border-radius": "0.00px",
+            "font-size": "14.00px",
+            "font-weight": "600",
+            "letter-spacing": "0.28px",
+            "padding-top": "0.00px",
+            "padding-left": "0.00px"
+          },
+          ".eco-intro": {
+            "color": "rgb(63, 63, 70)",
+            "background-color": "rgba(0, 0, 0, 0)",
+            "border-top-color": "rgb(63, 63, 70)",
+            "border-top-width": "0.00px",
+            "border-radius": "0.00px",
+            "font-size": "16.00px",
+            "font-weight": "400",
+            "letter-spacing": "normal",
+            "padding-top": "0.00px",
+            "padding-left": "0.00px"
+          },
+          ".eco-list li > p": {
+            "color": "rgb(63, 63, 70)",
+            "background-color": "rgba(0, 0, 0, 0)",
+            "border-top-color": "rgb(63, 63, 70)",
+            "border-top-width": "0.00px",
+            "border-radius": "0.00px",
+            "font-size": "16.00px",
+            "font-weight": "400",
+            "letter-spacing": "normal",
+            "padding-top": "0.00px",
+            "padding-left": "0.00px"
+          },
+          ".eco-title": {
+            "color": "rgb(9, 9, 11)",
+            "background-color": "rgba(0, 0, 0, 0)",
+            "border-top-color": "rgb(9, 9, 11)",
+            "border-top-width": "0.00px",
+            "border-radius": "0.00px",
+            "font-size": "36.00px",
+            "font-weight": "800",
+            "letter-spacing": "-1.62px",
             "padding-top": "0.00px",
             "padding-left": "0.00px"
           },
@@ -619,6 +715,54 @@
             "padding-top": "0.00px",
             "padding-left": "0.00px"
           },
+          ".eco-label": {
+            "color": "rgb(138, 138, 147)",
+            "background-color": "rgba(0, 0, 0, 0)",
+            "border-top-color": "rgb(138, 138, 147)",
+            "border-top-width": "0.00px",
+            "border-radius": "0.00px",
+            "font-size": "14.00px",
+            "font-weight": "600",
+            "letter-spacing": "0.28px",
+            "padding-top": "0.00px",
+            "padding-left": "0.00px"
+          },
+          ".eco-intro": {
+            "color": "rgb(161, 161, 170)",
+            "background-color": "rgba(0, 0, 0, 0)",
+            "border-top-color": "rgb(161, 161, 170)",
+            "border-top-width": "0.00px",
+            "border-radius": "0.00px",
+            "font-size": "16.00px",
+            "font-weight": "400",
+            "letter-spacing": "normal",
+            "padding-top": "0.00px",
+            "padding-left": "0.00px"
+          },
+          ".eco-list li > p": {
+            "color": "rgb(161, 161, 170)",
+            "background-color": "rgba(0, 0, 0, 0)",
+            "border-top-color": "rgb(161, 161, 170)",
+            "border-top-width": "0.00px",
+            "border-radius": "0.00px",
+            "font-size": "16.00px",
+            "font-weight": "400",
+            "letter-spacing": "normal",
+            "padding-top": "0.00px",
+            "padding-left": "0.00px"
+          },
+          ".eco-title": {
+            "color": "rgb(244, 244, 245)",
+            "background-color": "rgba(0, 0, 0, 0)",
+            "border-top-color": "rgb(244, 244, 245)",
+            "border-top-width": "0.00px",
+            "border-radius": "0.00px",
+            "font-size": "72.00px",
+            "font-weight": "800",
+            "letter-spacing": "-3.24px",
+            "padding-top": "0.00px",
+            "padding-left": "0.00px"
+          },
           ".links a": {
             "color": "rgb(244, 244, 245)",
             "background-color": "rgba(0, 0, 0, 0)",
@@ -837,6 +981,54 @@
             "padding-top": "0.00px",
             "padding-left": "0.00px"
           },
+          ".eco-label": {
+            "color": "rgb(95, 95, 104)",
+            "background-color": "rgba(0, 0, 0, 0)",
+            "border-top-color": "rgb(95, 95, 104)",
+            "border-top-width": "0.00px",
+            "border-radius": "0.00px",
+            "font-size": "14.00px",
+            "font-weight": "600",
+            "letter-spacing": "0.28px",
+            "padding-top": "0.00px",
+            "padding-left": "0.00px"
+          },
+          ".eco-intro": {
+            "color": "rgb(63, 63, 70)",
+            "background-color": "rgba(0, 0, 0, 0)",
+            "border-top-color": "rgb(63, 63, 70)",
+            "border-top-width": "0.00px",
+            "border-radius": "0.00px",
+            "font-size": "16.00px",
+            "font-weight": "400",
+            "letter-spacing": "normal",
+            "padding-top": "0.00px",
+            "padding-left": "0.00px"
+          },
+          ".eco-list li > p": {
+            "color": "rgb(63, 63, 70)",
+            "background-color": "rgba(0, 0, 0, 0)",
+            "border-top-color": "rgb(63, 63, 70)",
+            "border-top-width": "0.00px",
+            "border-radius": "0.00px",
+            "font-size": "16.00px",
+            "font-weight": "400",
+            "letter-spacing": "normal",
+            "padding-top": "0.00px",
+            "padding-left": "0.00px"
+          },
+          ".eco-title": {
+            "color": "rgb(9, 9, 11)",
+            "background-color": "rgba(0, 0, 0, 0)",
+            "border-top-color": "rgb(9, 9, 11)",
+            "border-top-width": "0.00px",
+            "border-radius": "0.00px",
+            "font-size": "72.00px",
+            "font-weight": "800",
+            "letter-spacing": "-3.24px",
+            "padding-top": "0.00px",
+            "padding-left": "0.00px"
+          },
           ".links a": {
             "color": "rgb(9, 9, 11)",
             "background-color": "rgba(0, 0, 0, 0)",
@@ -924,7 +1116,7 @@
             "font-size": "16.00px",
             "font-weight": "400",
             "letter-spacing": "normal",
-            "padding-top": "24.00px",
+            "padding-top": "16.00px",
             "padding-left": "0.00px"
           },
           ".site .mark": {
@@ -1130,7 +1322,7 @@
             "font-size": "16.00px",
             "font-weight": "400",
             "letter-spacing": "normal",
-            "padding-top": "24.00px",
+            "padding-top": "16.00px",
             "padding-left": "0.00px"
           },
           ".site .mark": {

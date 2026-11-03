@@ -1,0 +1,5 @@
+Public notes about the 25 marks on the hub.
+The files live under assets/logos/ and are listed in SOURCES.txt.
+A leaked path: /workspace/projects/example/logo.png
+Another leaked path: /run/media/someone/Data/pack.blend
+These two lines should fail H8. The rest of this file is ordinary text.

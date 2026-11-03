@@ -16,8 +16,69 @@ const VIEWS = [
   { width: 1440, height: 900, name: "1440" },
   { width: 390, height: 844, name: "390" },
 ];
+const B2_VIEWS = [
+  { width: 360, height: 844 },
+  { width: 375, height: 844 },
+  { width: 390, height: 844 },
+];
+const CLASSIC_SCROLLBAR = 15;
+const CLASSIC_SCROLLBAR_CSS = "html{overflow-y:scroll!important;scrollbar-color:auto!important}::-webkit-scrollbar{width:15px}::-webkit-scrollbar-thumb{background:CanvasText}";
 const SCHEMES = ["dark", "light"];
-const RULE_ORDER = ["H1", "H2", "H3", "H4", "H5", "H6", "H7", "B1", "B2", "B3", "B4"];
+const RULE_ORDER = ["H1", "H2", "H3", "H4", "H5", "H6", "H7", "H8", "B1", "B2", "B3", "B4", "B5"];
+const H8_RE = /(^|[^A-Za-z0-9_.-])\/(workspace\b|home\/|run\/media\b)/;
+const H8_EXT = new Set([".txt", ".md", ".json", ".css", ".svg", ".js", ".html", ".xml"]);
+const H8_ROOT = ["llms.txt", "README.md", "robots.txt", "sitemap.xml"];
+const COMPUTED_BASELINE = path.join(ROOT, "tests", "baselines", "computed-styles.json");
+const B5_PROPS = [
+  "color",
+  "background-color",
+  "border-top-color",
+  "border-top-width",
+  "border-radius",
+  "font-size",
+  "font-weight",
+  "letter-spacing",
+  "padding-top",
+  "padding-left",
+];
+const B5_COMMON = [
+  "body",
+  ".site",
+  ".site .mark",
+  ".site nav a",
+  '.site nav a[aria-current="page"]',
+  "h1",
+  "main h2",
+  "footer",
+  "footer a",
+];
+const B5_PAGE = {
+  "/": [
+    ".eco-tag",
+    ".eco-list li",
+    ".eco-list img",
+    ".eco-name h4",
+    ".eco-label",
+    ".eco-intro",
+    ".eco-list li > p",
+    ".eco-title",
+    ".links a",
+    "#products li",
+    "#products img",
+  ],
+  "/videos/": [
+    ".v",
+    ".v h3",
+    ".group-head small",
+    ".v .len",
+    ".v .p img",
+    ".group-head h2",
+  ],
+};
+const B5_PAGES = [
+  { file: "index.html", key: "/" },
+  { file: "videos/index.html", key: "/videos/" },
+];
 const FREEZE = "*{animation:none!important;transition:none!important}";
 const MIME = {
   ".html": "text/html; charset=utf-8",
@@ -525,6 +586,69 @@ function defaultCss() {
   return fs.readdirSync(dir).filter((name) => name.endsWith(".css")).map((name) => path.join(dir, name)).sort();
 }
 
+function isInternalTree(rel) {
+  return (
+    rel === ".git" ||
+    rel.startsWith(".git/") ||
+    rel.startsWith("tests/") ||
+    rel.startsWith("scripts/") ||
+    rel.startsWith(".github/")
+  );
+}
+
+function walkH8Assets(dir, out) {
+  if (!fs.existsSync(dir)) return;
+  for (const name of fs.readdirSync(dir)) {
+    const abs = path.join(dir, name);
+    const stat = fs.statSync(abs);
+    if (stat.isDirectory()) {
+      walkH8Assets(abs, out);
+      continue;
+    }
+    if (H8_EXT.has(path.extname(name).toLowerCase())) out.push(abs);
+  }
+}
+
+function defaultH8Files() {
+  const files = [];
+  walkH8Assets(path.join(ROOT, "assets"), files);
+  for (const name of H8_ROOT) {
+    const abs = path.join(ROOT, name);
+    if (fs.existsSync(abs)) files.push(abs);
+  }
+  return files.sort();
+}
+
+function auditH8(text) {
+  const failures = [];
+  const lines = eol(text).split("\n");
+  for (let i = 0; i < lines.length; i++) {
+    const match = lines[i].match(H8_RE);
+    if (!match) continue;
+    failures.push({
+      rule: "H8",
+      message: `${i + 1} internal path prefix /${match[2]}`,
+    });
+  }
+  return failures;
+}
+
+function h8Targets(bundle, fromArgs) {
+  const seen = new Set();
+  const out = [];
+  const add = (abs) => {
+    const rel = relPosix(abs);
+    if (seen.has(rel)) return;
+    if (!fromArgs && isInternalTree(rel)) return;
+    seen.add(rel);
+    out.push({ abs, rel });
+  };
+  for (const page of bundle.html) add(page.abs);
+  for (const abs of bundle.css) add(abs);
+  for (const abs of bundle.text) add(abs);
+  return out;
+}
+
 function parseArgs(argv) {
   const opts = {
     static: false,
@@ -591,10 +715,11 @@ function collect(opts) {
     const html = [];
     walkHtml(ROOT, html);
     html.sort();
-    return { html: html.map(readHtml), css: defaultCss() };
+    return { html: html.map(readHtml), css: defaultCss(), text: defaultH8Files() };
   }
   const html = [];
   const css = [];
+  const text = [];
   for (const file of opts.files) {
     const abs = resolveArg(file);
     if (!fs.existsSync(abs)) {
@@ -603,14 +728,15 @@ function collect(opts) {
     }
     if (abs.endsWith(".html")) html.push(readHtml(abs));
     else if (abs.endsWith(".css")) css.push(abs);
+    else if (abs.endsWith(".txt")) text.push(abs);
     else {
       console.error(`check-hub: skip ${file} (not html or css)`);
     }
   }
-  return { html, css };
+  return { html, css, text };
 }
 
-function staticFailures(bundle, env) {
+function staticFailures(bundle, env, fromArgs) {
   const failures = [];
   for (const page of bundle.html) {
     for (const item of auditHtml(page.html, env)) {
@@ -625,6 +751,12 @@ function staticFailures(bundle, env) {
   }
   if (BANNED.test(env.llms)) failures.push({ file: "llms.txt", rule: "H7", message: "banned wording" });
   if (BANNED.test(env.readme)) failures.push({ file: "README.md", rule: "H7", message: "banned wording" });
+  for (const target of h8Targets(bundle, fromArgs)) {
+    const text = fs.readFileSync(target.abs, "utf8");
+    for (const item of auditH8(text)) {
+      failures.push({ file: target.rel, rule: item.rule, message: item.message });
+    }
+  }
   return failures;
 }
 
@@ -887,17 +1019,79 @@ function formatHeight(value) {
   return Number.isInteger(value) ? String(value) : value.toFixed(1);
 }
 
-async function runBrowser(bundle, opts, failures) {
-  if (bundle.html.length === 0 && !opts.updateBaselines) return;
-  const chromium = await loadChromium();
-  const executablePath = chromeExecutable();
-  let browser;
+async function launchChrome(chromium, executablePath, classicScrollbar) {
+  const options = { executablePath, args: ["--no-sandbox"] };
+  if (classicScrollbar) options.ignoreDefaultArgs = ["--hide-scrollbars"];
   try {
-    browser = await chromium.launch({ executablePath, args: ["--no-sandbox"] });
+    return await chromium.launch(options);
   } catch (err) {
     console.error(`check-hub: could not launch Chrome at ${executablePath}: ${oneLine(err.message)}`);
     process.exit(1);
   }
+}
+
+async function runB2(chromium, executablePath, origin, pages, failures) {
+  const targets = pages.filter((page) => page.canonicalPath);
+  if (targets.length === 0) return;
+  const browser = await launchChrome(chromium, executablePath, true);
+  try {
+    const context = await browser.newContext({ deviceScaleFactor: 1 });
+    for (const pageRecord of targets) {
+      for (const scheme of SCHEMES) {
+        for (const view of B2_VIEWS) {
+          let page;
+          try {
+            page = await openDoc(
+              context,
+              origin,
+              { path: pageRecord.canonicalPath, width: view.width, height: view.height },
+              scheme,
+              "reduce",
+              { path: pageRecord.canonicalPath, html: pageRecord.html },
+            );
+            await page.addStyleTag({ content: CLASSIC_SCROLLBAR_CSS });
+            const box = await page.evaluate(() => ({
+              scrollWidth: document.documentElement.scrollWidth,
+              clientWidth: document.documentElement.clientWidth,
+            }));
+            const expectedClient = view.width - CLASSIC_SCROLLBAR;
+            if (box.clientWidth !== expectedClient) {
+              failures.push({
+                file: pageRecord.rel,
+                rule: "B2",
+                message: `classic scrollbar not forced at ${view.width} (${scheme}): clientWidth ${box.clientWidth}, expected ${expectedClient}`,
+              });
+              continue;
+            }
+            if (box.scrollWidth > box.clientWidth) {
+              failures.push({
+                file: pageRecord.rel,
+                rule: "B2",
+                message: `scrollWidth ${box.scrollWidth} > clientWidth ${box.clientWidth} at ${view.width} (${scheme}, classic scrollbar)`,
+              });
+            }
+          } catch (err) {
+            failures.push({
+              file: pageRecord.rel,
+              rule: "B2",
+              message: `browser error at ${view.width} ${scheme}: ${oneLine(err.message)}`,
+            });
+          } finally {
+            if (page) await page.close();
+          }
+        }
+      }
+    }
+  } finally {
+    await browser.close();
+  }
+}
+
+async function runBrowser(bundle, opts, failures) {
+  if (bundle.html.length === 0 && !opts.updateBaselines) return;
+  const chromium = await loadChromium();
+  const executablePath = chromeExecutable();
+  const browser = await launchChrome(chromium, executablePath, false);
   const server = await startServer();
   const origin = `http://127.0.0.1:${server.address().port}`;
   const context = await browser.newContext({ deviceScaleFactor: 1 });
@@ -964,13 +1158,6 @@ async function runBrowser(bundle, opts, failures) {
                 message: `${scheme} ${view.name}: ${problems.join(", ")}`,
               });
             }
-            if (view.width === 390 && shot.scrollWidth > 390) {
-              failures.push({
-                file: pageRecord.rel,
-                rule: "B2",
-                message: `scrollWidth ${shot.scrollWidth} > 390 (${scheme})`,
-              });
-            }
             const offenders = b3Offenders(shot);
             if (offenders.length) {
               const shown = offenders.slice(0, 4).map((link) => `"${link.text || "(empty)"}" ${formatHeight(link.height)}px`);
@@ -1005,6 +1192,20 @@ async function runBrowser(bundle, opts, failures) {
           canonicalPath: pageRecord.canonicalPath,
         }, failures);
       }
+      const wantsB5 = opts.expectFail
+        ? Boolean(spec && ([...(spec.fail || []), ...(spec.pass || [])].includes("B5")))
+        : false;
+      if (wantsB5) {
+        const target = normTarget(spec.b5Target || spec.b4Target || pageRecord.canonicalPath || "/");
+        const pageKey = b5PageKey(target) || target;
+        await runB5(context, origin, {
+          file: pageRecord.rel,
+          pageKey,
+          target: pageKey,
+          html: pageRecord.html,
+          canonicalPath: pageRecord.canonicalPath,
+        }, failures);
+      }
     }
     if (!opts.expectFail && bundle.html.length) {
       const target = opts.b4Target || "/";
@@ -1015,9 +1216,252 @@ async function runBrowser(bundle, opts, failures) {
         canonicalPath: null,
       }, failures);
     }
+    if (!opts.expectFail) {
+      for (const pageRecord of bundle.html) {
+        if (pageRecord.rel.startsWith("tests/")) continue;
+        const pageKey = b5PageKey(pageRecord.canonicalPath);
+        if (!pageKey) continue;
+        await runB5(context, origin, {
+          file: pageRecord.rel,
+          pageKey,
+          target: pageKey,
+          html: null,
+          canonicalPath: pageRecord.canonicalPath,
+        }, failures);
+      }
+    }
+    await runB2(chromium, executablePath, origin, bundle.html, failures);
   } finally {
     await browser.close();
     await new Promise((resolve) => server.close(resolve));
+  }
+}
+
+function b5PageKey(pathname) {
+  if (pathname === "/videos") return "/videos/";
+  if (pathname === "/" || pathname === "/videos/") return pathname;
+  return null;
+}
+
+function b5Selectors(pageKey) {
+  return B5_COMMON.concat(B5_PAGE[pageKey] || []);
+}
+
+function b5Fulfill(job) {
+  if (!job.html) return null;
+  if (job.canonicalPath !== job.target && b5PageKey(job.canonicalPath) !== job.pageKey) return null;
+  return { path: job.target, html: job.html };
+}
+
+function readStylesInPage({ selectors, props }) {
+  function roundPx(value) {
+    return String(value).trim().replace(/-?\d*\.?\d+(?:e[+-]?\d+)?px/gi, (raw) => {
+      const n = Number(raw.slice(0, -2));
+      if (!Number.isFinite(n)) return raw;
+      let text = n.toFixed(2);
+      if (text === "-0.00") text = "0.00";
+      return `${text}px`;
+    });
+  }
+
+  const names = new Set();
+  const takeRoot = (style) => {
+    for (let i = 0; i < style.length; i++) {
+      const name = style.item(i);
+      if (name.startsWith("--")) names.add(name);
+    }
+  };
+  const harvest = (rules) => {
+    if (!rules) return;
+    for (const rule of rules) {
+      if (rule.type === CSSRule.IMPORT_RULE) {
+        try {
+          if (rule.styleSheet) harvest(rule.styleSheet.cssRules);
+        } catch {
+          continue;
+        }
+        continue;
+      }
+      if (rule.type === CSSRule.MEDIA_RULE) {
+        const text = rule.conditionText || (rule.media && rule.media.mediaText) || "";
+        if (/prefers-color-scheme/i.test(text)) harvest(rule.cssRules);
+        continue;
+      }
+      if (rule.type !== CSSRule.STYLE_RULE) continue;
+      const parts = String(rule.selectorText || "").split(",").map((part) => part.trim());
+      if (!parts.includes(":root")) continue;
+      takeRoot(rule.style);
+    }
+  };
+
+  for (const sheet of document.styleSheets) {
+    if (sheet.disabled) continue;
+    try {
+      if (sheet.href) {
+        const url = new URL(sheet.href, location.href);
+        if (url.origin !== location.origin) continue;
+      }
+      harvest(sheet.cssRules);
+    } catch {
+      continue;
+    }
+  }
+
+  const rootStyle = getComputedStyle(document.documentElement);
+  const tokens = {};
+  for (const name of [...names].sort()) tokens[name] = roundPx(rootStyle.getPropertyValue(name));
+
+  const picked = {};
+  for (const selector of selectors) {
+    const el = document.querySelector(selector);
+    if (!el) {
+      picked[selector] = { absent: true };
+      continue;
+    }
+    const style = getComputedStyle(el);
+    const record = {};
+    for (const prop of props) record[prop] = roundPx(style.getPropertyValue(prop));
+    picked[selector] = record;
+  }
+  return { tokens, selectors: picked };
+}
+
+function showValue(value) {
+  return value === undefined ? "missing" : JSON.stringify(value);
+}
+
+function diffSelector(name, base, actual) {
+  const baseAbsent = !base || base.absent === true;
+  const actualAbsent = !actual || actual.absent === true;
+  if (baseAbsent || actualAbsent) {
+    if (baseAbsent && actualAbsent) return [];
+    return [`${name} baseline ${baseAbsent ? "absent" : "present"} actual ${actualAbsent ? "absent" : "present"}`];
+  }
+  const props = [];
+  const seen = new Set();
+  for (const prop of [...B5_PROPS, ...Object.keys(base), ...Object.keys(actual)]) {
+    if (prop === "absent" || seen.has(prop)) continue;
+    seen.add(prop);
+    props.push(prop);
+  }
+  const diffs = [];
+  for (const prop of props) {
+    if (base[prop] !== actual[prop]) {
+      diffs.push(`${name} ${prop} baseline ${showValue(base[prop])} actual ${showValue(actual[prop])}`);
+    }
+  }
+  return diffs;
+}
+
+function diffComputed(pageKey, base, actual) {
+  const diffs = [];
+  const baseTokens = base.tokens || {};
+  const actualTokens = actual.tokens || {};
+  const tokenNames = new Set([...Object.keys(baseTokens), ...Object.keys(actualTokens)]);
+  for (const name of [...tokenNames].sort()) {
+    if (baseTokens[name] !== actualTokens[name]) {
+      diffs.push(`${name} baseline ${showValue(baseTokens[name])} actual ${showValue(actualTokens[name])}`);
+    }
+  }
+  const baseSels = base.selectors || {};
+  const actualSels = actual.selectors || {};
+  const seen = new Set();
+  const selNames = [];
+  for (const name of [...b5Selectors(pageKey), ...Object.keys(baseSels), ...Object.keys(actualSels)]) {
+    if (seen.has(name)) continue;
+    seen.add(name);
+    selNames.push(name);
+  }
+  for (const name of selNames) diffs.push(...diffSelector(name, baseSels[name], actualSels[name]));
+  return diffs;
+}
+
+function formatB5(pageKey, view, scheme, diffs) {
+  const shown = diffs.slice(0, 8);
+  const extra = diffs.length - shown.length;
+  const more = extra > 0 ? ` (+${extra} more)` : "";
+  return `${pageKey} ${view} ${scheme}: ${shown.join(", ")}${more}`;
+}
+
+async function measureComputed(context, origin, job, view, scheme) {
+  const page = await openDoc(
+    context,
+    origin,
+    { path: job.target, width: view.width, height: view.height },
+    scheme,
+    "reduce",
+    b5Fulfill(job),
+  );
+  try {
+    return await page.evaluate(readStylesInPage, {
+      selectors: b5Selectors(job.pageKey),
+      props: B5_PROPS,
+    });
+  } finally {
+    await page.close();
+  }
+}
+
+async function runB5(context, origin, job, failures) {
+  if (!fs.existsSync(COMPUTED_BASELINE)) {
+    failures.push({
+      file: job.file,
+      rule: "B5",
+      message: "missing baseline tests/baselines/computed-styles.json; run node scripts/check-hub.mjs --update-baselines",
+    });
+    return;
+  }
+  let baseline;
+  try {
+    baseline = JSON.parse(fs.readFileSync(COMPUTED_BASELINE, "utf8"));
+  } catch (err) {
+    failures.push({
+      file: job.file,
+      rule: "B5",
+      message: `cannot read tests/baselines/computed-styles.json: ${oneLine(err.message)}`,
+    });
+    return;
+  }
+  const pageBase = baseline && typeof baseline === "object" ? baseline[job.pageKey] : null;
+  if (!pageBase || typeof pageBase !== "object") {
+    failures.push({
+      file: job.file,
+      rule: "B5",
+      message: `${job.pageKey}: missing from tests/baselines/computed-styles.json; run node scripts/check-hub.mjs --update-baselines`,
+    });
+    return;
+  }
+  for (const view of VIEWS) {
+    for (const scheme of SCHEMES) {
+      let actual;
+      try {
+        actual = await measureComputed(context, origin, job, view, scheme);
+      } catch (err) {
+        failures.push({
+          file: job.file,
+          rule: "B5",
+          message: `${job.pageKey} ${view.name} ${scheme}: ${oneLine(err.message)}`,
+        });
+        continue;
+      }
+      const cell = pageBase[view.name] && pageBase[view.name][scheme];
+      if (!cell || typeof cell !== "object") {
+        failures.push({
+          file: job.file,
+          rule: "B5",
+          message: `${job.pageKey} ${view.name} ${scheme}: missing from tests/baselines/computed-styles.json; run node scripts/check-hub.mjs --update-baselines`,
+        });
+        continue;
+      }
+      const diffs = diffComputed(job.pageKey, cell, actual);
+      if (diffs.length) {
+        failures.push({
+          file: job.file,
+          rule: "B5",
+          message: formatB5(job.pageKey, view.name, scheme, diffs),
+        });
+      }
+    }
   }
 }
 
@@ -1045,6 +1489,25 @@ async function writeBaselines(context, origin) {
       }
     }
   }
+  const styles = {};
+  for (const spec of B5_PAGES) {
+    const job = {
+      file: spec.file,
+      pageKey: spec.key,
+      target: spec.key,
+      html: null,
+      canonicalPath: spec.key,
+    };
+    styles[spec.key] = {};
+    for (const view of VIEWS) {
+      styles[spec.key][view.name] = {};
+      for (const scheme of SCHEMES) {
+        styles[spec.key][view.name][scheme] = await measureComputed(context, origin, job, view, scheme);
+      }
+    }
+  }
+  fs.writeFileSync(COMPUTED_BASELINE, `${JSON.stringify(styles, null, 2)}\n`);
+  console.log("check-hub: wrote tests/baselines/computed-styles.json");
 }
 
 function writeOut(name, buffer) {
@@ -1190,9 +1653,11 @@ async function main() {
   }
   const bundle = collect(opts);
   const env = loadEnv();
-  const failures = opts.runStatic ? staticFailures(bundle, env) : [];
+  const failures = opts.runStatic ? staticFailures(bundle, env, opts.files.length > 0) : [];
   if (opts.expectFail) {
-    opts.expectMap = loadExpect(bundle.html.map((page) => page.rel).concat(bundle.css.map(relPosix)));
+    opts.expectMap = loadExpect(
+      bundle.html.map((page) => page.rel).concat(bundle.css.map(relPosix), bundle.text.map(relPosix)),
+    );
   }
   if (opts.runBrowser) await runBrowser(bundle, opts, failures);
   printReport(failures, pageNames(bundle.html), opts.expectFail, opts.expectMap || { __order: [] });

@@ -157,6 +157,11 @@ body {
   .site .mark { font-size: 1.125rem; }
 }
 
+@media (max-width: 420px) {
+  .site { flex-wrap: wrap; padding-block: var(--space-16); }
+  .site nav { flex: 1 0 100%; justify-content: space-between; }
+}
+
 main {
   padding-top: var(--space-24);
   container-type: inline-size;

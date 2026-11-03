@@ -16,6 +16,8 @@ const ECOSYSTEM_LABELLEDBY = "ecosystem-title";
 const SHIELD_LICENSE = "https://polyformproject.org/licenses/shield/1.0.0/";
 const OFFER_PRICE = "0";
 const OFFER_CURRENCY = "USD";
+const RETRY_DELAYS = [1000, 3000];
+const OTHER_LICENCE = /\b(MIT|Apache|GPL|BSD|Creative Commons)\b/i;
 const NAV = [
   { href: "/#products", text: "Products" },
   { href: "/videos/", text: "Videos" },
@@ -576,12 +578,25 @@ function checkMarks(flagshipLive, flagshipSnapshot, ecoLive, catalog, sources) {
       checkImg(ecoLive[index], `assets/logos/${entry.repo}.webp`, `row ${entry.n}`);
     }
   }
-  if (sources == null || !catalog) return;
-  const names = catalog.filter((entry) => entry && entry.repo).map((entry) => `${entry.repo}.webp`);
-  names.push("mcp-bridge-go.webp");
+  if (sources == null) return;
+  const names = new Set();
+  if (catalog) {
+    for (const entry of catalog) {
+      if (entry && entry.repo) names.add(`${entry.repo}.webp`);
+    }
+  }
+  if (flagshipSnapshot) {
+    for (const row of flagshipSnapshot) {
+      const src = expectedFlagshipLogo(row);
+      if (typeof src === "string" && src) names.add(path.basename(src));
+    }
+  }
   const sourceLines = linesOf(sources);
   for (const fileName of names) {
     if (!sourceLines.some((line) => line.includes(fileName))) fail("AC-E8", `SOURCES.txt does not mention ${fileName}`);
+  }
+  if (!sourceLines.some((line) => line.startsWith("Usage rights: UNCONFIRMED"))) {
+    fail("AC-E8", 'SOURCES.txt missing line starting with "Usage rights: UNCONFIRMED"');
   }
 }
 
@@ -602,6 +617,35 @@ function checkLicenseMention(files) {
       }
     });
   }
+}
+
+function firstDescriptiveLine(text) {
+  for (const line of linesOf(text || "")) {
+    const trimmed = line.trim();
+    if (trimmed && !trimmed.startsWith("#")) return trimmed;
+  }
+  return "";
+}
+
+function ecosystemSentence(text) {
+  for (const line of linesOf(text || "")) {
+    if (/ecosystem/i.test(line)) return line.trim();
+  }
+  return "";
+}
+
+function checkReadmeLicence(readme) {
+  if (readme == null) return;
+  const first = firstDescriptiveLine(readme);
+  if (!first.includes("PolyForm Shield")) {
+    fail("AC-E9", 'README.md first descriptive line missing "PolyForm Shield"');
+  }
+  const eco = ecosystemSentence(readme);
+  if (!eco.includes("PolyForm Shield 1.0.0")) {
+    fail("AC-E9", 'README.md ecosystem sentence missing "PolyForm Shield 1.0.0"');
+  }
+  const banned = OTHER_LICENCE.exec(readme);
+  if (banned) fail("AC-E9", `README.md names ${banned[0]}`);
 }
 
 function sameLinks(live, expected) {
@@ -803,13 +847,44 @@ function summaryLine(online) {
   return `check-ecosystem: ${stats.rows} rows, ${stats.groups} groups (${stats.groupSizes.join("/")}), ${stats.docsPills} docs pills, ${stats.jsonLd} JSON-LD nodes, ${stats.sitemap} sitemap URLs, llms ${stats.llmsProducts}+${stats.llmsEco}, ${stats.marks} marks hashed`;
 }
 
-function checkOnlineCounts() {
+function expectedOnlineCounts(catalog, exclusions, flagship) {
+  const rows = Array.isArray(catalog) ? catalog : [];
+  const absent = rows.filter((entry) => entry && entry.docs == null && typeof entry.repo === "string" && entry.repo).length;
+  const repos = new Set();
+  for (const entry of rows) if (entry && entry.repo) repos.add(entry.repo);
+  if (Array.isArray(flagship)) {
+    for (const row of flagship) {
+      for (const link of (row && row.links) || []) {
+        const repo = repoFromHref(link && link.href);
+        if (repo) repos.add(repo);
+      }
+    }
+  }
+  return {
+    pageRepos: repos.size,
+    exclusions: Array.isArray(exclusions) ? exclusions.length : 0,
+    docsFetched: rows.filter((entry) => entry && typeof entry.docs === "string" && entry.docs).length,
+    absentPages: absent,
+    pagesApi: absent,
+    licenceGate: rows.filter((entry) => entry && typeof entry.repo === "string" && entry.repo).length,
+  };
+}
+
+function checkOnlineCounts(expected) {
+  const want = expected || {};
   const counts = [
-    ["AC-E1", "public repos listed", stats.publicRepos],
-    ["AC-E2", "docs links fetched", stats.docsFetched],
-    ["AC-E11", "licence-gate repos", stats.licenceGate],
+    ["AC-E1", "public repos listed", stats.publicRepos, want.publicRepos],
+    ["AC-E1", "page repos", stats.pageRepos, want.pageRepos],
+    ["AC-E1", "exclusions", stats.exclusions, want.exclusions],
+    ["AC-E2", "docs links fetched", stats.docsFetched, want.docsFetched],
+    ["AC-E2", "absent-Pages probes", stats.absentPages, want.absentPages],
+    ["AC-E2", "Pages-API probes", stats.pagesApi, want.pagesApi],
+    ["AC-E11", "licence-gate repos", stats.licenceGate, want.licenceGate],
   ];
-  for (const [ac, label, value] of counts) if (!value) fail(ac, `${label} count is 0`);
+  for (const [ac, label, value, need] of counts) {
+    if (!value) fail(ac, `${label} count is 0`);
+    else if (need != null && value !== need) fail(ac, `${label} count is ${value}, expected ${need}`);
+  }
 }
 
 function jqString(text) {
@@ -824,41 +899,102 @@ function jqString(text) {
   return trimmed;
 }
 
-function gh(args) {
-  try {
-    return execFileSync("gh", args, {
-      encoding: "utf8",
-      timeout: 30000,
-      stdio: ["ignore", "pipe", "pipe"],
-    });
-  } catch (err) {
-    throw new Error(oneLine(err.stderr || err.message));
-  }
+function delay(ms) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
-function ghResult(args) {
-  try {
-    return { ok: true, text: execFileSync("gh", args, {
-      encoding: "utf8",
-      timeout: 30000,
-      stdio: ["ignore", "pipe", "pipe"],
-    }) };
-  } catch (err) {
-    return { ok: false, text: oneLine([err.stderr, err.stdout, err.message].filter(Boolean).join(" ")) };
-  }
+function isRetryableStatus(status) {
+  return status === 429 || (status >= 500 && status <= 599);
+}
+
+function httpStatusFromMessage(message) {
+  const text = String(message || "");
+  const match = /\(HTTP (\d{3})\)/.exec(text) || /\bHTTP (\d{3})\b/.exec(text);
+  if (match) return Number(match[1]);
+  if (/"message"\s*:\s*"Not Found"/.test(text)) return 404;
+  return null;
 }
 
 function isHttp404(message) {
-  return /\(HTTP 404\)/.test(message) || /\bHTTP 404\b/.test(message) || /"message"\s*:\s*"Not Found"/.test(message);
+  return httpStatusFromMessage(message) === 404;
 }
 
-function checkLicenseGate(catalog) {
+function shouldRetryMessage(message) {
+  const status = httpStatusFromMessage(message);
+  return status == null || isRetryableStatus(status);
+}
+
+const GH_OPTS = { encoding: "utf8", timeout: 30000, stdio: ["ignore", "pipe", "pipe"] };
+
+async function gh(args) {
+  let lastMessage = "";
+  for (let attempt = 0; attempt < 3; attempt++) {
+    try {
+      return execFileSync("gh", args, GH_OPTS);
+    } catch (err) {
+      lastMessage = oneLine(err.stderr || err.message);
+      if (attempt < 2 && shouldRetryMessage(lastMessage)) {
+        await delay(RETRY_DELAYS[attempt]);
+        continue;
+      }
+      throw new Error(lastMessage);
+    }
+  }
+  throw new Error(lastMessage);
+}
+
+async function ghResult(args) {
+  let lastText = "";
+  for (let attempt = 0; attempt < 3; attempt++) {
+    try {
+      return { ok: true, text: execFileSync("gh", args, GH_OPTS) };
+    } catch (err) {
+      lastText = oneLine([err.stderr, err.stdout, err.message].filter(Boolean).join(" "));
+      if (attempt < 2 && shouldRetryMessage(lastText)) {
+        await delay(RETRY_DELAYS[attempt]);
+        continue;
+      }
+      return { ok: false, text: lastText };
+    }
+  }
+  return { ok: false, text: lastText };
+}
+
+async function fetchWithRetry(url) {
+  let lastErr;
+  for (let attempt = 0; attempt < 3; attempt++) {
+    try {
+      const response = await fetch(url, {
+        method: "GET",
+        redirect: "follow",
+        signal: AbortSignal.timeout(15000),
+      });
+      if (attempt < 2 && isRetryableStatus(response.status)) {
+        await response.arrayBuffer().catch(() => {});
+        await delay(RETRY_DELAYS[attempt]);
+        continue;
+      }
+      return response;
+    } catch (err) {
+      lastErr = err;
+      if (attempt < 2) {
+        await delay(RETRY_DELAYS[attempt]);
+        continue;
+      }
+      throw err;
+    }
+  }
+  if (lastErr) throw lastErr;
+  throw new Error("fetch failed");
+}
+
+async function checkLicenseGate(catalog) {
   for (const entry of catalog) {
     if (!entry || typeof entry.repo !== "string") continue;
     stats.licenceGate += 1;
     let visibility;
     try {
-      visibility = jqString(gh(["repo", "view", `jangtrinh/${entry.repo}`, "--json", "visibility", "-q", ".visibility"]));
+      visibility = jqString(await gh(["repo", "view", `jangtrinh/${entry.repo}`, "--json", "visibility", "-q", ".visibility"]));
     } catch (err) {
       fail("AC-E11", `${entry.repo} visibility ${err.message}`);
       continue;
@@ -866,7 +1002,7 @@ function checkLicenseGate(catalog) {
     if (visibility !== "PUBLIC") fail("AC-E11", `${entry.repo} visibility ${visibility}, expected PUBLIC`);
     let license;
     try {
-      license = gh(["api", `repos/jangtrinh/${entry.repo}/contents/LICENSE`, "-H", "Accept: application/vnd.github.raw"]);
+      license = await gh(["api", `repos/jangtrinh/${entry.repo}/contents/LICENSE`, "-H", "Accept: application/vnd.github.raw"]);
     } catch (err) {
       fail("AC-E11", `${entry.repo} LICENSE ${err.message}`);
       continue;
@@ -899,13 +1035,8 @@ async function checkLiveLinks(rows) {
   }
   const results = await Promise.all(urls.map(async (url) => {
     try {
-      const response = await fetch(url, {
-        method: "GET",
-        redirect: "follow",
-        signal: AbortSignal.timeout(15000),
-      });
-      await response.arrayBuffer();
-      return response.status === 200 ? null : `${url} status ${response.status}`;
+      const status = await fetchStatus(url);
+      return status === 200 ? null : `${url} status ${status}`;
     } catch (err) {
       return `${url} ${oneLine(err.message)}`;
     }
@@ -921,11 +1052,7 @@ function ownerForEntry(row) {
 }
 
 async function fetchStatus(url) {
-  const response = await fetch(url, {
-    method: "GET",
-    redirect: "follow",
-    signal: AbortSignal.timeout(15000),
-  });
+  const response = await fetchWithRetry(url);
   await response.arrayBuffer();
   return response.status;
 }
@@ -951,7 +1078,7 @@ async function checkAbsentPages(catalog, ecoRows) {
       messages.push(`row ${entry.n} ${url} ${oneLine(err.message)}`);
     }
     stats.pagesApi += 1;
-    const pages = ghResult(["api", `repos/${owner}/${entry.repo}/pages`]);
+    const pages = await ghResult(["api", `repos/${owner}/${entry.repo}/pages`]);
     if (pages.ok) {
       let htmlUrl = "";
       try {
@@ -963,7 +1090,7 @@ async function checkAbsentPages(catalog, ecoRows) {
     } else if (!isHttp404(pages.text)) {
       messages.push(`row ${entry.n} Pages API ${pages.text}`);
     }
-    const homepageResult = ghResult(["repo", "view", `${owner}/${entry.repo}`, "--json", "homepageUrl", "-q", ".homepageUrl"]);
+    const homepageResult = await ghResult(["repo", "view", `${owner}/${entry.repo}`, "--json", "homepageUrl", "-q", ".homepageUrl"]);
     if (!homepageResult.ok) {
       messages.push(`row ${entry.n} homepageUrl ${homepageResult.text}`);
       return messages;
@@ -983,12 +1110,12 @@ async function checkAbsentPages(catalog, ecoRows) {
   }
 }
 
-async function runOnline(catalog, exclusions, ecoRows, flagshipRows) {
-  if (catalog) checkLicenseGate(catalog);
+async function runOnline(catalog, exclusions, ecoRows, flagshipRows, flagshipSnapshot) {
+  if (catalog) await checkLicenseGate(catalog);
   if (catalog) await checkAbsentPages(catalog, ecoRows);
   let names = [];
   try {
-    names = gh(["repo", "list", "jangtrinh", "--visibility", "public", "--limit", "300", "--json", "name", "-q", ".[].name"])
+    names = (await gh(["repo", "list", "jangtrinh", "--visibility", "public", "--limit", "300", "--json", "name", "-q", ".[].name"]))
       .split(/\n/)
       .map((line) => jqString(line))
       .filter(Boolean);
@@ -1002,7 +1129,7 @@ async function runOnline(catalog, exclusions, ecoRows, flagshipRows) {
   stats.exclusions = Array.isArray(exclusions) ? exclusions.length : 0;
   checkPublicDesignOs(names, pageRepos, exclusions || []);
   if (ecoRows) await checkLiveLinks(ecoRows);
-  checkOnlineCounts();
+  checkOnlineCounts(expectedOnlineCounts(catalog, exclusions, flagshipSnapshot));
 }
 
 function fileText(files, rel, ac) {
@@ -1082,6 +1209,7 @@ function evaluate(files) {
     ["sitemap.xml", sitemap],
     ["README.md", readme],
   ]);
+  checkReadmeLicence(readme);
   checkFlagship(flagshipRows, flagshipSnapshot);
   checkSitemap(sitemap, catalog, flagshipSnapshot);
   checkCross(ecoRows, catalog || [], apps, llmsItems);
@@ -1091,7 +1219,7 @@ function evaluate(files) {
   if (headerPartial) checkNav(headerPartial, "scripts/partials/header.html");
   if (indexHtml && !/\bid\s*=\s*["']ecosystem["']/.test(indexHtml)) fail("AC-E12", 'index.html has no id "ecosystem"');
   checkCounts();
-  return { catalog, exclusions, ecoRows, flagshipRows };
+  return { catalog, exclusions, ecoRows, flagshipRows, flagshipSnapshot };
 }
 
 function ecosystemBounds(html) {
@@ -1224,6 +1352,29 @@ function readmeBannedWording(text) {
   return `${text || ""}\n${phrase}\n`;
 }
 
+function dropFlagshipSource(files) {
+  let snapshot;
+  try {
+    snapshot = JSON.parse(files["tests/flagship.json"] || "[]");
+  } catch {
+    snapshot = [];
+  }
+  const row = (Array.isArray(snapshot) ? snapshot : []).find((item) => item && typeof item.logo === "string" && item.logo);
+  const fileName = row ? path.basename(row.logo) : "";
+  const sources = files["assets/logos/SOURCES.txt"] || "";
+  files["assets/logos/SOURCES.txt"] = fileName
+    ? linesOf(sources).filter((line) => !line.includes(fileName)).join("\n")
+    : "";
+}
+
+function readmeLicenceSwap(text) {
+  return (text || "").replace(/PolyForm Shield/g, "MIT");
+}
+
+function removeUnconfirmedLine(text) {
+  return linesOf(text || "").filter((line) => !line.startsWith("Usage rights: UNCONFIRMED")).join("\n");
+}
+
 function changeFlagship(html) {
   const needle = "Reads and writes .fig files.";
   const at = (html || "").indexOf('id="products"');
@@ -1277,7 +1428,10 @@ const MUTATIONS = [
   { name: "drop-llms-line", ac: "AC-E7", apply(files) { files["llms.txt"] = dropLlmsLine(files["llms.txt"]); } },
   { name: "swap-hash", ac: "AC-E8", apply(files) { files["tests/marks.sha256"] = swapHash(files["tests/marks.sha256"]); } },
   { name: "remove-img", ac: "AC-E8", apply(files) { files["index.html"] = removeImg(files["index.html"]); } },
+  { name: "sources-drop-flagship", ac: "AC-E8", apply: dropFlagshipSource },
   { name: "licence-mention", ac: "AC-E9", apply(files) { files["README.md"] = licenceMention(files["README.md"]); } },
+  { name: "readme-licence-swap", ac: "AC-E9", apply(files) { files["README.md"] = readmeLicenceSwap(files["README.md"]); } },
+  { name: "sources-unconfirmed-removed", ac: "AC-E8", apply(files) { files["assets/logos/SOURCES.txt"] = removeUnconfirmedLine(files["assets/logos/SOURCES.txt"]); } },
   { name: "flagship-description", ac: "AC-E10", apply(files) { files["index.html"] = changeFlagship(files["index.html"]); } },
   { name: "flagship-aria-label", ac: "AC-E10", apply(files) { files["index.html"] = changeFlagshipAriaLabel(files["index.html"]); } },
   { name: "remove-nav", ac: "AC-E12", apply(files) { files["index.html"] = removeNav(files["index.html"]); } },
@@ -1286,6 +1440,7 @@ const MUTATIONS = [
   { name: "jsonld-license", ac: "AC-E7", apply(files) { files["index.html"] = changeJsonLdLicense(files["index.html"]); } },
   { name: "aria-label", ac: "AC-E2", apply(files) { files["index.html"] = changeAriaLabel(files["index.html"]); } },
   { name: "readme-banned-wording", ac: "AC-E3", apply(files) { files["README.md"] = readmeBannedWording(files["README.md"]); } },
+  { name: "online-zero-count", ac: "AC-E1", run() { checkOnlineCounts(); } },
 ];
 
 function selfTestRun(files) {
@@ -1298,10 +1453,15 @@ function selfTestRun(files) {
   }
   let red = 0;
   for (const mutation of MUTATIONS) {
-    const copy = { ...files };
-    mutation.apply(copy);
-    reset();
-    evaluate(copy);
+    if (mutation.run) {
+      reset();
+      mutation.run();
+    } else {
+      const copy = { ...files };
+      mutation.apply(copy);
+      reset();
+      evaluate(copy);
+    }
     const hit = failures.some((line) => line.startsWith(`${mutation.ac}:`));
     if (hit) {
       red += 1;
@@ -1349,7 +1509,7 @@ async function main() {
   }
   reset();
   const loaded = evaluate(files);
-  if (online) await runOnline(loaded.catalog, loaded.exclusions, loaded.ecoRows, loaded.flagshipRows);
+  if (online) await runOnline(loaded.catalog, loaded.exclusions, loaded.ecoRows, loaded.flagshipRows, loaded.flagshipSnapshot);
   report(online);
 }
 

@@ -1,11 +1,15 @@
 Overview
 
-This directory holds 25 WebP marks. 19 are original marks generated for design:os on 2026-11-02
+This directory holds 26 WebP marks. 20 are original marks generated for design:os on 2026-11-02
 (Asia/Saigon). Each one is a 1:1 sculptural 3D clay render of one chunky primitive form, made with
 an image generator. The six older hub logos were a style reference only. No third-party brand mark,
 logo or likeness was used as the subject or as a reference. Each file was downscaled to 256x256 WebP.
-tests/marks.sha256 lists the sha256 of all 25 files, the 19 new marks and the six older ones.
+tests/marks.sha256 lists the sha256 of all 26 files, the 20 new marks and the six older ones.
 scripts/check-ecosystem.mjs enforces that list. Jang accepted this set on 2026-11-02.
+design-os-robotics.webp was added on 2026-11-03 at Jang's request, for the DESIGN:OS Robotics
+repo's brand assets: a Design original made the same way as the other 19 (a 1:1 clay-style
+render of one chunky primitive form, downscaled to 256x256 WebP); it is not part of the set
+accepted on 2026-11-02.
 mcp-bridge-go now uses its mark, mcp-bridge-go.webp.
 
   design-os-vietnamese.webp          crescent moon
@@ -27,6 +31,7 @@ mcp-bridge-go now uses its mark, mcp-bridge-go.webp.
   aura-scrollcinema-demo.webp        horseshoe
   mcp-bridge-go.webp                 bridge arch
   multi-AI-profile.webp              three fused spheres
+  design-os-robotics.webp            rounded square slab
 
 The six older logos (open question O-1)
 
@@ -109,7 +114,9 @@ How the files got into the repos' branches
   Code2Flow #2, 3D Blender #32.
 
 Attribution
-  The render metadata of one older source file points to a commercial third-party 3D icon
-  pack ("Nixx Icon 3D", Blender Cycles renders dated 2023). The other source files carry no
-  embedded source text but share its style. No licence, receipt or purchase record was found.
-  This stays part of open question O-1 and Jang decides later whether this note stays public.
+  The render metadata of one older source file points to a third-party 3D icon pack
+  ("Nixx Icon 3D", Blender Cycles renders dated 2023). The source files other than the one
+  with embedded metadata carry no embedded source text; their consecutive numeric filenames
+  (8441427 to 8441441) and identical render style suggest the same kind of pack, but that is
+  not proven. No licence, receipt or purchase record was found. This is part of open
+  question O-1.

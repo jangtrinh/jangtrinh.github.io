@@ -27,6 +27,9 @@
   "tests/fixtures/rules/h8-box-path.txt": {
     "fail": ["H8"]
   },
+  "tests/fixtures/rules/h8-other-paths.txt": {
+    "fail": ["H8"]
+  },
   "tests/fixtures/rules/b1-body-font.html": {
     "fail": ["B1"]
   },
@@ -34,7 +37,7 @@
     "fail": ["B2"]
   },
   "tests/fixtures/rules/b2-overflow-360.html": {
-    "fail": ["B2"],
+    "fail": ["B2", "H2"],
     "pass": ["H1", "H3", "H4", "H5", "H6", "H7", "B1", "B3"]
   },
   "tests/fixtures/rules/b3-small-tap-target.html": {

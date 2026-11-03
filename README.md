@@ -2,7 +2,7 @@
 
 Hub for DESIGN:OS: FREE, source-available (PolyForm Shield) design tools for AI agents.
 
-The [ecosystem section](https://jangtrinh.github.io/#ecosystem) lists 18 more FREE, source-available (PolyForm Shield 1.0.0) repos.
+The [ecosystem section](https://jangtrinh.github.io/#ecosystem) lists 19 more FREE, source-available (PolyForm Shield 1.0.0) repos.
 
 ## Videos
 

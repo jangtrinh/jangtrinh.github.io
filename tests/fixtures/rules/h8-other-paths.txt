@@ -1,0 +1,7 @@
+Public notes about extra path prefixes on the hub.
+The files live under assets/logos/ and are listed in SOURCES.txt.
+A leaked path: /Users/shared/marks/logo.png
+A leaked path: /tmp/hub-pack/out.png
+A leaked path: C:\Users\Public\marks\logo.png
+A public URL: https://example.com/tmp/ok
+These three lines should fail H8. The URL must not.

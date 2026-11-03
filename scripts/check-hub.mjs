@@ -25,8 +25,25 @@ const CLASSIC_SCROLLBAR = 15;
 const CLASSIC_SCROLLBAR_CSS = "html{overflow-y:scroll!important;scrollbar-color:auto!important}::-webkit-scrollbar{width:15px}::-webkit-scrollbar-thumb{background:CanvasText}";
 const SCHEMES = ["dark", "light"];
 const RULE_ORDER = ["H1", "H2", "H3", "H4", "H5", "H6", "H7", "H8", "B1", "B2", "B3", "B4", "B5"];
-const H8_RE = /(^|[^A-Za-z0-9_.-])\/(workspace\b|home\/|run\/media\b)/;
-const H8_EXT = new Set([".txt", ".md", ".json", ".css", ".svg", ".js", ".html", ".xml"]);
+const H8_SLASH = "/";
+const H8_UNIX = [
+  "workspace\\b",
+  "home" + H8_SLASH,
+  "run" + H8_SLASH + "media\\b",
+  "Users" + H8_SLASH,
+  "tmp" + H8_SLASH,
+];
+const H8_RE = new RegExp(
+  "(^|[^A-Za-z0-9_.-])([A-Za-z]:[\\\\/]Users[\\\\/])" +
+    "|(^|[^A-Za-z0-9_.-])(?<!:" +
+    H8_SLASH +
+    ")(" +
+    H8_SLASH +
+    "(?:" +
+    H8_UNIX.join("|") +
+    "))",
+);
+const H8_EXT = new Set([".txt", ".md", ".json", ".css", ".svg", ".js", ".mjs", ".html", ".xml", ".yml", ".yaml"]);
 const H8_ROOT = ["llms.txt", "README.md", "robots.txt", "sitemap.xml"];
 const COMPUTED_BASELINE = path.join(ROOT, "tests", "baselines", "computed-styles.json");
 const B5_PROPS = [
@@ -587,19 +604,16 @@ function defaultCss() {
 }
 
 function isInternalTree(rel) {
-  return (
-    rel === ".git" ||
-    rel.startsWith(".git/") ||
-    rel.startsWith("tests/") ||
-    rel.startsWith("scripts/") ||
-    rel.startsWith(".github/")
-  );
+  return rel === ".git" || rel.startsWith(".git/");
 }
 
 function walkH8Assets(dir, out) {
   if (!fs.existsSync(dir)) return;
   for (const name of fs.readdirSync(dir)) {
+    if (name === ".git") continue;
     const abs = path.join(dir, name);
+    const rel = relPosix(abs);
+    if (rel === "tests/fixtures" || rel.startsWith("tests/fixtures/")) continue;
     const stat = fs.statSync(abs);
     if (stat.isDirectory()) {
       walkH8Assets(abs, out);
@@ -616,6 +630,9 @@ function defaultH8Files() {
     const abs = path.join(ROOT, name);
     if (fs.existsSync(abs)) files.push(abs);
   }
+  for (const dir of ["tests", "scripts", ".github"]) {
+    walkH8Assets(path.join(ROOT, dir), files);
+  }
   return files.sort();
 }
 
@@ -625,9 +642,10 @@ function auditH8(text) {
   for (let i = 0; i < lines.length; i++) {
     const match = lines[i].match(H8_RE);
     if (!match) continue;
+    const prefix = match[2] || match[4];
     failures.push({
       rule: "H8",
-      message: `${i + 1} internal path prefix /${match[2]}`,
+      message: `${i + 1} internal path prefix ${prefix}`,
     });
   }
   return failures;

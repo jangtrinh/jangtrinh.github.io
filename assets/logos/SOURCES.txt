@@ -1,10 +1,10 @@
 Overview
 
-This directory holds 25 WebP marks. 19 are original marks generated for design:os on 2026-11-02
+This directory holds 26 WebP marks. 19 are original marks generated for design:os on 2026-11-02
 (Asia/Saigon). Each one is a 1:1 sculptural 3D clay render of one chunky primitive form, made with
 an image generator. The six older hub logos were a style reference only. No third-party brand mark,
 logo or likeness was used as the subject or as a reference. Each file was downscaled to 256x256 WebP.
-tests/marks.sha256 lists the sha256 of all 25 files, the 19 new marks and the six older ones.
+tests/marks.sha256 lists the sha256 of all 26 files: the 19 new marks, the six older ones, and design-os-robotics.webp.
 scripts/check-ecosystem.mjs enforces that list. Jang accepted this set on 2026-11-02.
 mcp-bridge-go now uses its mark, mcp-bridge-go.webp.
 
@@ -27,6 +27,11 @@ mcp-bridge-go now uses its mark, mcp-bridge-go.webp.
   aura-scrollcinema-demo.webp        horseshoe
   mcp-bridge-go.webp                 bridge arch
   multi-AI-profile.webp              three fused spheres
+
+  design-os-robotics.webp          (not one of the 19 clay marks) the public 256x256 WebP brand mark
+                                   from jangtrinh/design-os-robotics, path docs/assets/brand/design-os-robotics.webp
+                                   on main, copied as-is on 2026-11-13 (Asia/Saigon). sha256
+                                   cb5f40e2455d96e231902300dbb46ecfbf17a62df320da42d683829a4c360c60.
 
 The six older logos (open question O-1)
 

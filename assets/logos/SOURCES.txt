@@ -1,10 +1,10 @@
 Overview
 
-This directory holds 26 WebP marks. 19 are original marks generated for design:os on 2026-11-02
+This directory holds 27 WebP marks. 19 are original marks generated for design:os on 2026-11-02
 (Asia/Saigon). Each one is a 1:1 sculptural 3D clay render of one chunky primitive form, made with
 an image generator. The six older hub logos were a style reference only. No third-party brand mark,
 logo or likeness was used as the subject or as a reference. Each file was downscaled to 256x256 WebP.
-tests/marks.sha256 lists the sha256 of all 26 files: the 19 new marks, the six older ones, and design-os-robotics.webp.
+tests/marks.sha256 lists the sha256 of all 27 files: the 19 new marks, the six older ones, design-os-robotics.webp and design-os-browser-extension.webp.
 scripts/check-ecosystem.mjs enforces that list. Jang accepted this set on 2026-11-02.
 mcp-bridge-go now uses its mark, mcp-bridge-go.webp.
 
@@ -32,6 +32,17 @@ mcp-bridge-go now uses its mark, mcp-bridge-go.webp.
                                    from jangtrinh/design-os-robotics, path docs/assets/brand/design-os-robotics.webp
                                    on main, copied as-is on 2026-11-13 (Asia/Saigon). sha256
                                    cb5f40e2455d96e231902300dbb46ecfbf17a62df320da42d683829a4c360c60.
+
+  design-os-browser-extension.webp (added later, same clay family) rounded cube with one short peg.
+                                   Generated with Grok Bot image generation on 2026-11-16 (Asia/Saigon), with
+                                   design-os-knowledge-builder.webp, design-os-skills-pack.webp and
+                                   design-os-voice-ux.webp as style references only. White background keyed to
+                                   alpha, cropped, padded to 92%, Lanczos to 256x256; not redrawn or recoloured.
+                                   Copied as-is from jangtrinh/design-os-browser-extension, path
+                                   docs/images/readme/design-os-browser-extension.webp on main (prompt and edits in
+                                   docs/images/readme/PROVENANCE.md there). sha256
+                                   3ac67d51e07c4f724b500a85c45ecd32582da95c18da16f24891907f511d4f7a.
+                                   Jang accepted it on 2026-11-16 ("Duyệt mark khối lập phương có chốt").
 
 The six older logos (open question O-1)
 

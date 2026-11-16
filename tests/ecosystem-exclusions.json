@@ -26,5 +26,9 @@
   {
     "repo": "product-os-spec-driven",
     "reason": "PolyForm Noncommercial License 1.0.0, not FREE source-available (PolyForm Shield)"
+  },
+  {
+    "repo": "design-os-browser-extension",
+    "reason": "research repo, extension not built yet; mark is in assets/logos, page card waits for Jang"
   }
 ]

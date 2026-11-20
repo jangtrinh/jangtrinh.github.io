@@ -40,3 +40,11 @@ FREE and source-available under PolyForm Shield 1.0.0.
 
 - [DESIGN:OS videos](https://jangtrinh.github.io/videos/): All channel videos for Studio, CLI, Bridge and 3D Blender with thumbnails and descriptions. Most are Vietnamese, with English terms.
 - [design:os by Jang on YouTube](https://www.youtube.com/@designosbyjang): the channel.
+
+## Optional
+
+- [Studio llms.txt](https://jangtrinh.github.io/design-os-studio/llms.txt)
+- [Studio llms-full.txt](https://jangtrinh.github.io/design-os-studio/llms-full.txt): full Studio docs for agents, including the 39 MCP tools
+- [CLI llms.txt](https://jangtrinh.github.io/design-os/llms.txt)
+- [CLI llms-full.txt](https://jangtrinh.github.io/design-os/llms-full.txt)
+- [Author site llms.txt](https://www.jang.work/llms.txt)
